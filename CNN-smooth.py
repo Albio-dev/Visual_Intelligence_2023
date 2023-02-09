@@ -1,13 +1,12 @@
-from torch.utils.data import DataLoader
-import glob
-import cv2, os
 import numpy as np
-import torch
+import torch, os
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from CNN_128x128 import CNN_128x128
-from utils import CustomDataset, compute_metrics
+from utils import compute_metrics
 import matplotlib.pyplot as plt
+
+import utils_our
 
 # test
 
@@ -37,45 +36,18 @@ num_epochs = 30
 lab_classes = ['Dog','Flower']
 
 ### DATA LOADING ###
-
-
-
-# Load dogs
-dogs = [cv2.imread(file) for file in glob.glob(f'{data_path}/dog/*.jpg')]
-# Create labels
-dogs_labels = [0]*len(dogs)
-
-# Load flowers
-flowers = [cv2.imread(file) for file in glob.glob(f'{data_path}/flower/*.jpg')]
-# Create labels
-flowers_labels = [1]*len(flowers)
-
-labels = dogs_labels + flowers_labels
-
 # Split in train and test set
-x_train, x_test, y_train, y_test = train_test_split(dogs+flowers, labels, test_size=test_perc)
-
-
-
+trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
 
 # Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print('Device: ', device)
 
-# Create Dataloader with batch size = 64
-train_dataset = CustomDataset(x_train,y_train)    # we use a custom dataset defined in utils.py file
-test_dataset = CustomDataset(x_test,y_test)       # we use a custom dataset defined in utils.py file
-
-
-trainset = DataLoader(train_dataset,batch_size=batch_size,drop_last=True)    # construct the trainset with subjects divided in mini-batch
-testset = DataLoader(test_dataset,batch_size=batch_size,drop_last=True)      # construct the testset with subjects divided in mini-batch
-
-
 
 ### HYPERPARAMETERS ###
 # Define useful variables
 best_acc = 0.0
-n_classes = len(np.unique(labels))                # number of classes in the dataset
+n_classes = len(lab_classes)                # number of classes in the dataset
 
 
 # Variables to store the results

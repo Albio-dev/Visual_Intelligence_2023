@@ -2,12 +2,12 @@
 
 step 1:
 CNNv1 sui dati lisci
- - [ ] Import data
- - [ ] Define model
- - [ ] Fit model
- - [ ] Test model
+ - [X] Import data
+ - [X] Define model
+ - [X] Fit model
+ - [X] Test model
 
-step 2 (in matlab):
+step 2 (con kymatio):
 - [ ] Import data
 - [ ] Choose decomposition method
 - [ ] Decompose data

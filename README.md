@@ -8,15 +8,18 @@ CNNv1 sui dati lisci
  - [X] Test model
 
 step 2 (con kymatio):
-- [ ] Import data
-- [ ] Choose decomposition method
-- [ ] Decompose data
-- [ ] Export decomposition
+- [X] Import data
+- [X] Choose decomposition method
+- [X] Decompose data
+- [X] Export decomposition
 
 step 3:
 CNNv2 on decomposition
-- [ ] Import decomposition
-- [ ] Use same steps as CNNv1
+- [ ] Memoizzare la trasformata scattering nel training
+- [ ] Capire come funziona l'input della NN in torch
+- [ ] Define model
+- [ ] Fit model
+- [ ] Test model
 
 step 4:
 Data extraction

@@ -17,6 +17,7 @@ data_path = './Data'
 model_train_path = './train_checkpoint'
 if not os.path.exists(model_train_path):                 # create a directory where to save the best model
     os.makedirs(model_train_path)
+cpu_device = torch.device("cpu")
 
 test_perc = .3
 
@@ -42,7 +43,7 @@ lab_classes = ['Dog','Flower']
 trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
 
 
-J = 1
+J = 2
 imageSize = (128, 128)
 order = 2
 
@@ -77,19 +78,24 @@ optim = torch.optim.SGD(model.parameters(), lr = learning_rate, momentum=momentu
 # Loss function
 criterion = torch.nn.CrossEntropyLoss()
 
-
+print(len(trainset))
+scatters = [None]*len(trainset)
 ### FIT MODEL ###
 for epoch in range(num_epochs):
     # Train step
     model.train()                                                   # tells to the model you are in training mode (batchnorm and dropout layers work)
-    for data_tr in trainset:
+    for i, data_tr in enumerate(trainset):
         optim.zero_grad()
 
         x,y = data_tr                        # unlist the data from the train set
-        x = x.view(batch_size,3,128,128).float().to(device)     # change the size for the input data - convert to float type
-        x = scatter(x).mean(axis=(3, 4)).movedim(1, 2).to(device)
+        if scatters[i] is None:
+            x = x.view(batch_size,3,128,128).float().to(device)     # change the size for the input data - convert to float type
+            x = scatter(x).mean(axis=(3, 4)).movedim(1, 2).to(device)
+            scatters[i] = (x.to(cpu_device))
+        else:
+            x = scatters[i].to(device)
+        print(f'batch {i}/{len(scatters)}')
         y = y.to(device)
-        print(x.shape)
         y_pred = model(x)                                        # run the model
         loss = criterion(y_pred,y)                               # compute loss
         _,pred = y_pred.max(1)                                      # get the index == class of the output along the rows (each sample)
@@ -103,7 +109,7 @@ for epoch in range(num_epochs):
     acc_train.append(acc_t)
     print("Epoch: {}/{}, loss = {:.4f} - acc = {:.4f}".format(epoch + 1, num_epochs, loss, acc_t))
     if acc_t > best_acc:                                                            # save the best model (the highest accuracy in validation)
-        torch.save(model.state_dict(), model_train_path + 'CNN_128x128_best_model_trained.pt')
+        torch.save(model.state_dict(), model_train_path + 'NN_128x128_best_model_trained.pt')
         best_acc = acc_t
 
     # Reinitialize the variables to compute accuracy
@@ -111,8 +117,8 @@ for epoch in range(num_epochs):
     true_label_train = torch.empty((0)).to(device)
 
 ### TEST MODEL ###
-model_test = CNN_128x128(input_channel=3,num_classes=n_classes).to(device)                # Initialize a new model
-model_test.load_state_dict(torch.load(model_train_path+'CNN_128x128_best_model_trained.pt'))   # Load the model
+model_test = NN_128x128(input_channel=3,num_classes=n_classes).to(device)                # Initialize a new model
+model_test.load_state_dict(torch.load(model_train_path+'NN_128x128_best_model_trained.pt'))   # Load the model
 
 pred_label_test = torch.empty((0,n_classes)).to(device)
 true_label_test = torch.empty((0)).to(device)

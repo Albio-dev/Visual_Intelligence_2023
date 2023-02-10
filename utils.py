@@ -51,12 +51,8 @@ def compute_metrics(y_true,y_pred,lab_classes):
     # Confusion matrix
     conf_mat = confusion_matrix(y_true,y_pred_lab,labels=list(range(0,len(lab_classes))))
     conf_mat_df = pd.DataFrame(conf_mat,columns=lab_classes,index=lab_classes)
-    plt.figure(figsize=(7,5))
-    sns.heatmap(conf_mat_df,annot=True)
-    plt.title('confusion matrix: test set')
-    plt.xlabel('predicted')
-    plt.ylabel('true')
-    plt.show()
+    
+    return conf_mat_df
 
 
 # Function to visualize the kernels for the two convolutional layers

@@ -33,7 +33,7 @@ num_epochs = 30
 
 
 # number of classes in the dataset             
-lab_classes = ['Dog','Flower']
+lab_classes = ['dog','flower']
 
 ### DATA LOADING ###
 # Split in train and test set

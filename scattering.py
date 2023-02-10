@@ -8,7 +8,7 @@ print('Device: ', device)
 
 # Load data
 dataPath = './Data'
-classes = ['Dog', 'Flower']
+classes = ['dog', 'flower']
 batch_size = 64
 test_perc = .3
 

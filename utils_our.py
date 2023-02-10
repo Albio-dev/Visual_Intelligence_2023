@@ -1,4 +1,4 @@
-import cv2, glob, numpy
+import cv2, glob, numpy, torch
 from torch.utils.data import DataLoader
 from utils import CustomDataset
 
@@ -26,11 +26,12 @@ def batcher(x_train, x_test, y_train, y_test, batch_size = 64):
     return trainset, testset
 
 
-def scatter_mem(batch_size,device,scatter,trainset,cpu_device):
+def scatter_mem(batch_size, device, scatter, trainset):
+    cpu_device = torch.device("cpu")
     scatters = [None]*len(trainset)
 
     for i, data_tr in enumerate(trainset):
-        x,y = data_tr                        # unlist the data from the train set
+        x,_ = data_tr                        # unlist the data from the train set
         x = x.view(batch_size,3,128,128).float().to(device)     # change the size for the input data - convert to float type
         x = scatter(x).mean(axis=(3, 4)).movedim(1, 2).to(device)
         scatters[i] = x.to(cpu_device)

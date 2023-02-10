@@ -18,7 +18,6 @@ data_path = './Data'
 model_train_path = './train_checkpoint'
 if not os.path.exists(model_train_path):                 # create a directory where to save the best model
     os.makedirs(model_train_path)
-cpu_device = torch.device("cpu")
 
 test_perc = .3
 
@@ -32,33 +31,37 @@ learning_rate = 0.01
 momentum = 0.5
 
 # The number of times the model is trained on the entire training dataset.
-num_epochs = 30   
+num_epochs = 80   
 
+## Scatter parameters ##
+J = 2
+imageSize = (128, 128)
+order = 2
 
-
-# number of classes in the dataset             
+# Classes in the dataset             
 lab_classes = ['dog','flower']
+
+# Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print('Available device: ', device)
 
 ### DATA LOADING ###
 # Split in train and test set
 trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
 
 
-J = 2
-imageSize = (128, 128)
-order = 2
+### SCATTERING DATA ###
 
-# Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print('Device: ', device)
 scatter = kt.Scattering2D(J, shape = imageSize, max_order = order)
 scatter = scatter.to(device)
 
-### HYPERPARAMETERS ###
+print(f'Calculating scattering coefficients of data in {len(trainset)} batches')
+scatters = utils_our.scatter_mem(batch_size,device,scatter,trainset)
+
+### MODEL VARIABLES ###
 # Define useful variables
 best_acc = 0.0
 n_classes = len(lab_classes)                # number of classes in the dataset
-
 
 # Variables to store the results
 losses = []
@@ -70,7 +73,6 @@ true_label_train = torch.empty((0)).to(device)
 ### CREATE MODEL ###
 
 # Model
-#model = CNN_128x128(input_channel=3,num_classes=n_classes).to(device)
 model = NN_128x128(input_channel=3, num_classes=n_classes).to(device)
 
 # Optimizer
@@ -79,8 +81,7 @@ optim = torch.optim.SGD(model.parameters(), lr = learning_rate, momentum=momentu
 # Loss function
 criterion = torch.nn.CrossEntropyLoss()
 
-print(len(trainset))
-scatters = utils_our.scatter_mem(batch_size,device,scatter,trainset,cpu_device)
+
 
 if scatters is None:
     print('Error during scatter_mem!')
@@ -93,11 +94,10 @@ for epoch in range(num_epochs):
     for i, data_tr in enumerate(trainset):
         optim.zero_grad()
 
-        x,y = data_tr                        # unlist the data from the train set
-        
+        x,y = data_tr                        # unlist the data from the train set        
         x = scatters[i].to(device)
-        print(f'batch {i}/{len(scatters)}')
         y = y.to(device)
+
         y_pred = model(x)                                        # run the model
         loss = criterion(y_pred,y)                               # compute loss
         _,pred = y_pred.max(1)                                      # get the index == class of the output along the rows (each sample)

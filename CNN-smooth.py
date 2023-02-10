@@ -9,7 +9,23 @@ import matplotlib.pyplot as plt
 import utils_our
 
 # test
+import yaml
+with open('parameters.yaml', 'r') as f:
+    settings = yaml.load(f, Loader=yaml.loader.FullLoader)
+print(settings)
 
+data_path = settings['data_path']
+model_train_path = settings['model_train_path']
+if not os.path.exists(model_train_path):                 # create a directory where to save the best model
+    os.makedirs(model_train_path)
+test_perc = settings['test_perc']
+batch_size = settings['batch_size']
+learning_rate = settings['learning_rate']
+momentum = settings['momentum']
+num_epochs = settings['num_epochs']  
+lab_classes = settings['lab_classes']
+
+'''
 ### Parameters ###
 data_path = './Data'
 model_train_path = './train_checkpoint'
@@ -34,6 +50,7 @@ num_epochs = 30
 
 # number of classes in the dataset             
 lab_classes = ['dog','flower']
+'''
 
 ### DATA LOADING ###
 # Split in train and test set

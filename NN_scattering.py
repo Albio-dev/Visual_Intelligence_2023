@@ -12,34 +12,24 @@ import utils_our
 import kymatio.torch as kt
 
 # test
+import yaml
+with open('parameters.yaml', 'r') as f:
+    settings = yaml.load(f, Loader=yaml.loader.FullLoader)
+print(settings)
 
-### Parameters ###
-data_path = './Data'
-model_train_path = './train_checkpoint'
+data_path = settings['data_path']
+model_train_path = settings['model_train_path']
 if not os.path.exists(model_train_path):                 # create a directory where to save the best model
     os.makedirs(model_train_path)
-
-test_perc = .3
-
-# How many samples are used per-iteration
-batch_size = 64
-
-# Learning rate to scale how much new weighs are evaluated
-learning_rate = 0.01
-
-# Scale for past experience to not be perturbated by new ones
-momentum = 0.5
-
-# The number of times the model is trained on the entire training dataset.
-num_epochs = 80   
-
-## Scatter parameters ##
-J = 2
-imageSize = (128, 128)
-order = 2
-
-# Classes in the dataset             
-lab_classes = ['dog','flower']
+test_perc = settings['test_perc']
+batch_size = settings['batch_size']
+learning_rate = settings['learning_rate']
+momentum = settings['momentum']
+num_epochs = settings['num_epochs']
+J = settings['J']
+imageSize = settings['imageSize']
+order = settings['order']      
+lab_classes = settings['lab_classes']
 
 # Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -55,7 +45,7 @@ trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split
 scatter = kt.Scattering2D(J, shape = imageSize, max_order = order)
 scatter = scatter.to(device)
 
-print(f'Calculating scattering coefficients of data in {len(trainset)} batches')
+print(f'Calculating scattering coefficients of data in {len(trainset)} batches of {batch_size} elements each')
 scatters = utils_our.scatter_mem(batch_size,device,scatter,trainset)
 
 ### MODEL VARIABLES ###

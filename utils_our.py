@@ -24,3 +24,15 @@ def batcher(x_train, x_test, y_train, y_test, batch_size = 64):
     testset = DataLoader(test_dataset,batch_size=batch_size,drop_last=True)      # construct the testset with subjects divided in mini-batch
 
     return trainset, testset
+
+
+def scatter_mem(batch_size,device,scatter,trainset,cpu_device):
+    scatters = [None]*len(trainset)
+
+    for i, data_tr in enumerate(trainset):
+        x,y = data_tr                        # unlist the data from the train set
+        x = x.view(batch_size,3,128,128).float().to(device)     # change the size for the input data - convert to float type
+        x = scatter(x).mean(axis=(3, 4)).movedim(1, 2).to(device)
+        scatters[i] = x.to(cpu_device)
+
+    return scatters

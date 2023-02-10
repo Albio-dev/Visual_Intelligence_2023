@@ -16,7 +16,7 @@ step 2 (con kymatio):
 step 3:
 CNNv2 on decomposition
 - [X] Memoizzare la trasformata scattering nel training
-- [ ] Ficcare in una funzione la scomposizione scatter con memoizzazione
+- [X] Ficcare in una funzione la scomposizione scatter con memoizzazione
 - [ ] Capire come funziona l'input della NN in torch
 - [ ] Define model
 - [ ] Fit model

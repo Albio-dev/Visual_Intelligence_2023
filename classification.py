@@ -3,6 +3,7 @@ import NN_scattering
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+import make_settings
 
 trainset_cnn, testset_cnn = CNN.getData()
 trainset_scatter, testset_scatter = NN_scattering.getData()

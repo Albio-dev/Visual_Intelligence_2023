@@ -3,7 +3,7 @@ data_path: ./Data
 lab_classes:
 - dog
 - flower
-model_train_path: ./train_checkpoint
+model_train_path: ./train_checkpoint/
 test_perc: 0.3
 learning_rate: 0.01
 momentum: 0.5

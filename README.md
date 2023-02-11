@@ -19,8 +19,12 @@ CNNv2 on decomposition
 - [X] Ficcare in una funzione la scomposizione scatter con memoizzazione
 - [ ] Capire come funziona l'input della NN in torch
 - [ ] Define model
-- [ ] Fit model
-- [ ] Test model
+- [X] Fit model
+- [X] Test model
 
 step 4:
 Data extraction
+- [ ] Confrontare i filtri estratti dallo scattering e i filtri CNN
+- [ ] Commentare i risultati
+- [ ] Scrivere il report (almeno 4 pagine e massimo 6)
+- [ ] Preparare una breve presentazione (max 10 min.) da esporre spiegando i punti salienti del progetto.

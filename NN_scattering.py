@@ -113,15 +113,14 @@ def test(testset):
 
     return compute_metrics(y_true=true_label_test,y_pred=pred_label_test,lab_classes=lab_classes)    # function to compute the metrics (accuracy and confusion matrix)
 
-
-if __name__ == "__main__":
+def getData():
     # Split in train and test set
     trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
 
     ### SCATTERING DATA ###
     scatter = kt.Scattering2D(J, shape = imageSize, max_order = order)
-    scatter = scatter.to(device)    
-
+    scatter = scatter.to(device)  
+    
     print(f'Calculating scattering coefficients of data in {len(trainset)} batches of {batch_size} elements each for training')
     training_scatters, train_lbls = utils_our.scatter_mem(batch_size,device,scatter,trainset)
     if training_scatters is None:
@@ -133,8 +132,12 @@ if __name__ == "__main__":
         print('Error during scatter_mem!')
         sys.exit()
 
+    return utils_our.batcher(training_scatters, testing_scatters, train_lbls, test_lbls, batch_size = batch_size)
 
-    trainset, testset = utils_our.batcher(training_scatters, testing_scatters, train_lbls, test_lbls, batch_size = batch_size)
+
+if __name__ == "__main__":
+    
+    trainset, testset = getData()
 
     train(trainset)
     confmat = test(testset)       

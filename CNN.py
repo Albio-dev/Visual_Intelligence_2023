@@ -111,12 +111,15 @@ def test(testset):
     return compute_metrics(y_true=true_label_test,y_pred=pred_label_test,lab_classes=lab_classes)    # function to compute the metrics (accuracy and confusion matrix)
 
 
+def getData():
+    # Split in train and test set
+    return utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
 
 
 
 
 if __name__ == "__main__":
-    trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))  
+    trainset, testset = getData()
     train(trainset=trainset)
     confmat = test(testset=testset)
 

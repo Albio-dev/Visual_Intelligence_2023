@@ -11,6 +11,7 @@ import seaborn as sns
 
 import utils_our
 import kymatio.torch as kt
+from kymatio.scattering2d.filter_bank import filter_bank
 
 # test
 import yaml
@@ -111,7 +112,12 @@ def test(testset):
             pred_label_test = torch.cat((pred_label_test,output_test),dim=0)
             true_label_test = torch.cat((true_label_test,y_te),dim=0)
 
-    return compute_metrics(y_true=true_label_test,y_pred=pred_label_test,lab_classes=lab_classes)    # function to compute the metrics (accuracy and confusion matrix)
+    return utils_our.metrics(true_label_test.cpu(), pred_label_test.cpu(), lab_classes)#compute_metrics(y_true=true_label_test,y_pred=pred_label_test,lab_classes=lab_classes)    # function to compute the metrics (accuracy and confusion matrix)
+
+
+def isTrained():
+    return os.path.isfile(model_train_path+'NN_128x128_best_model_trained.pt')
+
 
 def getData():
     # Split in train and test set
@@ -119,7 +125,7 @@ def getData():
 
     ### SCATTERING DATA ###
     scatter = kt.Scattering2D(J, shape = imageSize, max_order = order)
-    scatter = scatter.to(device)  
+    scatter = scatter.to(device)
     
     print(f'Calculating scattering coefficients of data in {len(trainset)} batches of {batch_size} elements each for training')
     training_scatters, train_lbls = utils_our.scatter_mem(batch_size,device,scatter,trainset)
@@ -135,33 +141,16 @@ def getData():
     return utils_our.batcher(training_scatters, testing_scatters, train_lbls, test_lbls, batch_size = batch_size)
 
 
+def getFilterBank():
+    return filter_bank(imageSize[0], imageSize[1], J, L=order), J, order
+
+
 if __name__ == "__main__":
     
     trainset, testset = getData()
 
     train(trainset)
-    confmat = test(testset)       
+    metrics = test(testset)       
         
-    plt.figure(figsize=(7,5))
-    sns.heatmap(confmat,annot=True)
-    plt.title('confusion matrix: test set')
-    plt.xlabel('predicted')
-    plt.ylabel('true')
+    metrics.confMatDisplay().plot()
     plt.show()
-'''
-# Plot the results
-plt.figure(figsize=(8,5))
-plt.plot(list(range(num_epochs)), losses)
-plt.title("Learning curve")
-plt.xlabel("Epochs")
-plt.ylabel("Loss")
-plt.tight_layout()
-plt.show()
-
-plt.figure(figsize=(8,5))
-plt.plot(list(range(num_epochs)), acc_train)
-plt.title("Accuracy curve")
-plt.xlabel("Epochs")
-plt.ylabel("Accuracy")
-plt.tight_layout()
-plt.show()'''

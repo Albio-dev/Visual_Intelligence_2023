@@ -1,6 +1,9 @@
 import cv2, glob, numpy, torch
 from torch.utils.data import DataLoader
 from utils import CustomDataset
+from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, f1_score
+from sklearn.metrics import roc_curve
+from sklearn.metrics import RocCurveDisplay, ConfusionMatrixDisplay, PrecisionRecallDisplay
 
 def loadData(path, folders):
 
@@ -28,14 +31,42 @@ def batcher(x_train, x_test, y_train, y_test, batch_size = 64):
 
 def scatter_mem(batch_size, device, scatter, dataset):
     cpu_device = torch.device("cpu")
-    scatters = []#[None]*len(dataset)
-    labels = []#[None]*len(dataset)
+    scatters = []
+    labels = []
 
-    for i, data_tr in enumerate(dataset):
+    for data_tr in dataset:
         x,y = data_tr                        # unlist the data from the train set
         x = x.view(batch_size,3,128,128).float().to(device)     # change the size for the input data - convert to float type
-        x = scatter(x).mean(axis=(3, 4)).movedim(1, 2).to(device)
+        x = scatter(x).mean(axis=(3, 4)).movedim(1, 2).to(device) 
         scatters += x.to(cpu_device)
         labels += y.to(cpu_device)
 
     return scatters, labels
+
+class metrics:
+
+    def __init__(self, y_true, y_pred, lab_classes) -> None:
+        self.classes = lab_classes
+        _, self.y_pred = y_pred.max(1)
+        self.y_true = y_true
+
+        self.accuracy = accuracy_score(self.y_true, self.y_pred)
+        self.precision = precision_score(self.y_true, self.y_pred)
+        self.recall = recall_score(self.y_true, self.y_pred)
+        self.f1 = f1_score(self.y_true, self.y_pred)
+
+        self.confmat = confusion_matrix(self.y_true, self.y_pred, labels=list(range(0,len(self.classes))))
+        fpr, tpr, threshold = roc_curve(self.y_true, self.y_pred)
+        self.roc = (fpr, tpr)
+
+    def __str__(self) -> str:
+        return f'Accuracy:\t\t{self.accuracy}\nPrecision:\t\t{self.precision}\nRecall:\t\t{self.recall}\nF1:\t\t{self.f1}'
+        
+    def rocDisplay(self):
+        return RocCurveDisplay(*self.roc)
+
+    def confMatDisplay(self):
+        return ConfusionMatrixDisplay(self.confmat, display_labels=self.classes)
+
+    def precisionRecallDisplay(self):
+        return PrecisionRecallDisplay(self.precision, self.recall)

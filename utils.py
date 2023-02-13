@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from torchvision import utils
 from torch.utils.data import Dataset
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, f1_score, classification_report, roc_curve, PrecisionRecallDisplay
 
 ##### Style for chart
 sns.set_style('darkgrid')
@@ -51,8 +51,19 @@ def compute_metrics(y_true,y_pred,lab_classes):
     # Confusion matrix
     conf_mat = confusion_matrix(y_true,y_pred_lab,labels=list(range(0,len(lab_classes))))
     conf_mat_df = pd.DataFrame(conf_mat,columns=lab_classes,index=lab_classes)
+
+    # Precision-Recall
     
-    return conf_mat_df
+    precision = precision_score(y_true, y_pred_lab)#, pos_label="positive")
+    recall = recall_score(y_true, y_pred_lab)#, pos_label="positive")
+    f1 = f1_score(y_true, y_pred_lab)
+    print(f'Precision: {precision}')
+    print(f'Recall: {recall}')
+    print(f'F1 Score: {f1}')
+    fpr, tpr, thresholds = roc_curve(y_true, y_pred_lab)
+    return conf_mat_df #utils_our.metrics(acc, precision, recall, f1, conf_mat, (fpr, tpr))
+
+    
 
 
 # Function to visualize the kernels for the two convolutional layers

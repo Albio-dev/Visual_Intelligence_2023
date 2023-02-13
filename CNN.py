@@ -90,6 +90,8 @@ def train(trainset):
         # Reinitialize the variables to compute accuracy
         pred_label_train = torch.empty((0)).to(device)
         true_label_train = torch.empty((0)).to(device)
+    
+    return model
 
 def test(testset):
     ### TEST MODEL ###
@@ -108,7 +110,7 @@ def test(testset):
             pred_label_test = torch.cat((pred_label_test,output_test),dim=0)
             true_label_test = torch.cat((true_label_test,y_te),dim=0)
 
-    return compute_metrics(y_true=true_label_test,y_pred=pred_label_test,lab_classes=lab_classes)    # function to compute the metrics (accuracy and confusion matrix)
+    return utils_our.metrics(true_label_test.cpu(), pred_label_test.cpu(), lab_classes), model_test
 
 
 def getData():
@@ -116,41 +118,16 @@ def getData():
     return utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
 
 
+def isTrained():
+    return os.path.isfile(model_train_path+'CNN_128x128_best_model_trained.pt')
 
 
 if __name__ == "__main__":
     trainset, testset = getData()
     train(trainset=trainset)
-    confmat = test(testset=testset)
+    metrics = test(testset=testset)
 
-    plt.figure(figsize=(7,5))
-    sns.heatmap(confmat,annot=True)
-    plt.title('confusion matrix: test set')
-    plt.xlabel('predicted')
-    plt.ylabel('true')
+    metrics.confMatDisplay().plot()
     plt.show()
 
 
-
-
-
-
-    '''
-
-    # Plot the results
-    plt.figure(figsize=(8,5))
-    plt.plot(list(range(num_epochs)), losses)
-    plt.title("Learning curve")
-    plt.xlabel("Epochs")
-    plt.ylabel("Loss")
-    plt.tight_layout()
-    plt.show()
-
-    plt.figure(figsize=(8,5))
-    plt.plot(list(range(num_epochs)), acc_train)
-    plt.title("Accuracy curve")
-    plt.xlabel("Epochs")
-    plt.ylabel("Accuracy")
-    plt.tight_layout()
-    plt.show()
-    '''

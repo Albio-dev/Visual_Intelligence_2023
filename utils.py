@@ -76,7 +76,7 @@ def visTensor(tensor, ch=0, allkernels=False, nrow=8, padding=1):
         rows = np.min((tensor.shape[0] // nrow + 1, 64))    
         grid = utils.make_grid(tensor, nrow=nrow, normalize=True, padding=padding)
         plt.figure( figsize=(nrow,rows) )
-        plt.imshow(grid.numpy().transpose((1, 2, 0)))
+        plt.imshow(grid.cpu().numpy().transpose((1, 2, 0)))
     
 
 def plot_filters_single_channel_big(t):

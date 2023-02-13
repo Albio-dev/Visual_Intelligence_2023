@@ -13,7 +13,7 @@ import make_settings
 
 def showCNNFilters(model):
     layer = 1
-    filter = model.features[layer].weight.data.clone()
+    filter = list(model.children())[layer].weight.data.clone()
     utils.visTensor(filter, ch=0, allkernels=False)
     plt.axis('off')
     plt.ioff()

@@ -3,7 +3,7 @@ import torch, os
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from CNN_128x128 import CNN_128x128
-from utils import compute_metrics
+from utils import compute_metrics,plot_weights, visTensor
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -91,7 +91,8 @@ def train(trainset):
         pred_label_train = torch.empty((0)).to(device)
         true_label_train = torch.empty((0)).to(device)
     
-    return model
+    # aggiunto x perché mi serviva per testare il codice
+    return model,x
 
 def test(testset):
     ### TEST MODEL ###
@@ -121,13 +122,101 @@ def getData():
 def isTrained():
     return os.path.isfile(model_train_path+'CNN_128x128_best_model_trained.pt')
 
+# aggiunta funzione per mostrare i kernel
+def show_kernels(model_test):
+    # Get the first kernel from the model
+    kernels_1 = model_test.conv1.weight.data.cpu().clone()
+    visTensor(kernels_1, ch=1, allkernels=False)
+    plt.axis('off')
+    plt.title('kernels from convolutional layer: 1')
+    plt.ioff()
+    plt.show()
+
+    # Get the second kernel from the model
+    kernels_2 = model_test.conv2.weight.data.cpu().clone()
+    visTensor(kernels_2, ch=0, allkernels=False)
+    plt.axis('off')
+    plt.title('kernels from convolutional layer: 2')
+    plt.ioff()
+    plt.show()
+
+    # Get the second kernel from the model
+    kernels_3 = model_test.conv3.weight.data.cpu().clone()
+    visTensor(kernels_3, ch=0, allkernels=False)
+    plt.axis('off')
+    plt.title('kernels from convolutional layer: 3')
+    plt.ioff()
+    plt.show()
+
+    # Get the second kernel from the model
+    kernels_4 = model_test.conv4.weight.data.cpu().clone()
+    visTensor(kernels_4, ch=0, allkernels=False)
+    plt.axis('off')
+    plt.title('kernels from convolutional layer: 4')
+    plt.ioff()
+    plt.show()
+
+def visualize_features_map(model,X_te):
+    conv_weights =[]                            # save the weights of convolutional layers
+    conv_layers = []                            # save the convolutional layers
+    model_children = list(model.children())     # get all the model children as list
+    # append all the convolutional layers and their respective wights to the list
+    for i in range(len(model_children)):
+        if type(model_children[i]) == torch.nn.Conv2d:
+            conv_weights.append(model_children[i].weight)
+            conv_layers.append(model_children[i])
+
+    print(conv_layers)
+
+    image = X_te[2,:,:,:]
+    original_image = image
+    # process the images through all the convolutional layers 
+    outputs = []
+    names = []
+    for layer in conv_layers[0:]:   # run over the convolutional layers
+        image = layer(image)        # process the image
+        outputs.append(image)       # save the output of the layer 
+        names.append(str(layer))    # save the name of the layer
+    print(len(outputs))
+
+    # print feature_maps
+    for feature_map in outputs:
+        print(feature_map.shape)
+
+    # Convert from 3D to 2D summing the element for each channel
+    processed = []
+    for feature_map in outputs:
+        feature_map = feature_map.squeeze(0)
+        gray_scale = torch.sum(feature_map,0)
+        gray_scale = gray_scale / feature_map.shape[0]
+        processed.append(gray_scale.data.cpu().numpy())
+    for fm in processed:
+        print(fm.shape)
+
+    fig = plt.figure(figsize=(30, 50))
+    for i in range(len(processed)):
+        a = fig.add_subplot(5, 4, i+1)
+        imgplot = plt.imshow(processed[i],cmap='viridis')
+        a.axis("off")
+        a.set_title(names[i].split('(')[0], fontsize=30)
+
+    plt.show()
+
+    plt.figure()
+    plt.imshow(original_image.reshape(128,128,3).cpu().detach().numpy().astype('uint8'))
+    plt.axis('off')
+    plt.show()
 
 if __name__ == "__main__":
     trainset, testset = getData()
-    train(trainset=trainset)
-    metrics = test(testset=testset)
+    model, X_te = train(trainset=trainset)
+    metrics, model_test = test(testset=testset)
+
+    plot_weights(model_test.conv1, single_channel = False, collated = True)
 
     metrics.confMatDisplay().plot()
     plt.show()
 
-
+    show_kernels(model_test)
+    
+    visualize_features_map(model,X_te)

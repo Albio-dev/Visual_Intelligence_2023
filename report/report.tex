@@ -1,8 +1,8 @@
 \documentclass{report}
-
+\usepackage{listings}
 
 \title{Report on CNN/Scattering classification comparison}
-\author{Alberto Carli \and Gabriele Roncolato \and Leonardo Zek}
+\author{Alberto Carli \and Gabriele Roncolato \and Leonardo Zecchin }
 \date{}
 
 \begin{document}
@@ -11,6 +11,12 @@
 \pagebreak
 
 \chapter{Introduction}
+This document illustrates the project valid for the Visual Intelligence course of the academic year 2022/2023. \\
+The assignment tests the knowledge gained in class by going on to apply signal analysis methods, in particular we classified signals using \textbf{Convolutional Neural Networks} and using wavelet theory, specifically  \textbf{Wavelet Scattering}. \\
+We wrote the code for both types of classifications and then compared the results and checked the veracity of the results. \\
+For the entire project, we followed the guidelines of laboratory classes.
+
+
 \chapter{Dataset}
 \chapter{Objectives}
 The objective of this project was to explore the use of scattering transforms to improve the performance of convolutional neural networks on a given dataset.\\
@@ -20,7 +26,59 @@ We then visualized the filters learned by the CNN and compared them to the ones 
 By accomplishing these objectives, we hoped to gain a better understanding of how the CNN learns which features to extract.
 
 \chapter{CNN Classification}
+\section{What is a CNN}
+A Convolutional Neural Network (\textbf{CNN}) is a type of deep learning algorithm commonly used for image recognition and computer vision tasks. It is designed to automatically learn and extract relevant features from input images through convolutional and pooling layers, followed by fully connected layers that produce output predictions. \\
+The \texttt{CNN\_128x128} architecture consists of four \textbf{convolutional} layers and three fully connected layers. The first layer takes an input image with \texttt{input\_channel} number of channels, and the output of the last layer is a vector with \texttt{num\_classes} elements representing the probability of each class.
+
+\section{Architecture}
+
+
+\begin{lstlisting}[language=bash]
+CNN_128x128(
+  (conv1): Conv2d(3, 32, kernel_size=(9, 9), stride=(1, 1))
+  (conv2): Conv2d(32, 32, kernel_size=(9, 9), stride=(1, 1))
+  (conv3): Conv2d(32, 64, kernel_size=(5, 5), stride=(1, 1))
+  (conv4): Conv2d(64, 64, kernel_size=(5, 5), stride=(1, 1))
+  (drop1): Dropout1d(p=0.1, inplace=False)
+  (flat): Flatten(start_dim=1, end_dim=-1)
+  (fc1): Linear(in_features=576, out_features=256, bias=True)
+  (drop2): Dropout(p=0.1, inplace=False)
+  (fc2): Linear(in_features=256, out_features=32, bias=True)
+  (fc3): Linear(in_features=32, out_features=2, bias=True)
+)
+\end{lstlisting}
+
+
+\subsection{Convolutional Layers}
+
+The first convolutional layer has 32 output channels, while the second convolutional layer has 64 output channels. The third and fourth convolutional layers also have 64 output channels, but they use a smaller kernel size of 5x5 instead of 9x9 used in the first two layers. All convolutional layers have a stride of 1 and use a \textbf{Rectified Linear Unit} (\textbf{ReLU}) activation function.
+\subsection{Dropout}
+
+The dropout layer is used to prevent overfitting in the model. In this architecture, we use a dropout rate of 0.1.
+\subsection{Flatten Layer}
+
+The flatten layer is used to convert the output of the last convolutional layer into a vector (\textit{tensor}), which can be used as input to the fully connected layers. In this architecture, the flatten layer converts the output of the last convolutional layer into a vector of size 576.
+
+\subsection{Fully Connected Layers}
+The fully connected layers consist of three layers, with 256, 32 and \texttt{num\_classes}  neurons respectively. All fully connected layers use a ReLU activation function except for the last layer which uses the \textbf{softmax function} to output the class probabilities.
+
+\section{Training the Model}
+
+To train the model, we pass the input images through the CNN and compute the loss function (in this case \textbf{cross-entropy}) between the predicted class probabilities and the true labels. We use \textbf{stochastic gradient descent} to optimize the model weights, with a \textit{learning rate} of 0.001 and a \textit{momentum} of 0.9. The model is trained for a fixed number of epochs, and the best model is selected based on its performance on a validation set.
+
 \chapter{Scattering+NN Classification}
+\textbf{DA METTERE APPOSTO}
+The NN\_128x128 class defines a Convolutional Neural Network (CNN) for classification tasks. The network expects input with a specified number of channels, input\_channel, and the number of output classes, \texttt{num\_classes}. The class inherits from the \texttt{nn.Module} class, which is a base class for all neural network modules in PyTorch.
+
+The CNN architecture defined in the NN\_128x128 class consists of only fully connected layers. There are no convolutional layers that are typically used in a CNN. Instead, the data is flattened using the \texttt{nn.Flatten()} layer and passed to the fully connected layers.
+
+The architecture of the network consists of three fully connected layers. The first layer, \texttt{self.fc1}, has 256 output neurons, and the input size is 243. The second layer, \texttt{self.fc2}, has 32 output neurons, and the third and final layer, \texttt{self.fc3}, has \texttt{num\_classes} output neurons.
+
+Between the second and third layer, there is a dropout layer, \texttt{self.drop2}, with a dropout rate of 0.1. The dropout layer helps to prevent overfitting of the model.
+
+The activation function used in the network is ReLU, which is applied after each fully connected layer. The last layer uses the softmax function to produce probabilities for each of the \texttt{num\_classes} output neurons.
+
+In summary, this CNN architecture is a simple three-layer fully connected network, where the data is flattened and passed through the layers, with ReLU activation applied after each fully connected layer. It uses dropout regularization and softmax activation in the final layer to predict the class probabilities.
 \chapter{Performances comparison}
 \chapter{Filters}
 \chapter{Conclusions}

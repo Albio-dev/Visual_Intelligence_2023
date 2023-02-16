@@ -61,6 +61,18 @@ The fully connected layers consist of three layers, with 256, 32 and \texttt{num
 To train the model, we pass the input images through the CNN and compute the loss function (in this case \textbf{cross-entropy}) between the predicted class probabilities and the true labels. We use \textbf{stochastic gradient descent} to optimize the model weights, with a \textit{learning rate} of 0.001 and a \textit{momentum} of 0.9. The model is trained for a fixed number of epochs, and the best model is selected based on its performance on a validation set.
 
 \chapter{Scattering+NN Classification}
+\textbf{DA METTERE APPOSTO}
+The NN\_128x128 class defines a Convolutional Neural Network (CNN) for classification tasks. The network expects input with a specified number of channels, input\_channel, and the number of output classes, \texttt{num\_classes}. The class inherits from the \texttt{nn.Module} class, which is a base class for all neural network modules in PyTorch.
+
+The CNN architecture defined in the NN\_128x128 class consists of only fully connected layers. There are no convolutional layers that are typically used in a CNN. Instead, the data is flattened using the \texttt{nn.Flatten()} layer and passed to the fully connected layers.
+
+The architecture of the network consists of three fully connected layers. The first layer, \texttt{self.fc1}, has 256 output neurons, and the input size is 243. The second layer, \texttt{self.fc2}, has 32 output neurons, and the third and final layer, \texttt{self.fc3}, has \texttt{num\_classes} output neurons.
+
+Between the second and third layer, there is a dropout layer, \texttt{self.drop2}, with a dropout rate of 0.1. The dropout layer helps to prevent overfitting of the model.
+
+The activation function used in the network is ReLU, which is applied after each fully connected layer. The last layer uses the softmax function to produce probabilities for each of the \texttt{num\_classes} output neurons.
+
+In summary, this CNN architecture is a simple three-layer fully connected network, where the data is flattened and passed through the layers, with ReLU activation applied after each fully connected layer. It uses dropout regularization and softmax activation in the final layer to predict the class probabilities.
 \chapter{Performances comparison}
 \chapter{Filters}
 \chapter{Conclusions}

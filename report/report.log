@@ -1,14 +1,14 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.12) (preloaded format=pdflatex 2023.1.12)  14 FEB 2023 15:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 23.1) (preloaded format=pdflatex 2023.2.5)  16 FEB 2023 09:54
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"c:/Users/albio/Desktop/Magistrale/(2022-2023) Intelligenza visuale/progetto/Visual_Intelligence_2023/report/report.tex"
-(c:/Users/albio/Desktop/Magistrale/(2022-2023) Intelligenza visuale/progetto/Visual_Intelligence_2023/report/report.tex
+**"f:/Albio Cloud/Scuola/Magistrale/(2022-2023) Intelligenza visuale/progetto/Visual_Intelligence_2023/report/report.tex"
+(f:/Albio Cloud/Scuola/Magistrale/(2022-2023) Intelligenza visuale/progetto/Visual_Intelligence_2023/report/report.tex
 LaTeX2e <2022-11-01> patch level 1
-L3 programming layer <2022-12-17> (C:\Users\albio\AppData\Local\Programs\MiKTeX\tex/latex/base\report.cls
+L3 programming layer <2023-01-24> (P:\MiKTeX\tex/latex/base\report.cls
 Document Class: report 2022/07/02 v1.4n Standard LaTeX document class
-(C:\Users\albio\AppData\Local\Programs\MiKTeX\tex/latex/base\size10.clo
+(P:\MiKTeX\tex/latex/base\size10.clo
 File: size10.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count185
@@ -23,8 +23,8 @@ File: size10.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip48
 \belowcaptionskip=\skip49
 \bibindent=\dimen140
-) (C:\Users\albio\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
-File: l3backend-pdftex.def 2022-10-26 L3 backend support: PDF output (pdfTeX)
+) (P:\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
+File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count194
 \l__pdf_internal_box=\box51
 ) (report.aux)
@@ -52,7 +52,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 9.
  [1
 
-{C:/Users/albio/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] (report.toc)
+{C:/Users/Albio/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] (report.toc)
 \tf@toc=\write3
 \openout3 = `report.toc'.
 
@@ -68,6 +68,11 @@ Chapter 2.
 
 ]
 Chapter 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 16--18
+
+ []
+
 [4
 
 ]
@@ -92,15 +97,15 @@ Chapter 8.
 
 ] (report.aux) ) 
 Here is how much of TeX's memory you used:
- 481 strings out of 476406
- 9622 string characters out of 2789567
- 1850787 words of memory out of 3000000
- 20908 multiletter control sequences out of 15000+600000
+ 481 strings out of 476375
+ 9369 string characters out of 5805391
+ 1851299 words of memory out of 5000000
+ 20937 multiletter control sequences out of 15000+600000
  516842 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,6n,38p,260b,186s stack positions out of 10000i,1000n,20000p,200000b,80000s
-<C:/Users/albio/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/albio/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/albio/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/albio/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/albio/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on report.pdf (10 pages, 73797 bytes).
+ 34i,6n,38p,310b,186s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+Output written on report.pdf (10 pages, 83398 bytes).
 PDF statistics:
  60 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

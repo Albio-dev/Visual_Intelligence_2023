@@ -52,7 +52,7 @@ def showPassBandScatterFilters():
         axs[i // order, i % order].set_title("$j = {}$ \n $\\theta={}$".format(i // order, i % order))
         i = i+1
     
-    fig.suptitle((r"Wavelets for each scales $j$ and angles $\theta$ used."
+    fig.subtitle((r"Wavelets for each scales $j$ and angles $\theta$ used."
                   "\nColor saturation and color hue respectively denote complex "
                   "magnitude and complex phase."), fontsize=13)
     plt.show()
@@ -84,12 +84,10 @@ def show_confusion_matrix(CNN_metrics,NN_metrics):
 
     fig, axs = plt.subplots(1, 2)
     CNN_metrics.confMatDisplay().plot(ax=axs[0])
-    #sns.heatmap(confmat_CNN, ax=axs[0], annot=True)
     axs[0].set_title('confusion matrix in test for CNN')
     axs[0].set_xlabel('predicted')
     axs[0].set_ylabel('true')
     NN_metrics.confMatDisplay().plot(ax=axs[1])
-    #sns.heatmap(confmat_scattering, ax=axs[1], annot=True)
     axs[1].set_title('confusion matrix in test for scattering NN')
     axs[1].set_xlabel('predicted')
     axs[1].set_ylabel('true')

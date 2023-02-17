@@ -4,6 +4,8 @@ from utils import CustomDataset
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, f1_score
 from sklearn.metrics import roc_curve
 from sklearn.metrics import RocCurveDisplay, ConfusionMatrixDisplay, PrecisionRecallDisplay
+from colorsys import hls_to_rgb
+import numpy as np
 
 def loadData(path, folders):
 
@@ -37,13 +39,12 @@ def scatter_mem(batch_size, device, scatter, dataset):
     for data_tr in dataset:
         x,y = data_tr   
         x = x.view(batch_size,3,128,128).float().to(device)     # change the size for the input data - convert to float type
-        
-        x = scatter(x)
-        #print(x.shape)
-        x = x.movedim(1, 2).mean(axis=(2, 3, 4)).to(device)# # scatter the data and average the values    
-        
+        x = scatter(x).to(cpu_device)        
+
+        x = x.movedim(1, 2).mean(axis=(3, 4)).to(device)# # scatter the data and average the values    
         scatters += x.to(cpu_device)
         labels += y.to(cpu_device)
+
 
     return scatters, labels
 
@@ -87,3 +88,17 @@ class metrics:
 
     def precisionRecallDisplay(self):
         return PrecisionRecallDisplay(self.precision, self.recall)
+
+    
+def colorize(z):
+    n, m = z.shape
+    c = np.zeros((n, m, 3))
+    c[np.isinf(z)] = (1.0, 1.0, 1.0)
+    c[np.isnan(z)] = (0.5, 0.5, 0.5)
+
+    idx = ~(np.isinf(z) + np.isnan(z))
+    A = (np.angle(z[idx]) + np.pi) / (2*np.pi)
+    A = (A + 0.5) % 1.0
+    B = 1.0/(1.0 + abs(z[idx])**0.3)
+    c[idx] = [hls_to_rgb(a, b, 0.8) for a, b in zip(A, B)]
+    return c

@@ -19,12 +19,12 @@ model_hyperparameters = {
     # Scale for past experience to not be perturbated by new ones
     "momentum" : 0.5,
     # The number of times the model is trained on the entire training dataset.
-    "num_epochs" : 80    
+    "num_epochs" : 30    
 }
 
 scattering_parameters = {
     # TODO: ??
-    "J" : 4,
+    "J" : 6,
     # Order of scattering
     "order" : 2,
     # Size of the input images
@@ -33,9 +33,31 @@ scattering_parameters = {
     "n_rotations" : 8
 }
 
-with open('parameters.yaml', 'w') as f:
-    f.write(yaml.dump(generic))
-    f.write(yaml.dump(model_hyperparameters))
-    f.write(yaml.dump(scattering_parameters))
+def writefile():
+    with open('parameters.yaml', 'w') as f:
+        f.write(yaml.dump(generic))
+        f.write(yaml.dump(model_hyperparameters))
+        f.write(yaml.dump(scattering_parameters))
+
+writefile()
     
+def setScatteringParameters( J, order, imageSize, n_rotations):
+    scattering_parameters['J'] = J
+    scattering_parameters['order'] = order
+    scattering_parameters['imageSize'] = imageSize
+    scattering_parameters['n_rotations'] = n_rotations
+
+    writefile()
+    
+
+def setGenericParameters(data_path, model_train_path, lab_classes, batch_size, test_perc):
+    generic['data_path'] = data_path
+    generic['model_train_path'] = model_train_path
+    generic['lab_classes'] = lab_classes
+    generic['batch_size'] = batch_size
+    generic['test_perc'] = test_perc
+
+    writefile()
+
+
 

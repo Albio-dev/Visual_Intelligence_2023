@@ -6,7 +6,7 @@ from CNN_128x128 import CNN_128x128
 from utils import compute_metrics,plot_weights, visTensor
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+import utils
 import utils_our
 
 # Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
@@ -206,6 +206,17 @@ def visualize_features_map(model,X_te):
     plt.imshow(original_image.reshape(128,128,3).cpu().detach().numpy().astype('uint8'))
     plt.axis('off')
     plt.show()
+
+
+def showCNNFilters(model):
+    layer = 0
+    filter = list(model.children())[layer].weight.data.clone()
+    utils.visTensor(filter, ch=0, allkernels=False)
+    plt.axis('off')
+    plt.ioff()
+    plt.show()
+
+
 
 if __name__ == "__main__":
     trainset, testset = getData()

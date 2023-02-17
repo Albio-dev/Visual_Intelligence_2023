@@ -7,7 +7,7 @@ from NN_128x128 import NN_128x128
 from utils import compute_metrics
 import matplotlib.pyplot as plt
 import sys
-
+from scipy.fft import fft2
 import utils_our
 import kymatio.torch as kt
 from kymatio.scattering2d.filter_bank import filter_bank
@@ -139,6 +139,52 @@ def getData():
         sys.exit()
 
     return *utils_our.batcher(training_scatters, testing_scatters, train_lbls, test_lbls, batch_size = batch_size), np.prod(training_scatters[0].shape)
+
+
+def showPassBandScatterFilters():
+    filters_set, J, rotations = getFilterBank()
+
+    fig, axs = plt.subplots(J, rotations, sharex=True, sharey=True)
+    fig.set_figheight(6)
+    fig.set_figwidth(6)
+    plt.rc('text', usetex=False)
+    plt.rc('font', family='serif')
+    i = 0
+    for filter in filters_set['psi']:
+        f = filter["levels"][0]
+        filter_c = fft2(f)
+        filter_c = np.fft.fftshift(filter_c)
+        axs[i // rotations, i % rotations].imshow(utils_our.colorize(filter_c))
+        axs[i // rotations, i % rotations].axis('off')
+        axs[i // rotations, i % rotations].set_title("j = {} \n theta={}".format(i // rotations, i % rotations))
+        i = i+1
+    
+    plt.suptitle(("Wavelets for each scale j and angle theta used."
+                  "\nColor saturation and color hue respectively denote complex "
+                  "magnitude and complex phase."), fontsize=13)
+    plt.show()
+
+
+def showLowPassScatterFilters():
+    filters_set, _, _ = getFilterBank()
+
+    plt.figure()
+    plt.rc('text', usetex=False)
+    plt.rc('font', family='serif')
+    plt.axis('off')
+    plt.set_cmap('gray_r')
+
+    f = filters_set['phi']["levels"][0]
+
+    filter_c = fft2(f)
+    filter_c = np.fft.fftshift(filter_c)
+    plt.suptitle(("The corresponding low-pass filter, also known as scaling "
+                  "function.\nColor saturation and color hue respectively denote "
+                  "complex magnitude and complex phase"), fontsize=13)
+    filter_c = np.abs(filter_c)
+    plt.imshow(filter_c)
+
+    plt.show()
 
 
 def getFilterBank():

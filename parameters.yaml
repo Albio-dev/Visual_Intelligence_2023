@@ -4,11 +4,11 @@ lab_classes:
 - dog
 - flower
 model_train_path: ./train_checkpoint/
-test_perc: 0.3
+test_perc: 0.1
 learning_rate: 0.01
 momentum: 0.5
-num_epochs: 80
-J: 4
+num_epochs: 30
+J: 6
 imageSize: !!python/tuple
 - 128
 - 128

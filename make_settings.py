@@ -24,11 +24,13 @@ model_hyperparameters = {
 
 scattering_parameters = {
     # TODO: ??
-    "J" : 2,
+    "J" : 4,
     # Order of scattering
     "order" : 2,
     # Size of the input images
-    "imageSize" : (128, 128)
+    "imageSize" : (128, 128),
+    # Number of rotations
+    "n_rotations" : 8
 }
 
 with open('parameters.yaml', 'w') as f:

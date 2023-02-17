@@ -8,11 +8,24 @@ from scipy.fft import fft2
 
 from colorsys import hls_to_rgb
 
-import make_settings
+import logging
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+fh = logging.FileHandler("log.txt")
+formatter = logging.Formatter('%(asctime)s - %(message)s')
+fh.setLevel(logging.INFO)
+fh.setFormatter(formatter)
+# add the handlers to the logger
+logger.addHandler(fh)
+
+
+import yaml
+with open('parameters.yaml', 'r') as f:
+    settings = yaml.load(f, Loader=yaml.loader.FullLoader)
 
 def showCNNFilters(model):
-    layer = 1
+    layer = 0
     filter = list(model.children())[layer].weight.data.clone()
     utils.visTensor(filter, ch=0, allkernels=False)
     plt.axis('off')
@@ -35,24 +48,24 @@ def colorize(z):
 
 
 def showPassBandScatterFilters():
-    filters_set, J, order = NN_scattering.getFilterBank()
+    filters_set, J, rotations = NN_scattering.getFilterBank()
 
-    fig, axs = plt.subplots(J, order, sharex=True, sharey=True)
+    fig, axs = plt.subplots(J, rotations, sharex=True, sharey=True)
     fig.set_figheight(6)
     fig.set_figwidth(6)
-    plt.rc('text', usetex=True)
+    plt.rc('text', usetex=False)
     plt.rc('font', family='serif')
     i = 0
     for filter in filters_set['psi']:
         f = filter["levels"][0]
         filter_c = fft2(f)
         filter_c = np.fft.fftshift(filter_c)
-        axs[i // order, i % order].imshow(colorize(filter_c))
-        axs[i // order, i % order].axis('off')
-        axs[i // order, i % order].set_title("$j = {}$ \n $\\theta={}$".format(i // order, i % order))
+        axs[i // rotations, i % rotations].imshow(colorize(filter_c))
+        axs[i // rotations, i % rotations].axis('off')
+        axs[i // rotations, i % rotations].set_title("j = {} \n theta={}".format(i // rotations, i % rotations))
         i = i+1
     
-    fig.subtitle((r"Wavelets for each scales $j$ and angles $\theta$ used."
+    plt.suptitle(("Wavelets for each scale j and angle theta used."
                   "\nColor saturation and color hue respectively denote complex "
                   "magnitude and complex phase."), fontsize=13)
     plt.show()
@@ -62,7 +75,7 @@ def showLowPassScatterFilters():
     filters_set, _, _ = NN_scattering.getFilterBank()
 
     plt.figure()
-    plt.rc('text', usetex=True)
+    plt.rc('text', usetex=False)
     plt.rc('font', family='serif')
     plt.axis('off')
     plt.set_cmap('gray_r')
@@ -82,7 +95,7 @@ def showLowPassScatterFilters():
 
 def show_confusion_matrix(CNN_metrics,NN_metrics):
 
-    fig, axs = plt.subplots(1, 2)
+    _, axs = plt.subplots(1, 2)
     CNN_metrics.confMatDisplay().plot(ax=axs[0])
     axs[0].set_title('confusion matrix in test for CNN')
     axs[0].set_xlabel('predicted')
@@ -95,18 +108,37 @@ def show_confusion_matrix(CNN_metrics,NN_metrics):
 
     
 trainset_cnn, testset_cnn = CNN.getData()
-trainset_scatter, testset_scatter = NN_scattering.getData()
+trainset_scatter, testset_scatter, data_size = NN_scattering.getData()
 
 if not CNN.isTrained():
     CNN.train(trainset_cnn)
 
+
 if not NN_scattering.isTrained():
-    NN_scattering.train(trainset_scatter)
+    NN_scattering.train(trainset_scatter, data_size)
 
 CNN_metrics, CNN_model = CNN.test(testset_cnn)
-NN_metrics = NN_scattering.test(testset_scatter)
+NN_metrics = NN_scattering.test(testset_scatter, data_size)
 
-#show_confusion_matrix(CNN_metrics, NN_metrics)
-#showPassBandScatterFilters()
-#showLowPassScatterFilters()
-showCNNFilters(CNN_model)
+fig, axs = plt.subplots(1, 2)
+axs[0].set_title('confusion matrix in test for CNN')
+CNN_metrics.confMatDisplay().plot(ax=axs[0])
+axs[1].set_title('confusion matrix in test for scattering NN')
+NN_metrics.confMatDisplay().plot(ax=axs[1])
+plt.show()
+
+# Write to file settings and metrics
+logger.info(settings)
+logger.info(f"{CNN_metrics.getMetrics(type='CNN')}")
+logger.info(f"{NN_metrics.getMetrics(type='NN')}")
+
+CNN_metrics.printMetrics("CNN")
+NN_metrics.printMetrics("NN")
+
+showPassBandScatterFilters()
+showLowPassScatterFilters()
+#showCNNFilters(CNN_model)
+
+
+
+

@@ -1,1 +1,0 @@
-# TODO: Implementare un'interfaccia comune che implementi il training e il testing

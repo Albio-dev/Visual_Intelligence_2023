@@ -8,8 +8,9 @@ test_perc: 0.3
 learning_rate: 0.01
 momentum: 0.5
 num_epochs: 80
-J: 2
+J: 4
 imageSize: !!python/tuple
 - 128
 - 128
+n_rotations: 8
 order: 2

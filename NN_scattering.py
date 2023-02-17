@@ -7,7 +7,6 @@ from NN_128x128 import NN_128x128
 from utils import compute_metrics
 import matplotlib.pyplot as plt
 import sys
-import seaborn as sns
 
 import utils_our
 import kymatio.torch as kt
@@ -29,6 +28,7 @@ learning_rate = settings['learning_rate']
 momentum = settings['momentum']
 num_epochs = settings['num_epochs']
 J = settings['J']
+num_rotations = settings['n_rotations']
 imageSize = settings['imageSize']
 order = settings['order']      
 lab_classes = settings['lab_classes']
@@ -39,7 +39,7 @@ print('Available device: ', device)
 
 ### DATA LOADING ###
 
-def train(trainset):
+def train(trainset, data_size):
     ### MODEL VARIABLES ###
     # Define useful variables
     best_acc = 0.0
@@ -54,7 +54,7 @@ def train(trainset):
     ### CREATE MODEL ###
 
     # Model
-    model = NN_128x128(input_channel=3, num_classes=len(lab_classes) ).to(device)
+    model = NN_128x128(input_channel=3, num_classes=len(lab_classes), data_size = data_size ).to(device)
 
     # Optimizer
     optim = torch.optim.SGD(model.parameters(), lr = learning_rate, momentum=momentum)
@@ -95,9 +95,9 @@ def train(trainset):
         pred_label_train = torch.empty((0)).to(device)
         true_label_train = torch.empty((0)).to(device)
 
-def test(testset):
+def test(testset, data_size):
     ### TEST MODEL ###
-    model_test = NN_128x128(input_channel=3,num_classes=len(lab_classes) ).to(device)                # Initialize a new model
+    model_test = NN_128x128(input_channel=3,num_classes=len(lab_classes) , data_size=data_size).to(device)                # Initialize a new model
     model_test.load_state_dict(torch.load(model_train_path+'NN_128x128_best_model_trained.pt'))   # Load the model
 
     pred_label_test = torch.empty((0,len(lab_classes) )).to(device)
@@ -124,7 +124,7 @@ def getData():
     trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
 
     ### SCATTERING DATA ###
-    scatter = kt.Scattering2D(J, shape = imageSize, max_order = order)
+    scatter = kt.Scattering2D(J, shape = imageSize, max_order = order, L=num_rotations)
     scatter = scatter.to(device)
     
     print(f'Calculating scattering coefficients of data in {len(trainset)} batches of {batch_size} elements each for training')
@@ -138,19 +138,23 @@ def getData():
         print('Error during scatter_mem!')
         sys.exit()
 
-    return utils_our.batcher(training_scatters, testing_scatters, train_lbls, test_lbls, batch_size = batch_size)
+    return *utils_our.batcher(training_scatters, testing_scatters, train_lbls, test_lbls, batch_size = batch_size), np.prod(training_scatters[0].shape)
 
 
 def getFilterBank():
-    return filter_bank(imageSize[0], imageSize[1], J, L=order), J, order
+    return filter_bank(imageSize[0], imageSize[1], J, L=num_rotations), J, num_rotations
 
 
 if __name__ == "__main__":
     
-    trainset, testset = getData()
-
-    train(trainset)
-    metrics = test(testset)       
+    trainset, testset, data_size = getData()
+    '''
+    data, labels = next(iter(trainset))
+    data_size = np.prod(data.shape[1:])
+    '''
+    
+    train(trainset, data_size)
+    metrics = test(testset,data_size)       
         
     metrics.confMatDisplay().plot()
     plt.show()

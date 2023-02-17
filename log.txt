@@ -1,0 +1,22 @@
+2023-02-17 11:33:03,718 - {'batch_size': 64, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 80, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-02-17 11:33:03,718 - CNN metrics: 
+Accuracy:		0.8928571428571429
+Precision:	    0.9011764705882352
+Recall:			0.8764302059496567
+F1:				0.888631090487239
+2023-02-17 11:33:03,718 - NN metrics: 
+Accuracy:		0.6372767857142857
+Precision:	    0.6634304207119741
+Recall:			0.4812206572769953
+F1:				0.5578231292517006
+2023-02-17 11:34:52,496 - {'batch_size': 64, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 80, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-02-17 11:34:52,496 - CNN metrics: 
+Accuracy:		0.8839285714285714
+Precision:		0.9043062200956937
+Recall:			0.8552036199095022
+F1:				0.8790697674418604
+2023-02-17 11:34:52,496 - NN metrics: 
+Accuracy:		0.7366071428571429
+Precision:		0.8061224489795918
+Recall:			0.5697115384615384
+F1:				0.6676056338028169

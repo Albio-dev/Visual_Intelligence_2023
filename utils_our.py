@@ -35,9 +35,13 @@ def scatter_mem(batch_size, device, scatter, dataset):
     labels = []
 
     for data_tr in dataset:
-        x,y = data_tr                        # unlist the data from the train set
+        x,y = data_tr   
         x = x.view(batch_size,3,128,128).float().to(device)     # change the size for the input data - convert to float type
-        x = scatter(x).mean(axis=(3, 4)).movedim(1, 2).to(device) 
+        
+        x = scatter(x)
+        #print(x.shape)
+        x = x.movedim(1, 2).mean(axis=(2, 3, 4)).to(device)# # scatter the data and average the values    
+        
         scatters += x.to(cpu_device)
         labels += y.to(cpu_device)
 
@@ -60,8 +64,21 @@ class metrics:
         self.roc = (fpr, tpr)
 
     def __str__(self) -> str:
-        return f'Accuracy:\t\t{self.accuracy}\nPrecision:\t\t{self.precision}\nRecall:\t\t{self.recall}\nF1:\t\t{self.f1}'
+        return f'Accuracy:\t\t{self.accuracy}\nPrecision:\t\t{self.precision}\nRecall:\t\t\t{self.recall}\nF1:\t\t\t\t{self.f1}'
+    
+    def printMetrics(self, type = None):
+        if type is not None:
+            print(f'{type} metrics: \n{self}')
+        else:
+            print(f'Metrics: \n{self}')
         
+    def getMetrics(self, type = None):
+        if type is not None:
+            return f'{type} metrics: \n{self}'
+        else:
+            return f'Metrics: \n{self}'
+
+
     def rocDisplay(self):
         return RocCurveDisplay(*self.roc)
 

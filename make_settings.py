@@ -59,5 +59,10 @@ def setGenericParameters(data_path, model_train_path, lab_classes, batch_size, t
 
     writefile()
 
+def setModelHyperparameters(learning_rate, momentum, num_epochs):
+    model_hyperparameters['learning_rate'] = learning_rate
+    model_hyperparameters['momentum'] = momentum
+    model_hyperparameters['num_epochs'] = num_epochs
 
+    writefile()
 

@@ -4,7 +4,7 @@ lab_classes:
 - dog
 - flower
 model_train_path: ./train_checkpoint/
-test_perc: 0.1
+test_perc: 0.5
 learning_rate: 0.01
 momentum: 0.5
 num_epochs: 30

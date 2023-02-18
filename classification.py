@@ -31,8 +31,9 @@ def classification_task(display = True):
     trainset_cnn, testset_cnn = CNN.getData()
     trainset_scatter, testset_scatter, data_size = NN_scattering.getData()
 
-    if not CNN.isTrained():
-        CNN.train(trainset_cnn)
+    #if not CNN.isTrained():
+    CNN.train(trainset_cnn)
+
 
 
     #if not NN_scattering.isTrained():
@@ -42,6 +43,8 @@ def classification_task(display = True):
     NN_metrics = NN_scattering.test(testset_scatter, data_size)
 
 
+    if os.path.exists(f"{settings['model_train_path']}CNN_128x128_best_model_trained.pt"):
+        os.remove(f"{settings['model_train_path']}CNN_128x128_best_model_trained.pt")
     if os.path.exists(f"{settings['model_train_path']}NN_128x128_best_model_trained.pt"):
         os.remove(f"{settings['model_train_path']}NN_128x128_best_model_trained.pt")
         

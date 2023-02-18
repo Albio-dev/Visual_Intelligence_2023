@@ -1,11 +1,11 @@
 import cv2, glob, numpy, torch
 from torch.utils.data import DataLoader
-from utils import CustomDataset
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, f1_score
 from sklearn.metrics import roc_curve
 from sklearn.metrics import RocCurveDisplay, ConfusionMatrixDisplay, PrecisionRecallDisplay
 from colorsys import hls_to_rgb
 import numpy as np
+from torch.utils.data import Dataset
 
 def loadData(path, folders):
 
@@ -20,15 +20,6 @@ def loadData(path, folders):
     return numpy.asarray(data), labels
 
 
-def batcher(x_train, x_test, y_train, y_test, batch_size = 64):
-    # Create Dataloader with batch size = 64
-    train_dataset = CustomDataset(x_train,y_train)    # we use a custom dataset defined in utils.py file
-    test_dataset = CustomDataset(x_test,y_test)       # we use a custom dataset defined in utils.py file
-
-    trainset = DataLoader(train_dataset,batch_size=batch_size,drop_last=True)    # construct the trainset with subjects divided in mini-batch
-    testset = DataLoader(test_dataset,batch_size=batch_size,drop_last=True)      # construct the testset with subjects divided in mini-batch
-
-    return trainset, testset
 
 
 def scatter_mem(batch_size, device, scatter, dataset):
@@ -102,3 +93,28 @@ def colorize(z):
     B = 1.0/(1.0 + abs(z[idx])**0.3)
     c[idx] = [hls_to_rgb(a, b, 0.8) for a, b in zip(A, B)]
     return c
+
+class CustomDataset(Dataset):
+    def __init__(self, data, labels):
+        self.labels = labels
+        self.data = data
+
+    def __len__(self):
+        return len(self.labels)
+
+    def __getitem__(self, idx):
+        label = self.labels[idx]
+        data = self.data[idx]
+        sample = [data,label]
+        return sample
+    
+
+def batcher(x_train, x_test, y_train, y_test, batch_size = 64):
+    # Create Dataloader with batch size = 64
+    train_dataset = CustomDataset(x_train,y_train)    # we use a custom dataset defined in utils.py file
+    test_dataset = CustomDataset(x_test,y_test)       # we use a custom dataset defined in utils.py file
+
+    trainset = DataLoader(train_dataset,batch_size=batch_size,drop_last=True)    # construct the trainset with subjects divided in mini-batch
+    testset = DataLoader(test_dataset,batch_size=batch_size,drop_last=True)      # construct the testset with subjects divided in mini-batch
+
+    return trainset, testset

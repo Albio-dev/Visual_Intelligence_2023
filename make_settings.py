@@ -47,8 +47,7 @@ def setScatteringParameters( J, order, imageSize, n_rotations):
     scattering_parameters['imageSize'] = imageSize
     scattering_parameters['n_rotations'] = n_rotations
 
-    writefile()
-    
+    writefile()    
 
 def setGenericParameters(data_path, model_train_path, lab_classes, batch_size, test_perc):
     generic['data_path'] = data_path

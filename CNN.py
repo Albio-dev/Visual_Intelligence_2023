@@ -1,11 +1,9 @@
-import numpy as np
 import torch, os
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from CNN_128x128 import CNN_128x128
-from utils import compute_metrics,plot_weights, visTensor
+from utils import plot_weights, visTensor
 import matplotlib.pyplot as plt
-import seaborn as sns
 import utils
 import utils_our
 

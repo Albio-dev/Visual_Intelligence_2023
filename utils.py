@@ -4,7 +4,6 @@ import torch
 import matplotlib.pyplot as plt
 import seaborn as sns
 from torchvision import utils
-from torch.utils.data import Dataset
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, f1_score, classification_report, roc_curve, PrecisionRecallDisplay
 
 ##### Style for chart
@@ -18,19 +17,7 @@ plt.rc('font', size=13)
 
 
 
-class CustomDataset(Dataset):
-    def __init__(self, data, labels):
-        self.labels = labels
-        self.data = data
 
-    def __len__(self):
-        return len(self.labels)
-
-    def __getitem__(self, idx):
-        label = self.labels[idx]
-        data = self.data[idx]
-        sample = [data,label]
-        return sample
 
 
 def compute_metrics(y_true,y_pred,lab_classes):

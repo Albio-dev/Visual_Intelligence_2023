@@ -1,13 +1,6 @@
 
 import matplotlib.pyplot as plt
-import seaborn as sns
-import numpy as np
-import utils
 import os
-
-
-from colorsys import hls_to_rgb
-
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -33,8 +26,6 @@ def classification_task(display = True):
 
     #if not CNN.isTrained():
     CNN.train(trainset_cnn)
-
-
 
     #if not NN_scattering.isTrained():
     NN_scattering.train(trainset_scatter, data_size)
@@ -69,7 +60,6 @@ def classification_task(display = True):
         plt.show()
 
         NN_scattering.showPassBandScatterFilters()
-        #showLowPassScatterFilters()
         CNN.showCNNFilters(CNN_model)
 
 if __name__ == "__main__":

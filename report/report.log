@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 23.1) (preloaded format=pdflatex 2023.2.5)  16 FEB 2023 09:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 23.1) (preloaded format=pdflatex 2023.2.5)  18 FEB 2023 15:51
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -23,10 +23,35 @@ File: size10.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip48
 \belowcaptionskip=\skip49
 \bibindent=\dimen140
-) (P:\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
+) (P:\MiKTeX\tex/latex/listings\listings.sty (P:\MiKTeX\tex/latex/graphics\keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks16
+)
+\lst@mode=\count194
+\lst@gtempboxa=\box51
+\lst@token=\toks17
+\lst@length=\count195
+\lst@currlwidth=\dimen141
+\lst@column=\count196
+\lst@pos=\count197
+\lst@lostspace=\dimen142
+\lst@width=\dimen143
+\lst@newlines=\count198
+\lst@lineno=\count199
+\lst@maxwidth=\dimen144
+ (P:\MiKTeX\tex/latex/listings\lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+\c@lstnumber=\count266
+\lst@skipnumbers=\count267
+\lst@framebox=\box52
+) (P:\MiKTeX\tex/latex/listings\listings.cfg
+File: listings.cfg 2020/03/24 1.8d listings configuration
+))
+Package: listings 2020/03/24 1.8d (Carsten Heinz)
+ (P:\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count194
-\l__pdf_internal_box=\box51
+\l__color_backend_stack_int=\count268
+\l__pdf_internal_box=\box53
 ) (report.aux)
 \openout1 = `report.aux'.
 
@@ -44,6 +69,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
 LaTeX Font Info:    ... okay on input line 8.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
 LaTeX Font Info:    ... okay on input line 8.
+\c@lstlisting=\count269
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 9.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -52,7 +78,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 9.
  [1
 
-{C:/Users/Albio/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] (report.toc)
+{C:/Users/Albio/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] (report.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 5.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 5.
+)
 \tf@toc=\write3
 \openout3 = `report.toc'.
 
@@ -69,7 +100,7 @@ Chapter 2.
 ]
 Chapter 3.
 
-Underfull \hbox (badness 10000) in paragraph at lines 16--18
+Underfull \hbox (badness 10000) in paragraph at lines 26--28
 
  []
 
@@ -77,37 +108,81 @@ Underfull \hbox (badness 10000) in paragraph at lines 16--18
 
 ]
 Chapter 4.
+(P:\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+) (P:\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+Overfull \hbox (9.0036pt too wide) in paragraph at lines 42--43
+[][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (15.00366pt too wide) in paragraph at lines 43--44
+[][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (15.00366pt too wide) in paragraph at lines 44--45
+[][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (15.00366pt too wide) in paragraph at lines 45--46
+[][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (21.00372pt too wide) in paragraph at lines 48--49
+[][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (15.00366pt too wide) in paragraph at lines 50--51
+[][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (3.00354pt too wide) in paragraph at lines 51--52
+[][][][][][][][][][][][][][][][][][][] 
+ []
+
 [5
 
-]
+] [6]
 Chapter 5.
-[6
-
-]
-Chapter 6.
 [7
+
+] [8]
+Chapter 6.
+
+Underfull \hbox (badness 10000) in paragraph at lines 102--106
+
+ []
+
+[9
 
 ]
 Chapter 7.
-[8
+[10
 
 ]
 Chapter 8.
-[9
+[11
 
 ] (report.aux) ) 
 Here is how much of TeX's memory you used:
- 481 strings out of 476375
- 9369 string characters out of 5805391
- 1851299 words of memory out of 5000000
- 20937 multiletter control sequences out of 15000+600000
- 516842 words of font info for 47 fonts, out of 8000000 for 9000
+ 2301 strings out of 476375
+ 33500 string characters out of 5805391
+ 1872299 words of memory out of 5000000
+ 22731 multiletter control sequences out of 15000+600000
+ 518603 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,6n,38p,310b,186s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on report.pdf (10 pages, 83398 bytes).
+ 41i,6n,59p,615b,1154s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{P:/MiKTeX/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><P:/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><P:/MiKTeX/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on report.pdf (12 pages, 146320 bytes).
 PDF statistics:
- 60 PDF objects out of 1000 (max. 8388607)
+ 87 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

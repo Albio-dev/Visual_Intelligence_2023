@@ -11,19 +11,23 @@
 \pagebreak
 
 \chapter{Introduction}
-This document illustrates the project valid for the Visual Intelligence course of the academic year 2022/2023. \\
-The assignment tests the knowledge gained in class by going on to apply signal analysis methods, in particular we classified signals using \textbf{Convolutional Neural Networks} and using wavelet theory, specifically  \textbf{Wavelet Scattering}. \\
-We wrote the code for both types of classifications and then compared the results and checked the veracity of the results. \\
-For the entire project, we followed the guidelines of laboratory classes.
+This document illustrates the project valid for the Visual Intelligence class of the academic year 2022/2023. \\
+The assignment tests the knowledge gained in class by applying signal analysis methods, in particular we classified signals by using \textbf{Convolutional Neural Networks} and wavelet theory, specifically  \textbf{Wavelet Scattering}. \\
+In this project we implemented the code necessary to classify a given dataset first by training and testing a CNN, then by applying the Wavelet Scattering Transform and training a NN with the extracted features.
+Finally we compared the results obtained with these two methods in terms of accuracy against how many epochs were used to train the classifiers. \\
+For the entire project, we followed the guidelines given during the laboratory lectures.
 
 
 \chapter{Dataset}
-\chapter{Objectives}
-The objective of this project was to explore the use of scattering transforms to improve the performance of convolutional neural networks on a given dataset.\\
-Specifically, we aimed to compare the performance of a CNN trained on the original dataset to one trained on the scattering decomposition of the data.\\
+We employed a dataset consisting of 128x128 RGB images divided into two categories: dogs and flowers. There are 1600 pictures of single dogs and 1387 pictures of single flowers.
+70\% of the dataset is used for training, while the remaining 30\% is allocated for running tests with the classifiers.
 
-We then visualized the filters learned by the CNN and compared them to the ones in the scattering network to gain insight into the types of features that were extracted. 
-By accomplishing these objectives, we hoped to gain a better understanding of how the CNN learns which features to extract.
+\chapter{Objectives}
+The goal of this project is to explore the use of scattering transforms to improve the performance of neural networks on a given dataset.\\
+Specifically, we aimed to compare the performance of a CNN trained on the original dataset to a NN trained on the scattering decomposition of the data.\\
+
+We then visualized the filters learned by the CNN and compared them to the ones applied by the scattering transform to gain insight into the types of features that were extracted. 
+By accomplishing these objectives we hoped to gain a better understanding of how the CNN learns which features to extract.
 
 \chapter{CNN Classification}
 \section{What is a CNN}
@@ -57,10 +61,10 @@ The first convolutional layer has 32 output channels, while the second convoluti
 The dropout layer is used to prevent overfitting in the model. In this architecture, we use a dropout rate of 0.1.
 \subsection{Flatten Layer}
 
-The flatten layer is used to convert the output of the last convolutional layer into a vector (\textit{tensor}), which can be used as input to the fully connected layers. In this architecture, the flatten layer converts the output of the last convolutional layer into a vector of size 576.
+The flatten layer is used to convert the output of the last convolutional layer into a vector (\textit{tensor}), which can be used as input for the fully connected layers. In this architecture the flatten layer converts the output of the last convolutional layer into a vector of size 576.
 
 \subsection{Fully Connected Layers}
-The fully connected layers consist of three layers, with 256, 32 and \texttt{num\_classes}  neurons respectively. All fully connected layers use a ReLU activation function except for the last layer which uses the \textbf{softmax function} to output the class probabilities.
+The fully connected layers consist of three layers, with 256, 32 and \texttt{num\_classes} neurons respectively. All fully connected layers use a ReLU activation function except for the last layer, which uses the \textbf{softmax function} to output the class probabilities.
 
 \section{Training the Model}
 
@@ -68,6 +72,14 @@ To train the model, we pass the input images through the CNN and compute the los
 
 \chapter{Scattering+NN Classification}
 \section{Wavelet Scattering}
+For the scattering part, we used the \texttt{kymatio} library and in particular we used the function \texttt{Scattering2D} which computes the 2D wavelet scattering transform of an input image, with a specified number of scales, maximum scattering order, and number of rotations. \\
+The output of the Scattering2D function is a multi-dimensional PyTorch tensor containing the wavelet scattering coefficients of the input image.
+We found the best results with the following values:
+\begin{itemize}
+    \item \texttt{J} = ...: parameter represents the number of scales to use in the wavelet transform .
+    \item \texttt{order} = ...: is the maximum order of wavelet scattering coefficients to compute .
+    \item $\texttt{L} = ...$: specifies the number of rotations to use in the wavelet transform .
+\end{itemize}
 \section{Neural Network}
 The \texttt{NN\_128x128} class defines a Neural Network (NN) for classification tasks. The network expects input with a specified number of channels, \texttt{input\_channel}, and the number of output classes, \texttt{num\_classes}. The class inherits from the \texttt{nn.Module} class, which is a base class for all neural network modules in PyTorch.
 
@@ -81,6 +93,16 @@ Between the second and third layer, there is a dropout layer, \texttt{self.drop2
 The activation function used in the network is \textbf{ReLU}, which is applied after each fully connected layer. The last layer uses the \textbf{softmax} function to produce probabilities for each of the \texttt{num\_classes} output neurons. 
 
 \chapter{Performances comparison}
+After some parameters tuning, we found that the best results were obtained with the following parameters:
+\begin{itemize}
+    \item \texttt{J} = 3: parameter represents the number of scales to use in the wavelet transform .
+    \item \texttt{order} = 2: is the maximum order of wavelet scattering coefficients to compute .
+    \item $\texttt{L} = 8$: specifies the number of rotations to use in the wavelet transform .
+\end{itemize}
+we tried optimizing the scattering transform to try and reach the CNN's performances.\\
+We tried different scales (J) and rotations (L) and we found that \\
+We tried different trainset sizes and we found that \\
+We tried different number of epochs and we found that \\
 \chapter{Filters}
 \chapter{Conclusions}
 \end{document}

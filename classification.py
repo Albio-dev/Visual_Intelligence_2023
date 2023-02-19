@@ -2,6 +2,9 @@
 import matplotlib.pyplot as plt
 import os
 import logging
+import CNN
+import NN_scattering
+import utils_our
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -13,35 +16,26 @@ fh.setFormatter(formatter)
 logger.addHandler(fh)
 
 def classification_task(display = True):
-    import CNN
-    import NN_scattering
-
-    import yaml
-    with open('parameters.yaml', 'r') as f:
-        settings = yaml.load(f, Loader=yaml.loader.FullLoader)
-
+    settings = utils_our.load_settings()
         
-    trainset_cnn, testset_cnn = CNN.getData()
-    trainset_scatter, testset_scatter, data_size = NN_scattering.getData()
+    trainset_cnn, testset_cnn = CNN.getData(data_path=settings['data_path'], test_perc=settings['test_perc'], batch_size=settings['batch_size'], lab_classes=settings['lab_classes'])
+    trainset_scatter, testset_scatter, data_size = NN_scattering.getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'])
 
-    #if not CNN.isTrained():
-    CNN.train(trainset_cnn)
+    if not CNN.isTrained(model_train_path=settings['model_train_path']):
+        CNN.train(trainset_cnn, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], batch_size=settings['batch_size'], model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], momentum=settings['momentum'])
 
-    #if not NN_scattering.isTrained():
-    NN_scattering.train(trainset_scatter, data_size)
+    if not NN_scattering.isTrained(model_train_path=settings['model_train_path']):
+        NN_scattering.train(trainset_scatter, data_size = data_size, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], model_train_path=settings['model_train_path'])
 
-    CNN_metrics, CNN_model = CNN.test(testset_cnn)
-    NN_metrics = NN_scattering.test(testset_scatter, data_size)
+    CNN_metrics, CNN_model = CNN.test(testset_cnn, model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], batch_size=settings['batch_size'])
+    NN_metrics = NN_scattering.test(testset_scatter, data_size, lab_classes=settings['lab_classes'], model_train_path=settings['model_train_path'])
 
-
+    
     if os.path.exists(f"{settings['model_train_path']}CNN_128x128_best_model_trained.pt"):
         os.remove(f"{settings['model_train_path']}CNN_128x128_best_model_trained.pt")
     if os.path.exists(f"{settings['model_train_path']}NN_128x128_best_model_trained.pt"):
         os.remove(f"{settings['model_train_path']}NN_128x128_best_model_trained.pt")
         
-
-
-    
 
     # Write to file settings and metrics
     logger.info(settings)

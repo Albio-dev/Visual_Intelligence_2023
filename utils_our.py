@@ -118,3 +118,9 @@ def batcher(x_train, x_test, y_train, y_test, batch_size = 64):
     testset = DataLoader(test_dataset,batch_size=batch_size,drop_last=True)      # construct the testset with subjects divided in mini-batch
 
     return trainset, testset
+
+def load_settings(filename = 'parameters.yaml'):
+    import yaml
+    with open(filename) as f:
+        settings = yaml.load(f, Loader=yaml.loader.FullLoader)
+    return settings

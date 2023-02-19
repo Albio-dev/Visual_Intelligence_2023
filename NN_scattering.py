@@ -9,7 +9,7 @@ from scipy.fft import fft2
 import utils_our
 import kymatio.torch as kt
 from kymatio.scattering2d.filter_bank import filter_bank
-
+'''
 # test
 import yaml
 with open('parameters.yaml', 'r') as f:
@@ -30,14 +30,14 @@ num_rotations = settings['n_rotations']
 imageSize = settings['imageSize']
 order = settings['order']      
 lab_classes = settings['lab_classes']
-
+'''
 # Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print('Available device: ', device)
 
 ### DATA LOADING ###
 
-def train(trainset, data_size):
+def train(trainset, data_size, learning_rate, momentum, num_epochs, lab_classes, model_train_path):
     ### MODEL VARIABLES ###
     # Define useful variables
     best_acc = 0.0
@@ -93,7 +93,7 @@ def train(trainset, data_size):
         pred_label_train = torch.empty((0)).to(device)
         true_label_train = torch.empty((0)).to(device)
 
-def test(testset, data_size):
+def test(testset, data_size, lab_classes, model_train_path):
     ### TEST MODEL ###
     model_test = NN_128x128(input_channel=3,num_classes=len(lab_classes) , data_size=data_size).to(device)                # Initialize a new model
     model_test.load_state_dict(torch.load(model_train_path+'NN_128x128_best_model_trained.pt'))   # Load the model
@@ -113,11 +113,11 @@ def test(testset, data_size):
     return utils_our.metrics(true_label_test.cpu(), pred_label_test.cpu(), lab_classes)#compute_metrics(y_true=true_label_test,y_pred=pred_label_test,lab_classes=lab_classes)    # function to compute the metrics (accuracy and confusion matrix)
 
 
-def isTrained():
+def isTrained(model_train_path):
     return os.path.isfile(model_train_path+'NN_128x128_best_model_trained.pt')
 
 
-def getData():
+def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, imageSize, order):
     # Split in train and test set
     trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
 
@@ -190,15 +190,13 @@ def getFilterBank():
 
 
 if __name__ == "__main__":
+
+    settings = utils_our.load_settings()
     
-    trainset, testset, data_size = getData()
-    '''
-    data, labels = next(iter(trainset))
-    data_size = np.prod(data.shape[1:])
-    '''
+    trainset, testset, data_size = getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'])
     
-    train(trainset, data_size)
-    metrics = test(testset,data_size)       
-        
+    train(trainset, data_size = data_size, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], model_train_path=settings['model_train_path'])
+    metrics = test(testset,data_size, lab_classes=settings['lab_classes'], model_train_path=settings['model_train_path'])       
+    
     metrics.confMatDisplay().plot()
     plt.show()

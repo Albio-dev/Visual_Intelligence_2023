@@ -1,9 +1,9 @@
 import make_settings
 import classification
 
-js = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-orders = [2]
-n_rotations = [8]
+js = [2, 3, 4, 5, 6, 7]
+orders = [1, 2]
+n_rotations = [4, 6, 8, 10]
 
 for j in js:
     for order in orders:

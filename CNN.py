@@ -10,7 +10,7 @@ import utils_our
 # Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print('Device: ', device)
-
+'''
 # test
 import yaml
 with open('parameters.yaml', 'r') as f:
@@ -27,19 +27,20 @@ learning_rate = settings['learning_rate']
 momentum = settings['momentum']
 num_epochs = settings['num_epochs']  
 lab_classes = settings['lab_classes']
-
+'''
 ### MODEL VARIABLES ###
 # Define useful variables
 # number of classes in the dataset
-n_classes = len(lab_classes)                
+             
 
 
 ### DATA LOADING ###
 # Split in train and test set
 #trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))  
 
-def train(trainset):    
-    
+def train(trainset, learning_rate, momentum, num_epochs, batch_size, lab_classes, model_train_path):    
+    n_classes = len(lab_classes)   
+
     best_acc = 0.0
     # Variables to store the results
     losses = []
@@ -92,7 +93,9 @@ def train(trainset):
     # aggiunto x perché mi serviva per testare il codice
     return model,x
 
-def test(testset):
+def test(testset, batch_size, lab_classes, model_train_path):
+    n_classes = len(lab_classes)   
+
     ### TEST MODEL ###
     model_test = CNN_128x128(input_channel=3,num_classes=n_classes).to(device)                # Initialize a new model
     model_test.load_state_dict(torch.load(model_train_path+'CNN_128x128_best_model_trained.pt'))   # Load the model
@@ -112,12 +115,11 @@ def test(testset):
     return utils_our.metrics(true_label_test.cpu(), pred_label_test.cpu(), lab_classes), model_test
 
 
-def getData():
+def getData(data_path, lab_classes, test_perc, batch_size):
     # Split in train and test set
     return utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
 
-
-def isTrained():
+def isTrained(model_train_path):
     return os.path.isfile(model_train_path+'CNN_128x128_best_model_trained.pt')
 
 # aggiunta funzione per mostrare i kernel
@@ -205,7 +207,6 @@ def visualize_features_map(model,X_te):
     plt.axis('off')
     plt.show()
 
-
 def showCNNFilters(model):
     layer = 0
     filter = list(model.children())[layer].weight.data.clone()
@@ -217,9 +218,12 @@ def showCNNFilters(model):
 
 
 if __name__ == "__main__":
-    trainset, testset = getData()
-    model, X_te = train(trainset=trainset)
-    metrics, model_test = test(testset=testset)
+
+    settings = utils_our.load_settings()
+
+    trainset, testset = getData(settings['data_path'], settings['lab_classes'], settings['test_perc'], settings['batch_size'])
+    model, X_te = train(trainset=trainset, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], batch_size=settings['batch_size'], model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], momentum=settings['momentum'])
+    metrics, model_test = test(testset=testset, model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], batch_size=settings['batch_size'])
 
     plot_weights(model_test.conv1, single_channel = False, collated = True)
 

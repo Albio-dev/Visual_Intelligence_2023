@@ -1,30 +1,11 @@
 # Visual_Intelligence_2023
 
-step 1:
-CNNv1 sui dati lisci
- - [X] Import data
- - [X] Define model
- - [X] Fit model
- - [X] Test model
-
-step 2 (con kymatio):
-- [X] Import data
-- [X] Choose decomposition method
-- [X] Decompose data
-- [X] Export decomposition
-
-step 3:
-CNNv2 on decomposition
-- [X] Memoizzare la trasformata scattering nel training
-- [X] Ficcare in una funzione la scomposizione scatter con memoizzazione
-- [ ] Capire come funziona l'input della NN in torch
-- [ ] Define model
-- [X] Fit model
-- [X] Test model
-
-step 4:
-Data extraction
-- [ ] Confrontare i filtri estratti dallo scattering e i filtri CNN
-- [ ] Commentare i risultati
+ToDo list:
+- [ ] Provare con immagini grayscale
+- [ ] Scorporare i colori dei filtri della CNN
+- [ ] Provare a classificare con la scatter di matlab
+- [ ] Visualizzare i banchi di filtri belli come fa mallat <3
 - [ ] Scrivere il report (almeno 4 pagine e massimo 6)
 - [ ] Preparare una breve presentazione (max 10 min.) da esporre spiegando i punti salienti del progetto.
+
+

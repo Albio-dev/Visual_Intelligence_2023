@@ -1,10 +1,11 @@
 batch_size: 64
+channels: 1
 data_path: ./Data
 lab_classes:
-- dog
-- flower
+- dog_gray
+- flower_gray
 model_train_path: ./train_checkpoint/
-test_perc: 0.5
+test_perc: 0.3
 learning_rate: 0.01
 momentum: 0.5
 num_epochs: 30

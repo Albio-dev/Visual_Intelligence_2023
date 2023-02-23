@@ -13,7 +13,7 @@ def loadData(path, folders):
     labels = []
 
     for index, foldername in enumerate(folders):
-        new_data = [numpy.asarray(cv2.imread(file)) for file in glob.glob(f'{path}/{foldername}/*.jpg')]
+        new_data = [numpy.asarray(cv2.imread(file, cv2.IMREAD_UNCHANGED)) for file in glob.glob(f'{path}/{foldername}/*.jpg')]
         data += new_data
         labels += [index]*len(new_data)
         
@@ -22,16 +22,16 @@ def loadData(path, folders):
 
 
 
-def scatter_mem(batch_size, device, scatter, dataset):
+def scatter_mem(batch_size, device, scatter, dataset, channels):
     cpu_device = torch.device("cpu")
     scatters = []
     labels = []
 
     for data_tr in dataset:
-        x,y = data_tr   
-        x = x.view(batch_size,3,128,128).float().to(device)     # change the size for the input data - convert to float type
+        x,y = data_tr
+        x = x.view(batch_size,channels,128,128).float().to(device)     # change the size for the input data - convert to float type
         x = scatter(x).to(cpu_device)        
-
+        print(x.shape)
         x = x.movedim(1, 2).mean(axis=(3, 4)).to(device)# # scatter the data and average the values    
         scatters += x.to(cpu_device)
         labels += y.to(cpu_device)

@@ -9,35 +9,14 @@ from scipy.fft import fft2
 import utils_our
 import kymatio.torch as kt
 from kymatio.scattering2d.filter_bank import filter_bank
-'''
-# test
-import yaml
-with open('parameters.yaml', 'r') as f:
-    settings = yaml.load(f, Loader=yaml.loader.FullLoader)
-print(settings)
 
-data_path = settings['data_path']
-model_train_path = settings['model_train_path']
-if not os.path.exists(model_train_path):                 # create a directory where to save the best model
-    os.makedirs(model_train_path)
-test_perc = settings['test_perc']
-batch_size = settings['batch_size']
-learning_rate = settings['learning_rate']
-momentum = settings['momentum']
-num_epochs = settings['num_epochs']
-J = settings['J']
-num_rotations = settings['n_rotations']
-imageSize = settings['imageSize']
-order = settings['order']      
-lab_classes = settings['lab_classes']
-'''
 # Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print('Available device: ', device)
 
 ### DATA LOADING ###
 
-def train(trainset, data_size, learning_rate, momentum, num_epochs, lab_classes, model_train_path):
+def train(trainset, data_size, learning_rate, momentum, num_epochs, lab_classes, model_train_path, channels):
     ### MODEL VARIABLES ###
     # Define useful variables
     best_acc = 0.0
@@ -52,7 +31,7 @@ def train(trainset, data_size, learning_rate, momentum, num_epochs, lab_classes,
     ### CREATE MODEL ###
 
     # Model
-    model = NN_128x128(input_channel=3, num_classes=len(lab_classes), data_size = data_size ).to(device)
+    model = NN_128x128(input_channel=channels, num_classes=len(lab_classes), data_size = data_size ).to(device)
 
     # Optimizer
     optim = torch.optim.SGD(model.parameters(), lr = learning_rate, momentum=momentum)
@@ -93,9 +72,9 @@ def train(trainset, data_size, learning_rate, momentum, num_epochs, lab_classes,
         pred_label_train = torch.empty((0)).to(device)
         true_label_train = torch.empty((0)).to(device)
 
-def test(testset, data_size, lab_classes, model_train_path):
+def test(testset, data_size, lab_classes, model_train_path, channels):
     ### TEST MODEL ###
-    model_test = NN_128x128(input_channel=3,num_classes=len(lab_classes) , data_size=data_size).to(device)                # Initialize a new model
+    model_test = NN_128x128(input_channel=channels,num_classes=len(lab_classes) , data_size=data_size).to(device)                # Initialize a new model
     model_test.load_state_dict(torch.load(model_train_path+'NN_128x128_best_model_trained.pt'))   # Load the model
 
     pred_label_test = torch.empty((0,len(lab_classes) )).to(device)
@@ -117,7 +96,7 @@ def isTrained(model_train_path):
     return os.path.isfile(model_train_path+'NN_128x128_best_model_trained.pt')
 
 
-def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, imageSize, order):
+def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, imageSize, order, channels):
     # Split in train and test set
     trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
 
@@ -126,7 +105,7 @@ def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, ima
     scatter = scatter.to(device)
     
     print(f'Calculating scattering coefficients of data in {len(trainset)} batches of {batch_size} elements each for training')
-    training_scatters, train_lbls = utils_our.scatter_mem(batch_size,device,scatter,trainset)
+    training_scatters, train_lbls = utils_our.scatter_mem(batch_size,device,scatter,trainset, channels)
     if training_scatters is None:
         print('Error during scatter_mem!')
         sys.exit()
@@ -139,8 +118,8 @@ def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, ima
     return *utils_our.batcher(training_scatters, testing_scatters, train_lbls, test_lbls, batch_size = batch_size), np.prod(training_scatters[0].shape)
 
 
-def showPassBandScatterFilters():
-    filters_set, J, rotations = getFilterBank()
+def showPassBandScatterFilters(imageSize=(128, 128), J=3, num_rotations=8):
+    filters_set, J, rotations = getFilterBank(imageSize=imageSize, J=J, num_rotations=num_rotations)
 
     fig, axs = plt.subplots(J, rotations, sharex=True, sharey=True)
     fig.set_figheight(6)
@@ -163,8 +142,8 @@ def showPassBandScatterFilters():
     plt.show()
 
 
-def showLowPassScatterFilters():
-    filters_set, _, _ = getFilterBank()
+def showLowPassScatterFilters(imageSize=(128, 128), J=3, num_rotations=8):
+    filters_set, _, _ = getFilterBank(imageSize=imageSize, J=J, num_rotations=num_rotations)
 
     plt.figure()
     plt.rc('text', usetex=False)
@@ -185,7 +164,7 @@ def showLowPassScatterFilters():
     plt.show()
 
 
-def getFilterBank():
+def getFilterBank(imageSize=(128, 128), J=3, num_rotations=8):
     return filter_bank(imageSize[0], imageSize[1], J, L=num_rotations), J, num_rotations
 
 
@@ -193,7 +172,7 @@ if __name__ == "__main__":
 
     settings = utils_our.load_settings()
     
-    trainset, testset, data_size = getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'])
+    trainset, testset, data_size = getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'], channels=settings['channels'])
     
     train(trainset, data_size = data_size, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], model_train_path=settings['model_train_path'])
     metrics = test(testset,data_size, lab_classes=settings['lab_classes'], model_train_path=settings['model_train_path'])       

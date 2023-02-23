@@ -38,7 +38,7 @@ lab_classes = settings['lab_classes']
 # Split in train and test set
 #trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))  
 
-def train(trainset, learning_rate, momentum, num_epochs, batch_size, lab_classes, model_train_path):    
+def train(trainset, learning_rate, momentum, num_epochs, batch_size, lab_classes, model_train_path, channels):    
     n_classes = len(lab_classes)   
 
     best_acc = 0.0
@@ -51,7 +51,7 @@ def train(trainset, learning_rate, momentum, num_epochs, batch_size, lab_classes
     ### CREATE MODEL ###
 
     # Model
-    model = CNN_128x128(input_channel=3,num_classes=n_classes).to(device)
+    model = CNN_128x128(input_channel=channels,num_classes=n_classes).to(device)
 
     # Optimizer
     optim = torch.optim.SGD(model.parameters(), lr = learning_rate, momentum=momentum)
@@ -68,7 +68,7 @@ def train(trainset, learning_rate, momentum, num_epochs, batch_size, lab_classes
             optim.zero_grad()
 
             x,y = data_tr                        # unlist the data from the train set
-            x = x.view(batch_size,3,128,128).float().to(device)     # change the size for the input data - convert to float type
+            x = x.view(batch_size,channels,128,128).float().to(device)     # change the size for the input data - convert to float type
             y = y.to(device)
             y_pred = model(x)                                        # run the model
             loss = criterion(y_pred,y)                               # compute loss
@@ -93,11 +93,11 @@ def train(trainset, learning_rate, momentum, num_epochs, batch_size, lab_classes
     # aggiunto x perché mi serviva per testare il codice
     return model,x
 
-def test(testset, batch_size, lab_classes, model_train_path):
+def test(testset, batch_size, lab_classes, model_train_path, channels):
     n_classes = len(lab_classes)   
 
     ### TEST MODEL ###
-    model_test = CNN_128x128(input_channel=3,num_classes=n_classes).to(device)                # Initialize a new model
+    model_test = CNN_128x128(input_channel=channels,num_classes=n_classes).to(device)                # Initialize a new model
     model_test.load_state_dict(torch.load(model_train_path+'CNN_128x128_best_model_trained.pt'))   # Load the model
 
     pred_label_test = torch.empty((0,n_classes)).to(device)
@@ -106,7 +106,7 @@ def test(testset, batch_size, lab_classes, model_train_path):
     with torch.no_grad():
         for data in testset:
             X_te, y_te = data
-            X_te = X_te.view(batch_size,3,128,128).float().to(device)
+            X_te = X_te.view(batch_size,channels,128,128).float().to(device)
             y_te = y_te.to(device)
             output_test = model_test(X_te)
             pred_label_test = torch.cat((pred_label_test,output_test),dim=0)
@@ -115,9 +115,9 @@ def test(testset, batch_size, lab_classes, model_train_path):
     return utils_our.metrics(true_label_test.cpu(), pred_label_test.cpu(), lab_classes), model_test
 
 
-def getData(data_path, lab_classes, test_perc, batch_size):
+def getData(data_path, lab_classes, test_perc, batch_size, channels):
     # Split in train and test set
-    return utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
+    return utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes, channels), test_size=test_perc))
 
 def isTrained(model_train_path):
     return os.path.isfile(model_train_path+'CNN_128x128_best_model_trained.pt')

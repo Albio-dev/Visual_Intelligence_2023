@@ -110,7 +110,7 @@ def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, ima
         print('Error during scatter_mem!')
         sys.exit()
     print(f'Calculating scattering coefficients of data in {len(testset)} batches of {batch_size} elements each for testing')
-    testing_scatters, test_lbls = utils_our.scatter_mem(batch_size,device,scatter,testset)
+    testing_scatters, test_lbls = utils_our.scatter_mem(batch_size,device,scatter,testset, channels)
     if testing_scatters is None:
         print('Error during scatter_mem!')
         sys.exit()
@@ -174,8 +174,9 @@ if __name__ == "__main__":
     
     trainset, testset, data_size = getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'], channels=settings['channels'])
     
-    train(trainset, data_size = data_size, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], model_train_path=settings['model_train_path'])
-    metrics = test(testset,data_size, lab_classes=settings['lab_classes'], model_train_path=settings['model_train_path'])       
+    train(trainset, data_size = data_size, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], model_train_path=settings['model_train_path'], channels=settings['channels'])
+    metrics = test(testset,data_size, lab_classes=settings['lab_classes'], model_train_path=settings['model_train_path'], channels=settings['channels'])       
     
     metrics.confMatDisplay().plot()
+    print(metrics)
     plt.show()

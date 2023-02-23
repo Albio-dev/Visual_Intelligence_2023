@@ -1,7 +1,7 @@
 # Visual_Intelligence_2023
 
 ToDo list:
-- [ ] Provare con immagini grayscale
+- [X] Provare con immagini grayscale
 - [ ] Scorporare i colori dei filtri della CNN
 - [ ] Provare a classificare con la scatter di matlab
 - [ ] Visualizzare i banchi di filtri belli come fa mallat <3

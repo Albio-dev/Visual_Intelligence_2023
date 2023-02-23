@@ -117,7 +117,7 @@ def test(testset, batch_size, lab_classes, model_train_path, channels):
 
 def getData(data_path, lab_classes, test_perc, batch_size, channels):
     # Split in train and test set
-    return utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes, channels), test_size=test_perc))
+    return utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
 
 def isTrained(model_train_path):
     return os.path.isfile(model_train_path+'CNN_128x128_best_model_trained.pt')
@@ -221,14 +221,15 @@ if __name__ == "__main__":
 
     settings = utils_our.load_settings()
 
-    trainset, testset = getData(settings['data_path'], settings['lab_classes'], settings['test_perc'], settings['batch_size'])
-    model, X_te = train(trainset=trainset, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], batch_size=settings['batch_size'], model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], momentum=settings['momentum'])
-    metrics, model_test = test(testset=testset, model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], batch_size=settings['batch_size'])
+    trainset, testset = getData(settings['data_path'], settings['lab_classes'], settings['test_perc'], settings['batch_size'], channels=settings['channels'])
+    model, X_te = train(trainset=trainset, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], batch_size=settings['batch_size'], model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], channels=settings['channels'])
+    metrics, model_test = test(testset=testset, model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], batch_size=settings['batch_size'], channels=settings['channels'])
 
     plot_weights(model_test.conv1, single_channel = False, collated = True)
 
     metrics.confMatDisplay().plot()
     plt.show()
+    print(metrics)
 
     show_kernels(model_test)
     

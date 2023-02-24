@@ -6,6 +6,7 @@ from sklearn.metrics import RocCurveDisplay, ConfusionMatrixDisplay, PrecisionRe
 from colorsys import hls_to_rgb
 import numpy as np
 from torch.utils.data import Dataset
+from sklearn.model_selection import train_test_split
 
 def loadData(path, folders):
 
@@ -19,22 +20,41 @@ def loadData(path, folders):
         
     return numpy.asarray(data), labels
 
+def get_data_split(test_perc, data_path, lab_classes, data = None):
+    random_state = 42
+    shuffle = True
+    if data is None:
+        return train_test_split(*loadData(data_path, lab_classes), test_size=test_perc, random_state=random_state, shuffle=shuffle)
+    else:
+        return train_test_split(*data, test_size=test_perc, random_state=random_state, shuffle=shuffle)
 
 
 
 def scatter_mem(batch_size, device, scatter, dataset, channels):
-    cpu_device = torch.device("cpu")
     scatters = []
     labels = []
 
-    for data_tr in dataset:
-        x,y = data_tr
-        x = x.view(batch_size,channels,128,128).float().to(device)     # change the size for the input data - convert to float type
-        x = scatter(x).to(cpu_device)        
-        print(x.shape)
-        x = x.movedim(1, 2).mean(axis=(3, 4)).to(device)# # scatter the data and average the values    
-        scatters += x.to(cpu_device)
-        labels += y.to(cpu_device)
+    #dataset_device = torch.tensor(dataset).to(device).float().contiguous()
+    dataset_device = DataLoader(dataset[0],batch_size=batch_size,drop_last=True)
+    labels_batches = DataLoader(dataset[1],batch_size=batch_size,drop_last=True)
+
+    for x, y in zip(dataset_device, labels_batches):
+        # change the size for the input data - convert to float type
+        if channels != 1:
+            x = x.movedim(3, 1).to(device).float().contiguous()
+        else:
+            x = x.to(device).float().contiguous()
+        #print(f'Scattering input shape: {x.shape}')
+        x = scatter(x)        
+        #print(f'Scattering output shape: {x.shape}')
+        if channels != 1:
+            x = x.movedim(1, 2).mean(axis=(3, 4))#.movedim(1, 2)# scatter the data and average the values    
+        else:
+            x = x.mean(axis=(2, 3))
+        #print(f'Scattering final shape: {x.shape}')
+        x = x.cpu().detach()#.reshape(batch_size, -1)
+        scatters += x
+        labels += y.cpu()
 
 
     return scatters, labels

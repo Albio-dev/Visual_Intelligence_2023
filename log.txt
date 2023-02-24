@@ -1,0 +1,77 @@
+2023-02-23 18:05:09,142 - {'batch_size': 64, 'channels': 1, 'data_path': './Data', 'lab_classes': ['dog_gray', 'flower_gray'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 2, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-02-23 18:05:09,143 - CNN metrics: 
+Accuracy:		0.8705357142857143
+Precision:		0.8571428571428571
+Recall:			0.8571428571428571
+F1:				0.8571428571428571
+2023-02-23 18:05:09,144 - NN metrics: 
+Accuracy:		0.6261160714285714
+Precision:		0.7125
+Recall:			0.28287841191067
+F1:				0.4049733570159858
+2023-02-24 19:14:18,611 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-02-24 19:14:18,611 - CNN metrics: 
+Accuracy:		0.7578125
+Precision:		0.6978723404255319
+Recall:			0.8138957816377171
+F1:				0.7514318442153495
+2023-02-24 19:14:18,612 - NN metrics: 
+Accuracy:		0.45703125
+Precision:		0.45657894736842103
+Recall:			0.9886039886039886
+F1:				0.6246624662466247
+2023-02-24 19:20:25,566 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-02-24 19:20:25,566 - CNN metrics: 
+Accuracy:		0.7611607142857143
+Precision:		0.6989473684210527
+Recall:			0.8238213399503722
+F1:				0.7562642369020502
+2023-02-24 19:20:25,566 - NN metrics: 
+Accuracy:		0.54296875
+Precision:		0.0
+Recall:			0.0
+F1:				0.0
+2023-02-24 19:24:18,805 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-02-24 19:24:18,805 - CNN metrics: 
+Accuracy:		0.7745535714285714
+Precision:		0.8210862619808307
+Recall:			0.6377171215880894
+F1:				0.7178770949720671
+2023-02-24 19:24:18,806 - NN metrics: 
+Accuracy:		0.54296875
+Precision:		0.0
+Recall:			0.0
+F1:				0.0
+2023-02-24 19:26:55,405 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-02-24 19:26:55,405 - CNN metrics: 
+Accuracy:		0.7377232142857143
+Precision:		0.6653543307086615
+Recall:			0.8387096774193549
+F1:				0.7420417124039517
+2023-02-24 19:26:55,406 - NN metrics: 
+Accuracy:		0.7356770833333334
+Precision:		0.9065934065934066
+Recall:			0.4700854700854701
+F1:				0.6191369606003752
+2023-02-24 19:28:53,764 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-02-24 19:28:53,765 - CNN metrics: 
+Accuracy:		0.7678571428571429
+Precision:		0.8217821782178217
+Recall:			0.6178660049627791
+F1:				0.7053824362606231
+2023-02-24 19:28:53,765 - NN metrics: 
+Accuracy:		0.7447916666666666
+Precision:		0.9234972677595629
+Recall:			0.48148148148148145
+F1:				0.6329588014981273
+2023-02-24 19:38:33,231 - {'batch_size': 128, 'channels': 1, 'data_path': './Data', 'lab_classes': ['dog_gray', 'flower_gray'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-02-24 19:38:33,232 - CNN metrics: 
+Accuracy:		0.6194196428571429
+Precision:		0.5453216374269005
+Recall:			0.9255583126550868
+F1:				0.6862925482980681
+2023-02-24 19:38:33,233 - NN metrics: 
+Accuracy:		0.5963541666666666
+Precision:		0.548235294117647
+Recall:			0.6638176638176638
+F1:				0.6005154639175257

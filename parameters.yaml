@@ -1,4 +1,4 @@
-batch_size: 64
+batch_size: 128
 channels: 1
 data_path: ./Data
 lab_classes:
@@ -9,7 +9,7 @@ test_perc: 0.3
 learning_rate: 0.01
 momentum: 0.5
 num_epochs: 30
-J: 2
+J: 6
 imageSize: !!python/tuple
 - 128
 - 128

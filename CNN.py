@@ -10,24 +10,7 @@ import utils_our
 # Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print('Device: ', device)
-'''
-# test
-import yaml
-with open('parameters.yaml', 'r') as f:
-    settings = yaml.load(f, Loader=yaml.loader.FullLoader)
-print(settings)
 
-data_path = settings['data_path']
-model_train_path = settings['model_train_path']
-if not os.path.exists(model_train_path):                 # create a directory where to save the best model
-    os.makedirs(model_train_path)
-test_perc = settings['test_perc']
-batch_size = settings['batch_size']
-learning_rate = settings['learning_rate']
-momentum = settings['momentum']
-num_epochs = settings['num_epochs']  
-lab_classes = settings['lab_classes']
-'''
 ### MODEL VARIABLES ###
 # Define useful variables
 # number of classes in the dataset
@@ -117,7 +100,7 @@ def test(testset, batch_size, lab_classes, model_train_path, channels):
 
 def getData(data_path, lab_classes, test_perc, batch_size, channels):
     # Split in train and test set
-    return utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
+    return utils_our.batcher(batch_size = batch_size, *utils_our.get_data_split(test_perc = test_perc, data_path=data_path, lab_classes = lab_classes))
 
 def isTrained(model_train_path):
     return os.path.isfile(model_train_path+'CNN_128x128_best_model_trained.pt')
@@ -126,7 +109,7 @@ def isTrained(model_train_path):
 def show_kernels(model_test):
     # Get the first kernel from the model
     kernels_1 = model_test.conv1.weight.data.cpu().clone()
-    visTensor(kernels_1, ch=1, allkernels=False)
+    visTensor(kernels_1, ch=0, allkernels=False)
     plt.axis('off')
     plt.title('kernels from convolutional layer: 1')
     plt.ioff()
@@ -156,7 +139,7 @@ def show_kernels(model_test):
     plt.ioff()
     plt.show()
 
-def visualize_features_map(model,X_te):
+def visualize_features_map(model,X_te, channels):
     conv_weights =[]                            # save the weights of convolutional layers
     conv_layers = []                            # save the convolutional layers
     model_children = list(model.children())     # get all the model children as list
@@ -203,7 +186,7 @@ def visualize_features_map(model,X_te):
     plt.show()
 
     plt.figure()
-    plt.imshow(original_image.reshape(128,128,3).cpu().detach().numpy().astype('uint8'))
+    plt.imshow(original_image.reshape(128,128,channels).cpu().detach().numpy().astype('uint8'))
     plt.axis('off')
     plt.show()
 
@@ -233,4 +216,4 @@ if __name__ == "__main__":
 
     show_kernels(model_test)
     
-    visualize_features_map(model,X_te)
+    #visualize_features_map(model,X_te, channels=settings['channels'])

@@ -5,11 +5,11 @@ generic = {
     "model_train_path": './train_checkpoint/',
 
     # Classes in the dataset             
-    "lab_classes" : ['dog_gray','flower_gray'],
-    'channels' : 1,
+    "lab_classes" : ['dog','flower'],
+    'channels' : 3,
 
     # How many samples are used per-iteration
-    "batch_size" : 64,
+    "batch_size" : 128,
     # Quantity of dataset used for the testing
     "test_perc" : .3
 }
@@ -50,12 +50,13 @@ def setScatteringParameters( J, order, imageSize, n_rotations):
 
     writefile()    
 
-def setGenericParameters(data_path, model_train_path, lab_classes, batch_size, test_perc):
+def setGenericParameters(data_path, model_train_path, lab_classes, batch_size, test_perc, channels):
     generic['data_path'] = data_path
     generic['model_train_path'] = model_train_path
     generic['lab_classes'] = lab_classes
     generic['batch_size'] = batch_size
     generic['test_perc'] = test_perc
+    generic['channels'] = channels
 
     writefile()
 

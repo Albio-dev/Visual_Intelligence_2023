@@ -98,25 +98,23 @@ def isTrained(model_train_path):
 
 def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, imageSize, order, channels):
     # Split in train and test set
-    trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
+    #trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
+    dataset = utils_our.loadData(path = data_path, folders = lab_classes)
 
     ### SCATTERING DATA ###
-    scatter = kt.Scattering2D(J, shape = imageSize, max_order = order, L=num_rotations)
+    scatter = kt.Scattering2D(J, shape = imageSize, max_order = order, L=num_rotations)#, backend='torch_skcuda')
     scatter = scatter.to(device)
     
-    print(f'Calculating scattering coefficients of data in {len(trainset)} batches of {batch_size} elements each for training')
-    training_scatters, train_lbls = utils_our.scatter_mem(batch_size,device,scatter,trainset, channels)
-    if training_scatters is None:
+    #print(f'Calculating scattering coefficients of data in {len(trainset)} batches of {batch_size} elements each for training')
+    print('Calculating scattering coefficients of data')
+    scatters = utils_our.scatter_mem(batch_size,device,scatter,dataset, channels)
+    if scatters is None:
         print('Error during scatter_mem!')
         sys.exit()
-    print(f'Calculating scattering coefficients of data in {len(testset)} batches of {batch_size} elements each for testing')
-    testing_scatters, test_lbls = utils_our.scatter_mem(batch_size,device,scatter,testset, channels)
-    if testing_scatters is None:
-        print('Error during scatter_mem!')
-        sys.exit()
+    print('Scattering coefficients calculated')
 
-    return *utils_our.batcher(training_scatters, testing_scatters, train_lbls, test_lbls, batch_size = batch_size), np.prod(training_scatters[0].shape)
 
+    return *utils_our.batcher(*utils_our.get_data_split(data = scatters, test_perc=test_perc, lab_classes=lab_classes, data_path=data_path), batch_size = batch_size), np.prod(scatters[0][0].shape)
 
 def showPassBandScatterFilters(imageSize=(128, 128), J=3, num_rotations=8):
     filters_set, J, rotations = getFilterBank(imageSize=imageSize, J=J, num_rotations=num_rotations)

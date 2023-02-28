@@ -4,12 +4,15 @@ imagedir = fullfile('Data', sub_color);
 Imds = imageDatastore(imagedir,'IncludeSubFolders',true,'FileExtensions',...
 '.jpg','LabelSource','foldernames');
 
+
 summary(Imds.Labels)
 
 %%
 
 images = readall(Imds);
 labels = Imds.Labels;
+
+labels = labels(:) ~= 'dog';
 
 %%
 

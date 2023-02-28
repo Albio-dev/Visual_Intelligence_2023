@@ -30,10 +30,10 @@ def get_data_split(test_perc, data_path, lab_classes, data = None):
         return train_test_split(*data, test_size=test_perc, random_state=random_state, shuffle=shuffle)
 
 def load_scatter(path):
-    raw_data = loadmat(f'{path}/scatter.mat')['datafeatures'][0][0]
-    ecg_data = raw_data[0]
+    raw_data = loadmat(f'{path}/scatter.mat')['datafeatures']
+    data = raw_data[0]
     labels = np.array([lab[0][0] for lab in raw_data[1]])
-    return ecg_data, labels
+    return data, labels
 
 def scatter_mem(batch_size, device, scatter, dataset, channels):
     scatters = []

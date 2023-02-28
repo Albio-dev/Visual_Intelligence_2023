@@ -1,4 +1,4 @@
-sub_color = 'gray';
+sub_color = 'rgb';
 imagedir = fullfile('Data', sub_color);
 
 Imds = imageDatastore(imagedir,'IncludeSubFolders',true,'FileExtensions',...
@@ -37,7 +37,8 @@ for i = 1:length(images)
     datafeatures = [datafeatures; features];
 end
 
+datas = {datafeatures,labels};
 %%
 
 
-save(sprintf(replace(fullfile("Data", sub_color, "scatter.mat"), '\', '/')), "datafeatures")
+save(sprintf(replace(fullfile("Data", sub_color, "scatter.mat"), '\', '/')), "datas")

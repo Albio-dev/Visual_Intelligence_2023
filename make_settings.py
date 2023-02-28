@@ -1,12 +1,12 @@
 import yaml
 
 generic = {
-    "data_path" : './Data',
+    "data_path" : './Data/rgb',
+    'channels' : 3,
     "model_train_path": './train_checkpoint/',
 
     # Classes in the dataset             
     "lab_classes" : ['dog','flower'],
-    'channels' : 3,
 
     # How many samples are used per-iteration
     "batch_size" : 128,

@@ -1,7 +1,7 @@
 import make_settings
 import classification
 
-js = [2, 3, 4, 5, 6, 7]
+js = [1, 2, 3, 4, 5, 6, 7]
 orders = [1, 2]
 n_rotations = [4, 6, 8, 10]
 

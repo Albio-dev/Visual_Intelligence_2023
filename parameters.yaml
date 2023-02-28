@@ -1,9 +1,9 @@
 batch_size: 128
-channels: 1
-data_path: ./Data
+channels: 3
+data_path: ./Data/rgb
 lab_classes:
-- dog_gray
-- flower_gray
+- dog
+- flower
 model_train_path: ./train_checkpoint/
 test_perc: 0.3
 learning_rate: 0.01

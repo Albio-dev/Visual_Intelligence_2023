@@ -98,9 +98,14 @@ def test(testset, batch_size, lab_classes, model_train_path, channels):
     return utils_our.metrics(true_label_test.cpu(), pred_label_test.cpu(), lab_classes), model_test
 
 
-def getData(data_path, lab_classes, test_perc, batch_size, channels):
+def getData(data_path, lab_classes, test_perc, batch_size, channels,train_scale=1):
     # Split in train and test set
-    return utils_our.batcher(batch_size = batch_size, *utils_our.get_data_split(test_perc = test_perc, data_path=data_path, lab_classes = lab_classes))
+
+    train, xtest, ytrain, ytest = utils_our.get_data_split(test_perc = test_perc, data_path=data_path, lab_classes = lab_classes)
+    xtrain = xtrain[:int(len(xtrain)*train_scale)]
+    ytrain = ytrain[:int(len(ytrain)*train_scale)]
+    return utils_our.batcher(xtrain, xtest, ytrain, ytest,batch_size= batch_size)
+    #return utils_our.batcher(batch_size = batch_size, *utils_our.get_data_split(test_perc = test_perc, data_path=data_path, lab_classes = lab_classes))
 
 def isTrained(model_train_path):
     return os.path.isfile(model_train_path+'CNN_128x128_best_model_trained.pt')

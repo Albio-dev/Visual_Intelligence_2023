@@ -96,7 +96,7 @@ def isTrained(model_train_path):
     return os.path.isfile(model_train_path+'NN_128x128_best_model_trained.pt')
 
 
-def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, imageSize, order, channels):
+def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, imageSize, order, channels , train_scale = 1):
     # Split in train and test set
     #trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
     dataset = utils_our.loadData(path = data_path, folders = lab_classes)
@@ -114,8 +114,12 @@ def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, ima
         sys.exit()
     print('Scattering coefficients calculated')
 
+    xtrain, xtest, ytrain, ytest = utils_our.get_data_split(data = scatters, test_perc=test_perc, lab_classes=lab_classes, data_path=data_path)
+    xtrain = xtrain[:int(len(xtrain)*train_scale)]
+    ytrain = ytrain[:int(len(ytrain)*train_scale)]
+    return *utils_our.batcher(xtrain, xtest, ytrain, ytest,batch_size= batch_size), np.prod(scatters[0][0].shape)
 
-    return *utils_our.batcher(*utils_our.get_data_split(data = scatters, test_perc=test_perc, lab_classes=lab_classes, data_path=data_path), batch_size = batch_size), np.prod(scatters[0][0].shape)
+    #return *utils_our.batcher(*utils_our.get_data_split(data = scatters, test_perc=test_perc, lab_classes=lab_classes, data_path=data_path), batch_size = batch_size), np.prod(scatters[0][0].shape)
 
 def showPassBandScatterFilters(imageSize=(128, 128), J=3, num_rotations=8):
     filters_set, J, rotations = getFilterBank(imageSize=imageSize, J=J, num_rotations=num_rotations)

@@ -108,7 +108,10 @@ def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, ima
     #print(f'Calculating scattering coefficients of data in {len(trainset)} batches of {batch_size} elements each for training')
     print('Calculating scattering coefficients of data')
     #scatters = utils_our.scatter_mem(batch_size,device,scatter,dataset, channels)
-    scatters = utils_our.load_scatter(data_path)
+    #scatters = utils_our.load_scatter(data_path)
+    scatters = utils_our.matlab_scatter('rgb', dataset, J, [4, 2],num_rotations)
+    print(scatters)
+    
     if scatters is None:
         print('Error during scatter_mem!')
         sys.exit()

@@ -1,25 +1,29 @@
-function datas = scattering_function(sub_color)
+function datas = scattering_function(sub_color, data, invScale, qualityFactors, num_rotations)
     
-    imagedir = fullfile('Data', sub_color);
-    
-    Imds = imageDatastore(imagedir,'IncludeSubFolders',true,'FileExtensions',...
-    '.jpg','LabelSource','foldernames');
-    
-    
-    summary(Imds.Labels)
-    
-    
-    images = readall(Imds);
-    labels = Imds.Labels;
-    
-    labels = labels(:) ~= 'dog';
+%     imagedir = fullfile('Data', sub_color);
+%     
+%     Imds = imageDatastore(imagedir,'IncludeSubFolders',true,'FileExtensions',...
+%     '.jpg','LabelSource','foldernames');
+%     
+%     
+%     summary(Imds.Labels)
     
     
+%     images = readall(Imds);
+%     labels = Imds.Labels;
+%     
+%     labels = labels(:) ~= 'dog';
+    images = data(0);
+    labels = data(1);
+       
     
-    invariance_scale = 32;
-    quality_factors = [3 1];
-    num_rotations = [4 4];
+%     invariance_scale = 32;
+%     quality_factors = [3 1];
+%     num_rotations = [4 4];
+    invariance_scale = invScale;
+    quality_factors = qualityFactors;
     
+
     sn = waveletScattering2('ImageSize',size(images{1}, [1, 2]),'InvarianceScale',invariance_scale,'QualityFactors',quality_factors,'NumRotations',num_rotations);
     [~,npaths] = paths(sn);
     sum(npaths)

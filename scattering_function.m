@@ -1,4 +1,4 @@
-function datas = scattering_function(sub_color, data, invScale, qualityFactors, num_rotations)
+function datas = scattering_function(sub_color, images, labels, invScale, qfact1,qfact2, num_rotations)
     
 %     imagedir = fullfile('Data', sub_color);
 %     
@@ -13,15 +13,18 @@ function datas = scattering_function(sub_color, data, invScale, qualityFactors, 
 %     labels = Imds.Labels;
 %     
 %     labels = labels(:) ~= 'dog';
-    images = data(0);
-    labels = data(1);
+%     images = images;
+%     labels = labels;
        
     
 %     invariance_scale = 32;
 %     quality_factors = [3 1];
 %     num_rotations = [4 4];
+    disp(qfact1);
+    disp(invScale);
     invariance_scale = invScale;
-    quality_factors = qualityFactors;
+    quality_factors = [qfact1 qfact2];
+    num_rotations = [num_rotations num_rotations];
     
 
     sn = waveletScattering2('ImageSize',size(images{1}, [1, 2]),'InvarianceScale',invariance_scale,'QualityFactors',quality_factors,'NumRotations',num_rotations);
@@ -41,5 +44,8 @@ function datas = scattering_function(sub_color, data, invScale, qualityFactors, 
     end
     
     datas = {cell2mat(datafeatures),labels};
+
+    save(sprintf(replace(fullfile("Data", sub_color, "scatter.mat"), '\', '/')), "datas")
+    disp('done')
 end
 

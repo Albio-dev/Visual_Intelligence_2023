@@ -20,7 +20,7 @@ def loadData(path, folders):
         data += new_data
         labels += [index]*len(new_data)
         
-    temp = random.sample(list(zip(numpy.asarray(data), labels)), 200)
+    temp = random.sample(list(zip(numpy.asarray(data).astype(numpy.float32), labels)), 200)
     return [i[0] for i in temp], [i[1] for i in temp]
 
 def get_data_split(test_perc, data_path, lab_classes, data = None):
@@ -35,13 +35,17 @@ def load_scatter(path):
 
     raw_data = loadmat(f'{path}/scatter.mat')['datas']
     data = raw_data[0][0]
-    labels = np.array([lab[0] for lab in raw_data[0][1]])
+    labels = np.array([lab[0][0] for lab in raw_data[0][1][0]])
     return data, labels
 
 def matlab_scatter(color, data, J, qualityFactors, rotations):
     import matlab.engine
     eng = matlab.engine.start_matlab()
-    scatter = eng.scattering(color, data, J, qualityFactors, rotations)
+    images = data[0]
+    labels = data[1]
+    qfact1 = qualityFactors[0]
+    qfact2 = qualityFactors[1]
+    scatter = eng.scattering_function(color, images,labels, float(J), float(qfact1),float(qfact2), float(rotations))
     eng.quit()
     
 

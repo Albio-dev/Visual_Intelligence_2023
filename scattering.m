@@ -16,9 +16,9 @@ labels = labels(:) ~= 'dog';
 
 %%
 
-invariance_scale = 40;
-quality_factors = 3;
-num_rotations = 3;
+invariance_scale = 128;
+quality_factors = [4 2];
+num_rotations = [8 8];
 
 sn = waveletScattering2('ImageSize',size(images{1}, [1, 2]),'InvarianceScale',invariance_scale,'QualityFactors',quality_factors,'NumRotations',num_rotations);
 [~,npaths] = paths(sn);
@@ -27,18 +27,19 @@ coefficientSize(sn)
 
 %%
 
-datafeatures = [];
-for i = 1:length(images)
+datafeatures = cell(length(images), 1);
+parfor i = 1:length(images)
    
     smat = featureMatrix(sn, images{i});
     features = mean(smat, 2:4);
     features = reshape(features, 1, []);
     
-    datafeatures = [datafeatures; features];
+    datafeatures{i} = features;
 end
 
-datas = {datafeatures,labels};
+datas = {cell2mat(datafeatures),labels};
 %%
 
 
 save(sprintf(replace(fullfile("Data", sub_color, "scatter.mat"), '\', '/')), "datas")
+disp('done')

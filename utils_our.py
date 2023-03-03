@@ -20,7 +20,7 @@ def loadData(path, folders):
         data += new_data
         labels += [index]*len(new_data)
         
-    temp = random.sample(list(zip(numpy.asarray(data).astype(numpy.float32), labels)), 200)
+    temp = random.sample(list(zip(numpy.asarray(data).astype(numpy.float32), labels)), 800)
     return [i[0] for i in temp], [i[1] for i in temp]
 
 def get_data_split(test_perc, data_path, lab_classes, data = None):

@@ -53,7 +53,7 @@ def classification_task(display = True):
         NN_metrics.confMatDisplay().plot(ax=axs[1])
         plt.show()
 
-        NN_scattering.showPassBandScatterFilters(J = settings['J'], num_rotations = settings['n_rotations'], imageSize= settings['imageSize'])
+        #NN_scattering.showPassBandScatterFilters(J = settings['J'], num_rotations = settings['n_rotations'], imageSize= settings['imageSize'])
         CNN.showCNNFilters(CNN_model)
 
 if __name__ == "__main__":

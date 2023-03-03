@@ -198,9 +198,10 @@ def visualize_features_map(model,X_te, channels):
 def showCNNFilters(model):
     layer = 0
     filter = list(model.children())[layer].weight.data.clone()
-    utils.visTensor(filter, ch=0, allkernels=False)
-    plt.axis('off')
-    plt.ioff()
+    fig, axs = plt.subplot(1, 3)
+    utils.visTensor(filter, ch=0, allkernels=False,ax= axs[0])
+    utils.visTensor(filter, ch=0, allkernels=False,ax= axs[1])
+    utils.visTensor(filter, ch=0, allkernels=False,ax= axs[2])
     plt.show()
 
 

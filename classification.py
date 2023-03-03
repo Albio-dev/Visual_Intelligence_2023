@@ -4,6 +4,7 @@ import os
 import logging
 import CNN
 import NN_scattering
+import make_settings
 import utils_our
 
 logging.basicConfig(level=logging.INFO)
@@ -57,7 +58,8 @@ def classification_task(display = True):
         CNN.showCNNFilters(CNN_model)
 
 if __name__ == "__main__":
-    classification_task(True)
+    make_settings.writefile()
+    classification_task(False)
 
 
 

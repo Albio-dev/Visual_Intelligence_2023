@@ -38,14 +38,14 @@ def load_scatter(path):
     labels = np.array([lab[0][0] for lab in raw_data[0][1][0]])
     return data, labels
 
-def matlab_scatter(data, J, qualityFactors, rotations):
+def matlab_scatter(channels, data, J, qualityFactors, rotations):
     import matlab.engine
     eng = matlab.engine.start_matlab()
     images = data[0]
     labels = data[1]
     qfact1 = qualityFactors[0]
     qfact2 = qualityFactors[1]
-    scatter = eng.scattering_function(images,labels, float(J), float(qfact1),float(qfact2), float(rotations))
+    scatter = eng.scattering_function(channels, images,labels, float(J), float(qfact1),float(qfact2), float(rotations))
     eng.quit()
     
 

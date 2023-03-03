@@ -9,7 +9,7 @@ generic = {
     "lab_classes" : ['dog','flower'],
 
     # How many samples are used per-iteration
-    "batch_size" : 10,
+    "batch_size" : 25,
     # Quantity of dataset used for the testing
     "test_perc" : .3
 }

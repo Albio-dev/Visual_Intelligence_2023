@@ -108,3 +108,14 @@ Accuracy:		0.6308571428571429
 Precision:		0.7058823529411765
 Recall:			0.3053435114503817
 F1:				0.4262877442273535
+2023-03-03 15:34:59,543 - {'batch_size': 25, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-03 15:34:59,544 - CNN metrics: 
+Accuracy:		0.7066666666666667
+Precision:		0.7692307692307693
+Recall:			0.5555555555555556
+F1:				0.6451612903225806
+2023-03-03 15:34:59,546 - NN metrics: 
+Accuracy:		0.52
+Precision:		0.0
+Recall:			0.0
+F1:				0.0

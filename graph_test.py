@@ -16,4 +16,7 @@ plt.ylim(0.5, 1)
 
 plt.plot(range(len(cnn_data)),  cnn_data)
 plt.plot(range(len(nn_data)), nn_data)
+plt.legend(["CNN", "NN"])
+plt.xlabel("Training instance")
+plt.ylabel("Accuracy")
 plt.show()

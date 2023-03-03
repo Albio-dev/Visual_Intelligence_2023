@@ -109,8 +109,12 @@ def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, ima
     print('Calculating scattering coefficients of data')
     #scatters = utils_our.scatter_mem(batch_size,device,scatter,dataset, channels)
     #scatters = utils_our.load_scatter(data_path)
+<<<<<<< HEAD
     
     utils_our.matlab_scatter('rgb', dataset, 2**J, [4, 2],num_rotations)
+=======
+    utils_our.matlab_scatter('rgb', dataset, 32, [4, 2],num_rotations)
+>>>>>>> 932942fb258c7a34ca09355277123b05d57ad320
     scatters = utils_our.load_scatter(data_path)
     
     print(scatters)

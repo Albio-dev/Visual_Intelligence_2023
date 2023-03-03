@@ -101,7 +101,7 @@ def test(testset, batch_size, lab_classes, model_train_path, channels):
 def getData(data_path, lab_classes, test_perc, batch_size, channels,train_scale=1):
     # Split in train and test set
 
-    train, xtest, ytrain, ytest = utils_our.get_data_split(test_perc = test_perc, data_path=data_path, lab_classes = lab_classes)
+    xtrain, xtest, ytrain, ytest = utils_our.get_data_split(test_perc = test_perc, data_path=data_path, lab_classes = lab_classes)
     xtrain = xtrain[:int(len(xtrain)*train_scale)]
     ytrain = ytrain[:int(len(ytrain)*train_scale)]
     return utils_our.batcher(xtrain, xtest, ytrain, ytest,batch_size= batch_size)
@@ -198,9 +198,10 @@ def visualize_features_map(model,X_te, channels):
 def showCNNFilters(model):
     layer = 0
     filter = list(model.children())[layer].weight.data.clone()
-    utils.visTensor(filter, ch=0, allkernels=False)
-    plt.axis('off')
-    plt.ioff()
+    fig, axs = plt.subplot(1, 3)
+    utils.visTensor(filter, ch=0, allkernels=False,ax= axs[0])
+    utils.visTensor(filter, ch=0, allkernels=False,ax= axs[1])
+    utils.visTensor(filter, ch=0, allkernels=False,ax= axs[2])
     plt.show()
 
 

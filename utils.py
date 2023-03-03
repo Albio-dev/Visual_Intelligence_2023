@@ -54,7 +54,7 @@ def compute_metrics(y_true,y_pred,lab_classes):
 
 
 # Function to visualize the kernels for the two convolutional layers
-def visTensor(tensor, ch=0, allkernels=False, nrow=8, padding=1):
+def visTensor(tensor, ax, ch=0, allkernels=False, nrow=8, padding=1):
         n,c,w,h = tensor.shape
 
         if allkernels: tensor = tensor.view(n*c, -1, w, h)
@@ -62,8 +62,11 @@ def visTensor(tensor, ch=0, allkernels=False, nrow=8, padding=1):
 
         rows = np.min((tensor.shape[0] // nrow + 1, 64))    
         grid = utils.make_grid(tensor, nrow=nrow, normalize=True, padding=padding)
-        plt.figure( figsize=(nrow,rows) )
-        plt.imshow(grid.cpu().numpy().transpose((1, 2, 0)))
+        #plt.figure( figsize=(nrow,rows))
+        ax.imshow(grid.cpu().numpy().transpose((1, 2, 0)))
+
+        ax.axis('off')
+        ax.ioff()
 
         #fig, axplt.subplot()
     

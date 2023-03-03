@@ -1,839 +1,121 @@
-2023-02-23 18:05:09,142 - {'batch_size': 64, 'channels': 1, 'data_path': './Data', 'lab_classes': ['dog_gray', 'flower_gray'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 2, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-02-23 18:05:09,143 - CNN metrics: 
-Accuracy:		0.8705357142857143
-Precision:		0.8571428571428571
-Recall:			0.8571428571428571
-F1:				0.8571428571428571
-2023-02-23 18:05:09,144 - NN metrics: 
-Accuracy:		0.6261160714285714
-Precision:		0.7125
-Recall:			0.28287841191067
-F1:				0.4049733570159858
-2023-02-24 19:14:18,611 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-02-24 19:14:18,611 - CNN metrics: 
-Accuracy:		0.7578125
-Precision:		0.6978723404255319
-Recall:			0.8138957816377171
-F1:				0.7514318442153495
-2023-02-24 19:14:18,612 - NN metrics: 
-Accuracy:		0.45703125
-Precision:		0.45657894736842103
-Recall:			0.9886039886039886
-F1:				0.6246624662466247
-2023-02-24 19:20:25,566 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-02-24 19:20:25,566 - CNN metrics: 
-Accuracy:		0.7611607142857143
-Precision:		0.6989473684210527
-Recall:			0.8238213399503722
-F1:				0.7562642369020502
-2023-02-24 19:20:25,566 - NN metrics: 
-Accuracy:		0.54296875
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
-2023-02-24 19:24:18,805 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-02-24 19:24:18,805 - CNN metrics: 
-Accuracy:		0.7745535714285714
-Precision:		0.8210862619808307
-Recall:			0.6377171215880894
-F1:				0.7178770949720671
-2023-02-24 19:24:18,806 - NN metrics: 
-Accuracy:		0.54296875
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
-2023-02-24 19:26:55,405 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-02-24 19:26:55,405 - CNN metrics: 
-Accuracy:		0.7377232142857143
-Precision:		0.6653543307086615
-Recall:			0.8387096774193549
-F1:				0.7420417124039517
-2023-02-24 19:26:55,406 - NN metrics: 
-Accuracy:		0.7356770833333334
-Precision:		0.9065934065934066
-Recall:			0.4700854700854701
-F1:				0.6191369606003752
-2023-02-24 19:28:53,764 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-02-24 19:28:53,765 - CNN metrics: 
-Accuracy:		0.7678571428571429
-Precision:		0.8217821782178217
-Recall:			0.6178660049627791
-F1:				0.7053824362606231
-2023-02-24 19:28:53,765 - NN metrics: 
-Accuracy:		0.7447916666666666
-Precision:		0.9234972677595629
-Recall:			0.48148148148148145
-F1:				0.6329588014981273
-2023-02-24 19:38:33,231 - {'batch_size': 128, 'channels': 1, 'data_path': './Data', 'lab_classes': ['dog_gray', 'flower_gray'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-02-24 19:38:33,232 - CNN metrics: 
-Accuracy:		0.6194196428571429
-Precision:		0.5453216374269005
-Recall:			0.9255583126550868
-F1:				0.6862925482980681
-2023-02-24 19:38:33,233 - NN metrics: 
-Accuracy:		0.5963541666666666
-Precision:		0.548235294117647
-Recall:			0.6638176638176638
-F1:				0.6005154639175257
-2023-02-24 19:42:48,952 - {'batch_size': 128, 'channels': 1, 'data_path': './Data', 'lab_classes': ['dog_gray', 'flower_gray'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-02-24 19:42:48,952 - CNN metrics: 
-Accuracy:		0.5714285714285714
-Precision:		0.5124508519003932
-Recall:			0.9702233250620348
-F1:				0.6706689536878215
-2023-02-24 19:42:48,953 - NN metrics: 
-Accuracy:		0.5963541666666666
-Precision:		0.545054945054945
-Recall:			0.7065527065527065
-F1:				0.6153846153846153
-
-
-scatter gridsearch
-2023-02-24 19:48:54,311 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 1, 'imageSize': (128, 128), 'n_rotations': 4, 'order': 1}
-2023-02-24 19:48:54,312 - CNN metrics: 
-Accuracy:		0.7566964285714286
-Precision:		0.6810176125244618
-Recall:			0.8635235732009926
-F1:				0.7614879649890591
-2023-02-24 19:48:54,313 - NN metrics: 
-Accuracy:		0.54296875
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
-2023-02-24 19:49:41,553 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 1, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 1}
-2023-02-24 19:49:41,554 - CNN metrics: 
-Accuracy:		0.7790178571428571
-Precision:		0.774798927613941
-Recall:			0.71712158808933
-F1:				0.7448453608247423
-2023-02-24 19:49:41,554 - NN metrics: 
-Accuracy:		0.54296875
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
-2023-02-24 19:50:29,314 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 1, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 1}
-2023-02-24 19:50:29,315 - CNN metrics: 
-Accuracy:		0.6696428571428571
-Precision:		0.5826893353941267
-Recall:			0.9354838709677419
-F1:				0.718095238095238
-2023-02-24 19:50:29,316 - NN metrics: 
-Accuracy:		0.7109375
-Precision:		0.8486486486486486
-Recall:			0.4472934472934473
-F1:				0.585820895522388
-2023-02-24 19:51:17,654 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 1, 'imageSize': (128, 128), 'n_rotations': 10, 'order': 1}
-2023-02-24 19:51:17,654 - CNN metrics: 
-Accuracy:		0.7522321428571429
-Precision:		0.6905263157894737
-Recall:			0.8138957816377171
-F1:				0.7471526195899773
-2023-02-24 19:51:17,655 - NN metrics: 
-Accuracy:		0.6783854166666666
-Precision:		0.8561643835616438
-Recall:			0.3561253561253561
-F1:				0.5030181086519115
-2023-02-24 19:52:04,504 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 1, 'imageSize': (128, 128), 'n_rotations': 4, 'order': 2}
-2023-02-24 19:52:04,505 - CNN metrics: 
-Accuracy:		0.7600446428571429
-Precision:		0.6918367346938775
-Recall:			0.8411910669975186
-F1:				0.7592385218365061
-2023-02-24 19:52:04,505 - NN metrics: 
-Accuracy:		0.70703125
-Precision:		0.794392523364486
-Recall:			0.4843304843304843
-F1:				0.6017699115044248
-2023-02-24 19:52:50,468 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 1, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 2}
-2023-02-24 19:52:50,468 - CNN metrics: 
-Accuracy:		0.7767857142857143
-Precision:		0.7164179104477612
-Recall:			0.8337468982630273
-F1:				0.7706422018348623
-2023-02-24 19:52:50,469 - NN metrics: 
-Accuracy:		0.7044270833333334
-Precision:		0.8734939759036144
-Recall:			0.4131054131054131
-F1:				0.5609284332688589
-2023-02-24 19:53:38,125 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 1, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-02-24 19:53:38,126 - CNN metrics: 
-Accuracy:		0.7544642857142857
-Precision:		0.8327272727272728
-Recall:			0.5682382133995038
-F1:				0.6755162241887906
-2023-02-24 19:53:38,127 - NN metrics: 
-Accuracy:		0.71484375
-Precision:		0.8586956521739131
-Recall:			0.45014245014245013
-F1:				0.5906542056074766
-2023-02-24 19:54:25,134 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 1, 'imageSize': (128, 128), 'n_rotations': 10, 'order': 2}
-2023-02-24 19:54:25,135 - CNN metrics: 
-Accuracy:		0.7488839285714286
-Precision:		0.8803418803418803
-Recall:			0.511166253101737
-F1:				0.6467817896389324
-2023-02-24 19:54:25,135 - NN metrics: 
-Accuracy:		0.7109375
-Precision:		0.8449197860962567
-Recall:			0.45014245014245013
-F1:				0.587360594795539
-2023-02-24 19:55:11,764 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 2, 'imageSize': (128, 128), 'n_rotations': 4, 'order': 1}
-2023-02-24 19:55:11,764 - CNN metrics: 
-Accuracy:		0.7533482142857143
-Precision:		0.7156398104265402
-Recall:			0.749379652605459
-F1:				0.7321212121212121
-2023-02-24 19:55:11,765 - NN metrics: 
-Accuracy:		0.7252604166666666
-Precision:		0.868421052631579
-Recall:			0.4700854700854701
-F1:				0.6099815157116452
-2023-02-24 19:56:00,276 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 2, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 1}
-2023-02-24 19:56:00,276 - CNN metrics: 
-Accuracy:		0.7823660714285714
-Precision:		0.8291139240506329
-Recall:			0.6501240694789082
-F1:				0.7287899860917941
-2023-02-24 19:56:00,277 - NN metrics: 
-Accuracy:		0.7356770833333334
-Precision:		0.8523809523809524
-Recall:			0.50997150997151
-F1:				0.6381461675579323
-2023-02-24 20:00:38,739 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 2, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 1}
-2023-02-24 20:00:38,740 - CNN metrics: 
-Accuracy:		0.7689732142857143
-Precision:		0.7227272727272728
-Recall:			0.7890818858560794
-F1:				0.7544483985765125
-2023-02-24 20:00:38,741 - NN metrics: 
-Accuracy:		0.69921875
-Precision:		0.8260869565217391
-Recall:			0.43304843304843305
-F1:				0.5682242990654205
-2023-02-24 20:01:31,168 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 2, 'imageSize': (128, 128), 'n_rotations': 10, 'order': 1}
-2023-02-24 20:01:31,168 - CNN metrics: 
-Accuracy:		0.6975446428571429
-Precision:		0.6114864864864865
-Recall:			0.8982630272952854
-F1:				0.7276381909547739
-2023-02-24 20:01:31,169 - NN metrics: 
-Accuracy:		0.7239583333333334
-Precision:		0.8638743455497382
-Recall:			0.4700854700854701
-F1:				0.6088560885608856
-2023-02-24 20:02:18,893 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 2, 'imageSize': (128, 128), 'n_rotations': 4, 'order': 2}
-2023-02-24 20:02:18,893 - CNN metrics: 
-Accuracy:		0.7645089285714286
-Precision:		0.7436548223350253
-Recall:			0.7270471464019851
-F1:				0.7352572145545797
-2023-02-24 20:02:18,894 - NN metrics: 
-Accuracy:		0.7278645833333334
-Precision:		0.8585858585858586
-Recall:			0.4843304843304843
-F1:				0.6193078324225865
-2023-02-24 20:03:09,165 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 2, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 2}
-2023-02-24 20:03:09,166 - CNN metrics: 
-Accuracy:		0.7098214285714286
-Precision:		0.9181286549707602
-Recall:			0.38957816377171217
-F1:				0.5470383275261324
-2023-02-24 20:03:09,166 - NN metrics: 
-Accuracy:		0.7239583333333334
-Precision:		0.8492462311557789
-Recall:			0.48148148148148145
-F1:				0.6145454545454546
-2023-02-24 20:04:02,849 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 2, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-02-24 20:04:02,850 - CNN metrics: 
-Accuracy:		0.7924107142857143
-Precision:		0.8297872340425532
-Recall:			0.6774193548387096
-F1:				0.7459016393442622
-2023-02-24 20:04:02,850 - NN metrics: 
-Accuracy:		0.72265625
-Precision:		0.8670212765957447
-Recall:			0.46438746438746437
-F1:				0.6048237476808904
-2023-02-24 20:05:00,740 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 2, 'imageSize': (128, 128), 'n_rotations': 10, 'order': 2}
-2023-02-24 20:05:00,740 - CNN metrics: 
-Accuracy:		0.7165178571428571
-Precision:		0.6332737030411449
-Recall:			0.8784119106699751
-F1:				0.735966735966736
-2023-02-24 20:05:00,741 - NN metrics: 
-Accuracy:		0.71875
-Precision:		0.8497409326424871
-Recall:			0.4672364672364672
-F1:				0.6029411764705883
-2023-02-24 20:05:47,632 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 3, 'imageSize': (128, 128), 'n_rotations': 4, 'order': 1}
-2023-02-24 20:05:47,633 - CNN metrics: 
-Accuracy:		0.7667410714285714
-Precision:		0.783625730994152
-Recall:			0.6650124069478908
-F1:				0.7194630872483221
-2023-02-24 20:05:47,633 - NN metrics: 
-Accuracy:		0.6770833333333334
-Precision:		0.8759124087591241
-Recall:			0.3418803418803419
-F1:				0.49180327868852464
-2023-02-24 20:06:35,719 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 3, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 1}
-2023-02-24 20:06:35,719 - CNN metrics: 
-Accuracy:		0.7700892857142857
-Precision:		0.8294314381270903
-Recall:			0.6153846153846154
-F1:				0.7065527065527065
-2023-02-24 20:06:35,720 - NN metrics: 
-Accuracy:		0.7356770833333334
-Precision:		0.8592233009708737
-Recall:			0.5042735042735043
-F1:				0.6355475763016158
-2023-02-24 20:07:25,150 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 3, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 1}
-2023-02-24 20:07:25,151 - CNN metrics: 
-Accuracy:		0.7053571428571429
-Precision:		0.6156405990016639
-Recall:			0.9181141439205955
-F1:				0.7370517928286854
-2023-02-24 20:07:25,152 - NN metrics: 
-Accuracy:		0.7291666666666666
-Precision:		0.8950276243093923
-Recall:			0.46153846153846156
-F1:				0.6090225563909775
-2023-02-24 20:08:15,895 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 3, 'imageSize': (128, 128), 'n_rotations': 10, 'order': 1}
-2023-02-24 20:08:15,896 - CNN metrics: 
-Accuracy:		0.7756696428571429
-Precision:		0.7550505050505051
-Recall:			0.7419354838709677
-F1:				0.7484355444305383
-2023-02-24 20:08:15,897 - NN metrics: 
-Accuracy:		0.7369791666666666
-Precision:		0.907103825136612
-Recall:			0.47293447293447294
-F1:				0.6217228464419475
-2023-02-24 20:09:04,880 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 3, 'imageSize': (128, 128), 'n_rotations': 4, 'order': 2}
-2023-02-24 20:09:04,880 - CNN metrics: 
-Accuracy:		0.734375
-Precision:		0.6519337016574586
-Recall:			0.8784119106699751
-F1:				0.7484143763213531
-2023-02-24 20:09:04,880 - NN metrics: 
-Accuracy:		0.734375
-Precision:		0.8620689655172413
-Recall:			0.4985754985754986
-F1:				0.631768953068592
-2023-02-24 20:09:57,691 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 3, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 2}
-2023-02-24 20:09:57,692 - CNN metrics: 
-Accuracy:		0.7131696428571429
-Precision:		0.6285211267605634
-Recall:			0.8858560794044665
-F1:				0.7353244078269825
-2023-02-24 20:09:57,693 - NN metrics: 
-Accuracy:		0.7265625
-Precision:		0.8578680203045685
-Recall:			0.48148148148148145
-F1:				0.6167883211678833
-2023-02-24 20:10:55,401 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 3, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-02-24 20:10:55,402 - CNN metrics: 
-Accuracy:		0.7667410714285714
-Precision:		0.7276995305164319
-Recall:			0.7692307692307693
-F1:				0.7478890229191797
-2023-02-24 20:10:55,402 - NN metrics: 
-Accuracy:		0.7200520833333334
-Precision:		0.8908045977011494
-Recall:			0.4415954415954416
-F1:				0.5904761904761904
-2023-02-24 20:11:58,321 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 3, 'imageSize': (128, 128), 'n_rotations': 10, 'order': 2}
-2023-02-24 20:11:58,322 - CNN metrics: 
-Accuracy:		0.7176339285714286
-Precision:		0.6311188811188811
-Recall:			0.8957816377171216
-F1:				0.7405128205128205
-2023-02-24 20:11:58,322 - NN metrics: 
-Accuracy:		0.7265625
-Precision:		0.8852459016393442
-Recall:			0.46153846153846156
-F1:				0.6067415730337079
-2023-02-24 20:12:46,497 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 4, 'order': 1}
-2023-02-24 20:12:46,497 - CNN metrics: 
-Accuracy:		0.7734375
+2023-03-03 14:43:47,251 - {'batch_size': 25, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-03 14:43:47,252 - CNN metrics: 
+Accuracy:		0.7805714285714286
+Precision:		0.7410071942446043
+Recall:			0.7862595419847328
+F1:				0.762962962962963
+2023-03-03 14:43:47,252 - NN metrics: 
+Accuracy:		0.6365714285714286
 Precision:		0.711864406779661
-Recall:			0.8337468982630273
-F1:				0.7679999999999999
-2023-02-24 20:12:46,498 - NN metrics: 
-Accuracy:		0.7330729166666666
-Precision:		0.9010989010989011
-Recall:			0.4672364672364672
-F1:				0.6153846153846154
-2023-02-24 20:13:36,767 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 1}
-2023-02-24 20:13:36,767 - CNN metrics: 
-Accuracy:		0.7611607142857143
-Precision:		0.6997885835095138
-Recall:			0.8213399503722084
-F1:				0.7557077625570777
-2023-02-24 20:13:36,768 - NN metrics: 
-Accuracy:		0.7239583333333334
-Precision:		0.8839779005524862
-Recall:			0.45584045584045585
-F1:				0.6015037593984963
-2023-02-24 20:14:28,984 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 1}
-2023-02-24 20:14:28,985 - CNN metrics: 
-Accuracy:		0.7388392857142857
-Precision:		0.9043062200956937
-Recall:			0.46898263027295284
-F1:				0.6176470588235293
-2023-02-24 20:14:28,985 - NN metrics: 
-Accuracy:		0.7395833333333334
-Precision:		0.9081081081081082
-Recall:			0.47863247863247865
-F1:				0.6268656716417911
-2023-02-24 20:15:23,291 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 10, 'order': 1}
-2023-02-24 20:15:23,292 - CNN metrics: 
-Accuracy:		0.7321428571428571
-Precision:		0.6442477876106195
-Recall:			0.9032258064516129
-F1:				0.7520661157024794
-2023-02-24 20:15:23,292 - NN metrics: 
-Accuracy:		0.7421875
-Precision:		0.7741935483870968
-Recall:			0.6153846153846154
-F1:				0.6857142857142857
-2023-02-24 20:16:14,574 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 4, 'order': 2}
-2023-02-24 20:16:14,574 - CNN metrics: 
-Accuracy:		0.7555803571428571
-Precision:		0.6965811965811965
-Recall:			0.8089330024813896
-F1:				0.7485648679678529
-2023-02-24 20:16:14,574 - NN metrics: 
-Accuracy:		0.7174479166666666
-Precision:		0.8681318681318682
-Recall:			0.45014245014245013
-F1:				0.5928705440900564
-2023-02-24 20:17:12,040 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 2}
-2023-02-24 20:17:12,040 - CNN metrics: 
-Accuracy:		0.7566964285714286
-Precision:		0.7166276346604216
-Recall:			0.7593052109181141
-F1:				0.7373493975903614
-2023-02-24 20:17:12,041 - NN metrics: 
-Accuracy:		0.7330729166666666
-Precision:		0.8724489795918368
-Recall:			0.48717948717948717
-F1:				0.6252285191956124
-2023-02-24 20:18:17,239 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-02-24 20:18:17,239 - CNN metrics: 
-Accuracy:		0.7600446428571429
-Precision:		0.7385786802030457
-Recall:			0.7220843672456576
-F1:				0.7302383939774153
-2023-02-24 20:18:17,240 - NN metrics: 
-Accuracy:		0.7513020833333334
-Precision:		0.8809523809523809
-Recall:			0.5270655270655271
-F1:				0.6595365418894831
-2023-02-24 20:19:31,906 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 4, 'imageSize': (128, 128), 'n_rotations': 10, 'order': 2}
-2023-02-24 20:19:31,906 - CNN metrics: 
-Accuracy:		0.7511160714285714
-Precision:		0.9245283018867925
-Recall:			0.48635235732009924
-F1:				0.6373983739837399
-2023-02-24 20:19:31,907 - NN metrics: 
-Accuracy:		0.7421875
-Precision:		0.8844221105527639
-Recall:			0.5014245014245015
-F1:				0.64
-2023-02-24 20:20:23,421 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 5, 'imageSize': (128, 128), 'n_rotations': 4, 'order': 1}
-2023-02-24 20:20:23,422 - CNN metrics: 
-Accuracy:		0.7466517857142857
-Precision:		0.6660377358490566
-Recall:			0.8759305210918115
-F1:				0.7566988210075027
-2023-02-24 20:20:23,422 - NN metrics: 
-Accuracy:		0.7317708333333334
-Precision:		0.84688995215311
-Recall:			0.5042735042735043
-F1:				0.6321428571428571
-2023-02-24 20:21:18,516 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 5, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 1}
-2023-02-24 20:21:18,516 - CNN metrics: 
-Accuracy:		0.7075892857142857
-Precision:		0.6243386243386243
-Recall:			0.8784119106699751
-F1:				0.7298969072164949
-2023-02-24 20:21:18,516 - NN metrics: 
-Accuracy:		0.7434895833333334
-Precision:		0.84375
-Recall:			0.5384615384615384
-F1:				0.6573913043478261
-2023-02-24 20:22:17,328 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 5, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 1}
-2023-02-24 20:22:17,328 - CNN metrics: 
-Accuracy:		0.6450892857142857
-Precision:		0.5639097744360902
-Recall:			0.9305210918114144
-F1:				0.7022471910112359
-2023-02-24 20:22:17,329 - NN metrics: 
-Accuracy:		0.75390625
-Precision:		0.8970588235294118
-Recall:			0.5213675213675214
-F1:				0.6594594594594595
-2023-02-24 20:23:19,779 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 5, 'imageSize': (128, 128), 'n_rotations': 10, 'order': 1}
-2023-02-24 20:23:19,779 - CNN metrics: 
-Accuracy:		0.7377232142857143
-Precision:		0.8853211009174312
-Recall:			0.47890818858560796
-F1:				0.6215780998389694
-2023-02-24 20:23:19,780 - NN metrics: 
-Accuracy:		0.7265625
-Precision:		0.9122807017543859
-Recall:			0.4444444444444444
-F1:				0.5977011494252874
-2023-02-24 20:24:16,892 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 5, 'imageSize': (128, 128), 'n_rotations': 4, 'order': 2}
-2023-02-24 20:24:16,893 - CNN metrics: 
-Accuracy:		0.7879464285714286
-Precision:		0.7414965986394558
-Recall:			0.8114143920595533
-F1:				0.7748815165876777
-2023-02-24 20:24:16,893 - NN metrics: 
-Accuracy:		0.7291666666666666
-Precision:		0.8592964824120602
-Recall:			0.48717948717948717
-F1:				0.6218181818181818
-2023-02-24 20:25:24,777 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 5, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 2}
-2023-02-24 20:25:24,777 - CNN metrics: 
-Accuracy:		0.7466517857142857
-Precision:		0.6732283464566929
-Recall:			0.8486352357320099
-F1:				0.7508232711306259
-2023-02-24 20:25:24,778 - NN metrics: 
-Accuracy:		0.7330729166666666
-Precision:		0.8802083333333334
-Recall:			0.48148148148148145
-F1:				0.6224677716390423
-2023-02-24 20:26:46,766 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 5, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-02-24 20:26:46,767 - CNN metrics: 
-Accuracy:		0.7700892857142857
-Precision:		0.797583081570997
-Recall:			0.6550868486352357
-F1:				0.7193460490463215
-2023-02-24 20:26:46,767 - NN metrics: 
-Accuracy:		0.7239583333333334
-Precision:		0.9161676646706587
-Recall:			0.4358974358974359
-F1:				0.5907335907335908
-2023-02-24 20:28:26,275 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 5, 'imageSize': (128, 128), 'n_rotations': 10, 'order': 2}
-2023-02-24 20:28:26,275 - CNN metrics: 
-Accuracy:		0.7857142857142857
-Precision:		0.7617866004962779
-Recall:			0.7617866004962779
-F1:				0.7617866004962778
-2023-02-24 20:28:26,276 - NN metrics: 
-Accuracy:		0.7486979166666666
-Precision:		0.8590909090909091
-Recall:			0.5384615384615384
-F1:				0.6619964973730297
-2023-02-24 20:29:27,086 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 4, 'order': 1}
-2023-02-24 20:29:27,087 - CNN metrics: 
-Accuracy:		0.7566964285714286
-Precision:		0.7097505668934241
-Recall:			0.7766749379652605
-F1:				0.7417061611374407
-2023-02-24 20:29:27,087 - NN metrics: 
-Accuracy:		0.7317708333333334
-Precision:		0.9142857142857143
-Recall:			0.45584045584045585
-F1:				0.6083650190114068
-2023-02-24 20:30:35,917 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 1}
-2023-02-24 20:30:35,917 - CNN metrics: 
-Accuracy:		0.7689732142857143
-Precision:		0.8402777777777778
-Recall:			0.6004962779156328
-F1:				0.7004341534008683
-2023-02-24 20:30:35,918 - NN metrics: 
-Accuracy:		0.76171875
-Precision:		0.8853211009174312
-Recall:			0.5498575498575499
-F1:				0.6783831282952548
-2023-02-24 20:31:53,037 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 1}
-2023-02-24 20:31:53,038 - CNN metrics: 
-Accuracy:		0.7366071428571429
-Precision:		0.653211009174312
-Recall:			0.8833746898263027
-F1:				0.751054852320675
-2023-02-24 20:31:53,038 - NN metrics: 
-Accuracy:		0.7252604166666666
-Precision:		0.8763440860215054
-Recall:			0.46438746438746437
-F1:				0.6070763500931098
-2023-02-24 20:33:18,368 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 10, 'order': 1}
-2023-02-24 20:33:18,369 - CNN metrics: 
-Accuracy:		0.7645089285714286
-Precision:		0.7388059701492538
-Recall:			0.7369727047146402
-F1:				0.737888198757764
-2023-02-24 20:33:18,369 - NN metrics: 
-Accuracy:		0.7356770833333334
-Precision:		0.8775510204081632
-Recall:			0.49002849002849
-F1:				0.6288848263254113
-2023-02-24 20:34:30,221 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 4, 'order': 2}
-2023-02-24 20:34:30,221 - CNN metrics: 
-Accuracy:		0.7700892857142857
-Precision:		0.7545219638242894
-Recall:			0.7245657568238213
-F1:				0.7392405063291138
-2023-02-24 20:34:30,222 - NN metrics: 
-Accuracy:		0.7213541666666666
-Precision:		0.9053254437869822
-Recall:			0.4358974358974359
-F1:				0.5884615384615385
-2023-02-24 20:36:04,933 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 2}
-2023-02-24 20:36:04,933 - CNN metrics: 
-Accuracy:		0.7723214285714286
-Precision:		0.745679012345679
-Recall:			0.749379652605459
-F1:				0.7475247524752476
-2023-02-24 20:36:04,934 - NN metrics: 
-Accuracy:		0.7395833333333334
-Precision:		0.9364161849710982
-Recall:			0.46153846153846156
-F1:				0.6183206106870229
-2023-02-24 20:38:08,976 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-02-24 20:38:08,976 - CNN metrics: 
-Accuracy:		0.7198660714285714
-Precision:		0.6288135593220339
-Recall:			0.9205955334987593
-F1:				0.7472306143001007
-2023-02-24 20:38:08,977 - NN metrics: 
-Accuracy:		0.7526041666666666
-Precision:		0.8779342723004695
-Recall:			0.5327635327635327
-F1:				0.6631205673758864
-2023-02-24 20:40:48,776 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 10, 'order': 2}
-2023-02-24 20:40:48,777 - CNN metrics: 
-Accuracy:		0.7734375
-Precision:		0.7590673575129534
-Recall:			0.7270471464019851
-F1:				0.7427122940430926
-2023-02-24 20:40:48,777 - NN metrics: 
-Accuracy:		0.76171875
-Precision:		0.9117647058823529
-Recall:			0.5299145299145299
-F1:				0.6702702702702703
-2023-02-24 20:42:22,942 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 7, 'imageSize': (128, 128), 'n_rotations': 4, 'order': 1}
-2023-02-24 20:42:22,942 - CNN metrics: 
-Accuracy:		0.7645089285714286
-Precision:		0.7513089005235603
-Recall:			0.7121588089330024
-F1:				0.7312101910828025
-2023-02-24 20:42:22,943 - NN metrics: 
-Accuracy:		0.7408854166666666
-Precision:		0.9367816091954023
-Recall:			0.46438746438746437
-F1:				0.6209523809523808
-2023-02-24 20:44:21,983 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 7, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 1}
-2023-02-24 20:44:21,984 - CNN metrics: 
-Accuracy:		0.7667410714285714
-Precision:		0.7298578199052133
-Recall:			0.7642679900744417
-F1:				0.7466666666666667
-2023-02-24 20:44:21,984 - NN metrics: 
-Accuracy:		0.7760416666666666
-Precision:		0.780564263322884
-Recall:			0.7094017094017094
-F1:				0.7432835820895521
-2023-02-24 20:46:46,148 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 7, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 1}
-2023-02-24 20:46:46,149 - CNN metrics: 
-Accuracy:		0.7555803571428571
-Precision:		0.8484848484848485
-Recall:			0.5558312655086849
-F1:				0.671664167916042
-2023-02-24 20:46:46,149 - NN metrics: 
-Accuracy:		0.7265625
-Precision:		0.9028571428571428
-Recall:			0.45014245014245013
-F1:				0.6007604562737642
-2023-02-24 20:49:34,631 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 7, 'imageSize': (128, 128), 'n_rotations': 10, 'order': 1}
-2023-02-24 20:49:34,631 - CNN metrics: 
-Accuracy:		0.7622767857142857
-Precision:		0.889344262295082
-Recall:			0.5384615384615384
-F1:				0.670788253477589
-2023-02-24 20:49:34,632 - NN metrics: 
-Accuracy:		0.76953125
-Precision:		0.9027777777777778
-Recall:			0.5555555555555556
-F1:				0.6878306878306878
-2023-02-24 20:51:39,837 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 7, 'imageSize': (128, 128), 'n_rotations': 4, 'order': 2}
-2023-02-24 20:51:39,838 - CNN metrics: 
-Accuracy:		0.7611607142857143
-Precision:		0.683495145631068
-Recall:			0.8734491315136477
-F1:				0.7668845315904139
-2023-02-24 20:51:39,838 - NN metrics: 
-Accuracy:		0.71875
-Precision:		0.9530201342281879
-Recall:			0.4045584045584046
-F1:				0.5680000000000001
-2023-02-24 20:54:47,474 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 7, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 2}
-2023-02-24 20:54:47,474 - CNN metrics: 
-Accuracy:		0.75
-Precision:		0.6758349705304518
-Recall:			0.8535980148883374
-F1:				0.7543859649122807
-2023-02-24 20:54:47,475 - NN metrics: 
-Accuracy:		0.78515625
-Precision:		0.918918918918919
-Recall:			0.5811965811965812
-F1:				0.712041884816754
-2023-02-24 20:59:14,462 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 7, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-02-24 20:59:14,462 - CNN metrics: 
-Accuracy:		0.7410714285714286
-Precision:		0.6792452830188679
-Recall:			0.8039702233250621
-F1:				0.7363636363636363
-2023-02-24 20:59:14,463 - NN metrics: 
-Accuracy:		0.796875
-Precision:		0.8853754940711462
-Recall:			0.6381766381766382
-F1:				0.7417218543046359
-2023-02-24 21:06:16,447 - {'batch_size': 128, 'channels': 3, 'data_path': './Data', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 7, 'imageSize': (128, 128), 'n_rotations': 10, 'order': 2}
-2023-02-24 21:06:16,448 - CNN metrics: 
-Accuracy:		0.7946428571428571
-Precision:		0.8101983002832861
-Recall:			0.7096774193548387
-F1:				0.7566137566137566
-2023-02-24 21:06:16,448 - NN metrics: 
-Accuracy:		0.7604166666666666
-Precision:		0.7103274559193955
-Recall:			0.8034188034188035
-F1:				0.7540106951871658
-2023-03-03 11:39:53,548 - {'batch_size': 10, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-03-03 11:39:53,549 - CNN metrics: 
-Accuracy:		0.6733333333333333
-Precision:		0.7619047619047619
-Recall:			0.4507042253521127
-F1:				0.5663716814159292
-2023-03-03 11:39:53,550 - NN metrics: 
-Accuracy:		0.5
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
-2023-03-03 11:43:49,395 - {'batch_size': 10, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-03-03 11:43:49,396 - CNN metrics: 
-Accuracy:		0.7333333333333333
-Precision:		0.7611940298507462
-Recall:			0.68
-F1:				0.7183098591549296
-2023-03-03 11:43:49,396 - NN metrics: 
-Accuracy:		0.5
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
-2023-03-03 11:45:16,722 - {'batch_size': 10, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-03-03 11:45:16,723 - CNN metrics: 
-Accuracy:		0.7533333333333333
-Precision:		0.8421052631578947
-Recall:			0.631578947368421
-F1:				0.7218045112781954
-2023-03-03 11:45:16,724 - NN metrics: 
-Accuracy:		0.5
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
-2023-03-03 12:09:08,085 - {'batch_size': 10, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-03-03 12:09:08,086 - CNN metrics: 
-Accuracy:		0.6733333333333333
-Precision:		0.8157894736842105
-Recall:			0.4246575342465753
-F1:				0.5585585585585585
-2023-03-03 12:09:08,087 - NN metrics: 
-Accuracy:		0.5
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
-2023-03-03 12:11:58,289 - {'batch_size': 10, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-03-03 12:11:58,289 - CNN metrics: 
-Accuracy:		0.7333333333333333
-Precision:		0.7012987012987013
-Recall:			0.7605633802816901
-F1:				0.7297297297297298
-2023-03-03 12:11:58,290 - NN metrics: 
-Accuracy:		0.5
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
-2023-03-03 12:13:38,783 - {'batch_size': 10, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-03-03 12:13:38,784 - CNN metrics: 
-Accuracy:		0.76
-Precision:		0.7662337662337663
-Recall:			0.7662337662337663
-F1:				0.7662337662337663
-2023-03-03 12:13:38,784 - NN metrics: 
-Accuracy:		0.5
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
-2023-03-03 12:16:32,804 - {'batch_size': 10, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-03-03 12:16:32,805 - CNN metrics: 
-Accuracy:		0.7666666666666667
-Precision:		0.75
-Recall:			0.7808219178082192
-F1:				0.7651006711409396
-2023-03-03 12:16:32,806 - NN metrics: 
-Accuracy:		0.5
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
-2023-03-03 12:21:17,023 - {'batch_size': 10, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-03-03 12:21:17,024 - CNN metrics: 
-Accuracy:		0.6933333333333334
-Precision:		0.6216216216216216
-Recall:			0.9452054794520548
-F1:				0.75
-2023-03-03 12:21:17,024 - NN metrics: 
-Accuracy:		0.5
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
-2023-03-03 12:26:16,324 - {'batch_size': 10, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-03-03 12:26:16,324 - CNN metrics: 
-Accuracy:		0.6866666666666666
-Precision:		0.8181818181818182
-Recall:			0.39705882352941174
-F1:				0.5346534653465347
-2023-03-03 12:26:16,325 - NN metrics: 
-Accuracy:		0.5
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
-2023-03-03 12:33:21,361 - {'batch_size': 10, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-03-03 12:33:21,362 - CNN metrics: 
-Accuracy:		0.4866666666666667
-Precision:		0.4866666666666667
-Recall:			1.0
-F1:				0.6547085201793722
-2023-03-03 12:33:21,362 - NN metrics: 
-Accuracy:		0.5
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
-2023-03-03 12:36:09,792 - {'batch_size': 10, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-03-03 12:36:09,793 - CNN metrics: 
-Accuracy:		0.6933333333333334
-Precision:		0.6521739130434783
-Recall:			0.8108108108108109
-F1:				0.7228915662650603
-2023-03-03 12:36:09,794 - NN metrics: 
-Accuracy:		0.5
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
-2023-03-03 12:41:15,107 - {'batch_size': 10, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
-2023-03-03 12:41:15,107 - CNN metrics: 
-Accuracy:		0.6133333333333333
-Precision:		0.5454545454545454
-Recall:			0.9565217391304348
-F1:				0.6947368421052631
-2023-03-03 12:41:15,108 - NN metrics: 
-Accuracy:		0.5
-Precision:		0.0
-Recall:			0.0
-F1:				0.0
+Recall:			0.32061068702290074
+F1:				0.44210526315789467
+2023-03-03 14:47:50,883 - {'batch_size': 25, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-03 14:47:50,883 - CNN metrics: 
+Accuracy:		0.7851428571428571
+Precision:		0.8253968253968254
+Recall:			0.6615776081424937
+F1:				0.7344632768361582
+2023-03-03 14:47:50,884 - NN metrics: 
+Accuracy:		0.6331428571428571
+Precision:		0.6855670103092784
+Recall:			0.3384223918575064
+F1:				0.4531516183986371
+2023-03-03 14:49:01,473 - {'batch_size': 25, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-03 14:49:01,473 - CNN metrics: 
+Accuracy:		0.752
+Precision:		0.6705426356589147
+Recall:			0.8804071246819338
+F1:				0.7612761276127612
+2023-03-03 14:49:01,474 - NN metrics: 
+Accuracy:		0.6297142857142857
+Precision:		0.7041420118343196
+Recall:			0.30279898218829515
+F1:				0.4234875444839858
+2023-03-03 14:50:13,004 - {'batch_size': 25, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-03 14:50:13,004 - CNN metrics: 
+Accuracy:		0.5634285714285714
+Precision:		1.0
+Recall:			0.027989821882951654
+F1:				0.05445544554455445
+2023-03-03 14:50:13,005 - NN metrics: 
+Accuracy:		0.6274285714285714
+Precision:		0.703030303030303
+Recall:			0.2951653944020356
+F1:				0.4157706093189964
+2023-03-03 14:51:23,907 - {'batch_size': 25, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-03 14:51:23,907 - CNN metrics: 
+Accuracy:		0.768
+Precision:		0.902542372881356
+Recall:			0.5419847328244275
+F1:				0.6772655007949125
+2023-03-03 14:51:23,908 - NN metrics: 
+Accuracy:		0.6331428571428571
+Precision:		0.6956521739130435
+Recall:			0.3256997455470738
+F1:				0.44367417677642984
+2023-03-03 14:52:35,182 - {'batch_size': 25, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-03 14:52:35,183 - CNN metrics: 
+Accuracy:		0.7725714285714286
+Precision:		0.7526041666666666
+Recall:			0.7353689567430025
+F1:				0.7438867438867438
+2023-03-03 14:52:35,184 - NN metrics: 
+Accuracy:		0.6342857142857142
+Precision:		0.7062146892655368
+Recall:			0.31806615776081426
+F1:				0.4385964912280702
+2023-03-03 14:53:46,181 - {'batch_size': 25, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-03 14:53:46,181 - CNN metrics: 
+Accuracy:		0.7748571428571429
+Precision:		0.8202614379084967
+Recall:			0.638676844783715
+F1:				0.7181688125894135
+2023-03-03 14:53:46,182 - NN metrics: 
+Accuracy:		0.6342857142857142
+Precision:		0.7062146892655368
+Recall:			0.31806615776081426
+F1:				0.4385964912280702
+2023-03-03 14:54:57,159 - {'batch_size': 25, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-03 14:54:57,160 - CNN metrics: 
+Accuracy:		0.8331428571428572
+Precision:		0.8708708708708709
+Recall:			0.7379134860050891
+F1:				0.7988980716253445
+2023-03-03 14:54:57,160 - NN metrics: 
+Accuracy:		0.6365714285714286
+Precision:		0.7142857142857143
+Recall:			0.31806615776081426
+F1:				0.44014084507042256
+2023-03-03 14:56:07,529 - {'batch_size': 25, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-03 14:56:07,530 - CNN metrics: 
+Accuracy:		0.7657142857142857
+Precision:		0.8560606060606061
+Recall:			0.5750636132315522
+F1:				0.6879756468797564
+2023-03-03 14:56:07,530 - NN metrics: 
+Accuracy:		0.6377142857142857
+Precision:		0.6979166666666666
+Recall:			0.34096692111959287
+F1:				0.4581196581196581
+2023-03-03 14:57:16,973 - {'batch_size': 25, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-03 14:57:16,973 - CNN metrics: 
+Accuracy:		0.7577142857142857
+Precision:		0.8986784140969163
+Recall:			0.5190839694656488
+F1:				0.6580645161290323
+2023-03-03 14:57:16,974 - NN metrics: 
+Accuracy:		0.6331428571428571
+Precision:		0.7045454545454546
+Recall:			0.3155216284987277
+F1:				0.4358523725834798
+2023-03-03 14:58:25,542 - {'batch_size': 25, 'channels': 3, 'data_path': './Data/rgb', 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.3, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 30, 'J': 6, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-03 14:58:25,542 - CNN metrics: 
+Accuracy:		0.7931428571428571
+Precision:		0.7928176795580111
+Recall:			0.7302798982188295
+F1:				0.7602649006622517
+2023-03-03 14:58:25,543 - NN metrics: 
+Accuracy:		0.6308571428571429
+Precision:		0.6988636363636364
+Recall:			0.31297709923664124
+F1:				0.43233743409490333

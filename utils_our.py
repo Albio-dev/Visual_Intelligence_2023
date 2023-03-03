@@ -20,6 +20,7 @@ def loadData(path, folders):
         data += new_data
         labels += [index]*len(new_data)
         
+    random.seed(42)
     temp = random.sample(list(zip(numpy.asarray(data).astype(numpy.float32), labels)), 500)
     return [i[0] for i in temp], [i[1] for i in temp]
 

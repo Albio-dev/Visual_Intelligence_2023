@@ -41,10 +41,11 @@ def train(trainset, data_size, learning_rate, momentum, num_epochs, lab_classes,
 
 
 
+    model.train()      
+
     ### FIT MODEL ###
     for epoch in range(num_epochs):
-        # Train step
-        model.train()                                                   # tells to the model you are in training mode (batchnorm and dropout layers work)
+        # Train step                                  # tells to the model you are in training mode (batchnorm and dropout layers work)
         for data_tr in trainset:
             optim.zero_grad()
 
@@ -58,7 +59,7 @@ def train(trainset, data_size, learning_rate, momentum, num_epochs, lab_classes,
             pred_label_train = torch.cat((pred_label_train,pred),dim=0)
             true_label_train = torch.cat((true_label_train,y),dim=0)
             loss.backward()                                             # compute backpropagation
-            optim.step()                                                # parameter update
+            optim.step()                        # parameter update
 
         losses.append(loss.cpu().detach().numpy())
         acc_t = accuracy_score(true_label_train.cpu(),pred_label_train.cpu())

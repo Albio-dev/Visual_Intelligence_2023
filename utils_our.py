@@ -22,7 +22,7 @@ def loadData(path, folders):
         
     random.seed(42)
     temp = random.sample(list(zip(numpy.asarray(data).astype(numpy.float32), labels)), 500)
-    #return data, labels
+    
     return [i[0] for i in temp], [i[1] for i in temp]
 
 def get_data_split(test_perc, data_path, lab_classes, data = None):
@@ -34,7 +34,6 @@ def get_data_split(test_perc, data_path, lab_classes, data = None):
         return train_test_split(*data, test_size=test_perc, random_state=random_state, shuffle=shuffle)
 
 def load_scatter(path):
-
     raw_data = loadmat(f'{path}/scatter.mat')['datas']
     data = raw_data[0][0]
     labels = np.array([lab[0][0] for lab in raw_data[0][1][0]])
@@ -47,8 +46,9 @@ def matlab_scatter(channels, data, J, qualityFactors, rotations):
     labels = data[1]
     qfact1 = qualityFactors[0]
     qfact2 = qualityFactors[1]
-    scatter = eng.scattering_function(channels, images,labels, float(J), float(qfact1),float(qfact2), float(rotations))
+    scatter = eng.scattering_function(channels, images,labels, float(J), float(qfact1),float(qfact2), float(rotations), nargout = 2)
     eng.quit()
+    return scatter
     
 
 def scatter_mem(batch_size, device, scatter, dataset, channels):

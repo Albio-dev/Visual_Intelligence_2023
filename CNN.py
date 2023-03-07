@@ -212,7 +212,7 @@ if __name__ == "__main__":
     settings = utils_our.load_settings()
 
     trainset, testset = getData(settings['data_path'], settings['lab_classes'], settings['test_perc'], settings['batch_size'], channels=settings['channels'])
-    model, X_te = train(trainset=trainset, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], batch_size=settings['batch_size'], model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], channels=settings['channels'])
+    model, X_te, _ = train(trainset=trainset, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], batch_size=settings['batch_size'], model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], channels=settings['channels'])
     metrics, model_test = test(testset=testset, model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], batch_size=settings['batch_size'], channels=settings['channels'])
 
     plot_weights(model_test.conv1, single_channel = False, collated = True)

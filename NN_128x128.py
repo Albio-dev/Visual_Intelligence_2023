@@ -30,7 +30,6 @@ class NN_128x128(nn.Module):
 
     def forward(self,x):
         # FC phase
-
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         x = self.drop2(x)

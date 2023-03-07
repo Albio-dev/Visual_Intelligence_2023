@@ -6,8 +6,8 @@ lab_classes:
 - flower
 model_train_path: ./train_checkpoint/
 test_perc: 0.3
-learning_rate: 0.01
-momentum: 0.5
+learning_rate: 0.001
+momentum: 0.9
 num_epochs: 30
 J: 64
 imageSize: !!python/tuple

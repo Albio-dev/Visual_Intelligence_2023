@@ -23,7 +23,7 @@ class NN_128x128(nn.Module):
         self.fc1 = nn.Linear(data_size,256)
         self.drop2 = nn.Dropout(p=0.1)
         self.fc2 = nn.Linear(256,32)
-        self.fc3 = nn.Linear(32,self.num_classes)
+        self.fc3 = nn.Linear(256,self.num_classes)
         
 
     def forward(self,x):
@@ -31,7 +31,6 @@ class NN_128x128(nn.Module):
 
         # FC phase
         x = F.relu(self.fc1(x))
-        x = F.relu(self.fc2(x))
         #x = self.drop2(x)
         x = torch.softmax(self.fc3(x),dim=1)
         return x

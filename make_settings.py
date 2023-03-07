@@ -24,14 +24,14 @@ model_hyperparameters = {
 }
 
 scattering_parameters = {
-    # TODO: ??
-    "J" : 6,
+    # Invariance scale
+    "J" : 64,
     # Order of scattering
     "order" : 2,
     # Size of the input images
     "imageSize" : (128, 128),
     # Number of rotations
-    "n_rotations" : 8
+    "n_rotations" : 4
 }
 
 def writefile():

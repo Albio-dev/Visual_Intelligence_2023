@@ -1,4 +1,4 @@
-function datas = scattering_function(sub_color, images, labels, invScale, qfact1,qfact2, num_rotations)
+function [datas, scatter] = scattering_function(sub_color, images, labels, invScale, qfact1,qfact2, num_rotations)
     
 %     imagedir = fullfile('Data', sub_color);
 %     
@@ -40,12 +40,14 @@ function datas = scattering_function(sub_color, images, labels, invScale, qfact1
         features = mean(smat, 2:4);
         features = reshape(features, 1, []);
         
-        datafeatures{i} = features;
+        datafeatures{i} = features;       
     end
     
     datas = {cell2mat(datafeatures),labels};
 
     save(sprintf(replace(fullfile("Data", sub_color, "scatter.mat"), '\', '/')), "datas")
     disp('done')
+
+    scatter = sn;
 end
 

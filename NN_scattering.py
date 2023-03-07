@@ -113,7 +113,9 @@ def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, ima
     print('Calculating scattering coefficients of data')
     #scatters = utils_our.scatter_mem(batch_size,device,scatter,dataset, channels)
     #scatters = utils_our.load_scatter(data_path)
-    scatter = utils_our.matlab_scatter('gray', dataset, J, [2, 2], num_rotations)
+    s = data_path.split("/")
+    sub_color = s[2]
+    scatter = utils_our.matlab_scatter(sub_color, dataset, J, [4, 2], num_rotations)
     scatters = utils_our.load_scatter(data_path)
         
     if scatters is None:
@@ -200,12 +202,14 @@ def getFilterBank(imageSize=(128, 128), J=3, num_rotations=8):
 if __name__ == "__main__":
     settings = utils_our.load_settings()
     
-    trainset, testset, data_size, _ = getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'], channels=settings['channels'])
+    trainset, testset, data_size, scatter = getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'], channels=settings['channels'])
     
     print(f'Scatter data size: {data_size}')
-    train(trainset, data_size = data_size, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], model_train_path=settings['model_train_path'], channels=settings['channels'])
+    stats_NN = train(trainset, data_size = data_size, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], model_train_path=settings['model_train_path'], channels=settings['channels'])
     metrics = test(testset,data_size, lab_classes=settings['lab_classes'], model_train_path=settings['model_train_path'], channels=settings['channels'])       
     
     metrics.confMatDisplay().plot()
     print(metrics)
     plt.show()
+    #printScatterInfo(scatter, print)
+    #utils_our.display_stats_graphs(stats_CNN= None, stats_NN= stats_NN ,epochs= settings['num_epochs'])

@@ -115,7 +115,7 @@ def isTrained(model_train_path):
 def show_kernels(model_test):
     # Get the first kernel from the model
     kernels_1 = model_test.conv1.weight.data.cpu().clone()
-    visTensor(kernels_1, ch=0, allkernels=False)
+    utils.visTensor(kernels_1, ch=0, allkernels=False, ax=0)
     plt.axis('off')
     plt.title('kernels from convolutional layer: 1')
     plt.ioff()
@@ -212,7 +212,7 @@ if __name__ == "__main__":
     settings = utils_our.load_settings()
 
     trainset, testset = getData(settings['data_path'], settings['lab_classes'], settings['test_perc'], settings['batch_size'], channels=settings['channels'])
-    model, X_te = train(trainset=trainset, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], batch_size=settings['batch_size'], model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], channels=settings['channels'])
+    model, X_te, _ = train(trainset=trainset, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], batch_size=settings['batch_size'], model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], channels=settings['channels'])
     metrics, model_test = test(testset=testset, model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], batch_size=settings['batch_size'], channels=settings['channels'])
 
     plot_weights(model_test.conv1, single_channel = False, collated = True)

@@ -9,18 +9,18 @@ generic = {
     "lab_classes" : ['dog','flower'],
 
     # How many samples are used per-iteration
-    "batch_size" : 25,
+    "batch_size" : 12,
     # Quantity of dataset used for the testing
-    "test_perc" : .3
+    "test_perc" : .2
 }
 
 model_hyperparameters = {
     # Learning rate to scale how much new weighs are evaluated
     "learning_rate": 0.001,
     # Scale for past experience to not be perturbated by new ones
-    "momentum" : 0.9,
+    "momentum" : 0.5,
     # The number of times the model is trained on the entire training dataset.
-    "num_epochs" : 30    
+    "num_epochs" : 50
 }
 
 scattering_parameters = {
@@ -42,7 +42,7 @@ def writefile():
 
 writefile()
     
-def setScatteringParameters( J, order, imageSize, n_rotations):
+def setScatteringParameters(J, order, imageSize, n_rotations):
     scattering_parameters['J'] = J
     scattering_parameters['order'] = order
     scattering_parameters['imageSize'] = imageSize

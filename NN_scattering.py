@@ -39,8 +39,6 @@ def train(trainset, data_size, learning_rate, momentum, num_epochs, lab_classes,
     # Loss function
     criterion = torch.nn.CrossEntropyLoss()
 
-
-
     model.train()      
 
     ### FIT MODEL ###
@@ -81,6 +79,7 @@ def test(testset, data_size, lab_classes, model_train_path, channels):
     pred_label_test = torch.empty((0,len(lab_classes) )).to(device)
     true_label_test = torch.empty((0)).to(device)
 
+    model_test.eval()
     with torch.no_grad():
         for data in testset:
             X_te, y_te = data
@@ -178,7 +177,6 @@ def getFilterBank(imageSize=(128, 128), J=3, num_rotations=8):
 
 
 if __name__ == "__main__":
-
     settings = utils_our.load_settings()
     
     trainset, testset, data_size = getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'], channels=settings['channels'])

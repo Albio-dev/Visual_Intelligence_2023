@@ -115,7 +115,7 @@ def isTrained(model_train_path):
 def show_kernels(model_test):
     # Get the first kernel from the model
     kernels_1 = model_test.conv1.weight.data.cpu().clone()
-    visTensor(kernels_1, ch=0, allkernels=False)
+    utils.visTensor(kernels_1, ch=0, allkernels=False, ax=0)
     plt.axis('off')
     plt.title('kernels from convolutional layer: 1')
     plt.ioff()

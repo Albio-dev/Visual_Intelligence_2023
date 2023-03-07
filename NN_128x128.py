@@ -25,13 +25,12 @@ class NN_128x128(nn.Module):
         self.fc1 = nn.Linear(data_size,64)
         self.fc2 = nn.Linear(64, 32)
         self.drop2 = nn.Dropout(p=0.5)
-        self.fc3 = nn.Linear(32,self.num_classes)
+        self.fc3 = nn.Linear(64,self.num_classes)
         
 
     def forward(self,x):
         # FC phase
         x = F.relu(self.fc1(x))
-        x = F.relu(self.fc2(x))
         x = self.drop2(x)
         x = self.fc3(x)
         return x

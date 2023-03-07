@@ -113,7 +113,7 @@ def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, ima
     print('Calculating scattering coefficients of data')
     #scatters = utils_our.scatter_mem(batch_size,device,scatter,dataset, channels)
     #scatters = utils_our.load_scatter(data_path)
-    scatter = utils_our.matlab_scatter('rgb', dataset, J, [2, 2], num_rotations)
+    scatter = utils_our.matlab_scatter('gray', dataset, J, [2, 2], num_rotations)
     scatters = utils_our.load_scatter(data_path)
         
     if scatters is None:
@@ -138,13 +138,13 @@ def printScatterInfo(scatter, print_func = print, graphs = False):
     print_func(f'Number of wavelet decompositions: {sum(np.asarray(eng.paths(scatter, nargout=2)[1]))}')
 
     if graphs:
-        plt.figure()
-        plt.title('Scatter filters')
+        fig = plt.figure()
+        fig.title('Scatter filters')
         for index, points in enumerate(scatnet):            
-            plt.scatter([x[0] for x in points], [x[1] for x in points])
+            fig.scatter([x[0] for x in points], [x[1] for x in points])
 
-        plt.legend([f"Filterbank level {i}" for i in range(len(scatnet))])
-        plt.show()
+        fig.legend([f"Filterbank level {i}" for i in range(len(scatnet))])
+        fig.show()
 
 
 def showPassBandScatterFilters(imageSize=(128, 128), J=3, num_rotations=8):

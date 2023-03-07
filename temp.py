@@ -4,8 +4,8 @@ from PIL import Image
 path = './Data'
 
 # Load the data
-for filename in os.listdir(path+'/flower'):
-    img = Image.open(path+'/flower/'+filename)
+for filename in os.listdir(path+'/rgb/whale'):
+    img = Image.open(path+'/rgb/whale/'+filename)
     img = img.convert('L')
-    img.save(path+'/flower_gray/'+filename)
+    img.save(path+'/gray/whale/'+filename)
     

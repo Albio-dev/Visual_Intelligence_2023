@@ -64,6 +64,7 @@ def train(trainset, learning_rate, momentum, num_epochs, batch_size, lab_classes
         losses.append(loss.cpu().detach().numpy())
         acc_t = accuracy_score(true_label_train.cpu(),pred_label_train.cpu())
         acc_train.append(acc_t)
+        
         print("Epoch: {}/{}, loss = {:.4f} - acc = {:.4f}".format(epoch + 1, num_epochs, loss, acc_t))
         if acc_t > best_acc:                                                            # save the best model (the highest accuracy in validation)
             torch.save(model.state_dict(), model_train_path + 'CNN_128x128_best_model_trained.pt')
@@ -74,7 +75,7 @@ def train(trainset, learning_rate, momentum, num_epochs, batch_size, lab_classes
         true_label_train = torch.empty((0)).to(device)
     
     # aggiunto x perché mi serviva per testare il codice
-    return model,x
+    return model, x, {'loss': losses, 'accuracy': acc_train}
 
 def test(testset, batch_size, lab_classes, model_train_path, channels):
     n_classes = len(lab_classes)   
@@ -202,7 +203,7 @@ def showCNNFilters(model):
     utils.visTensor(filter.clone(), ch=0, allkernels=False,ax= axs[0], filter_channel=0)
     utils.visTensor(filter.clone(), ch=0, allkernels=False,ax= axs[1], filter_channel=1)
     utils.visTensor(filter.clone(), ch=0, allkernels=False,ax= axs[2], filter_channel=2)
-    plt.show()
+    fig.show()
 
 
 

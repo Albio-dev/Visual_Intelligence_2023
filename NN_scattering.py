@@ -62,6 +62,7 @@ def train(trainset, data_size, learning_rate, momentum, num_epochs, lab_classes,
         losses.append(loss.cpu().detach().numpy())
         acc_t = accuracy_score(true_label_train.cpu(),pred_label_train.cpu())
         acc_train.append(acc_t)
+        
         print("Epoch: {}/{}, loss = {:.4f} - acc = {:.4f}".format(epoch + 1, num_epochs, loss, acc_t))
         if acc_t > best_acc:                                                            # save the best model (the highest accuracy in validation)
             torch.save(model.state_dict(), model_train_path + 'NN_128x128_best_model_trained.pt')
@@ -70,6 +71,9 @@ def train(trainset, data_size, learning_rate, momentum, num_epochs, lab_classes,
         # Reinitialize the variables to compute accuracy
         pred_label_train = torch.empty((0)).to(device)
         true_label_train = torch.empty((0)).to(device)
+
+
+    return {'loss': losses, 'accuracy': acc_train}
 
 def test(testset, data_size, lab_classes, model_train_path, channels):
     ### TEST MODEL ###

@@ -24,10 +24,10 @@ def classification_task(display = True):
 
     
     if not CNN.isTrained(model_train_path=settings['model_train_path']):
-        CNN.train(trainset_cnn, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], batch_size=settings['batch_size'], model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], channels=settings['channels'])
+        _, _, stats_CNN = CNN.train(trainset_cnn, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], batch_size=settings['batch_size'], model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], channels=settings['channels'])
 
     if not NN_scattering.isTrained(model_train_path=settings['model_train_path']):
-        NN_scattering.train(trainset_scatter, data_size = data_size, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], model_train_path=settings['model_train_path'], channels=settings['channels'])
+        stats_NN = NN_scattering.train(trainset_scatter, data_size = data_size, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], model_train_path=settings['model_train_path'], channels=settings['channels'])
 
     CNN_metrics, CNN_model = CNN.test(testset_cnn, model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], batch_size=settings['batch_size'], channels=settings['channels'])
     NN_metrics = NN_scattering.test(testset_scatter, data_size, lab_classes=settings['lab_classes'], model_train_path=settings['model_train_path'], channels=settings['channels'])
@@ -48,12 +48,8 @@ def classification_task(display = True):
     NN_metrics.printMetrics("NN")
 
     if display == True:
-        fig, axs = plt.subplots(1, 2)
-        axs[0].set_title('confusion matrix in test for CNN')
-        CNN_metrics.confMatDisplay().plot(ax=axs[0])
-        axs[1].set_title('confusion matrix in test for scattering NN')
-        NN_metrics.confMatDisplay().plot(ax=axs[1])
-        plt.show()
+        
+        utils_our.display_stats_graphs(stats_CNN, stats_NN, settings['num_epochs'])
 
         #NN_scattering.showPassBandScatterFilters(J = settings['J'], num_rotations = settings['n_rotations'], imageSize= settings['imageSize'])
         CNN.showCNNFilters(CNN_model)

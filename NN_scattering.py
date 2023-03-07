@@ -62,6 +62,7 @@ def train(trainset, data_size, learning_rate, momentum, num_epochs, lab_classes,
         losses.append(loss.cpu().detach().numpy())
         acc_t = accuracy_score(true_label_train.cpu(),pred_label_train.cpu())
         acc_train.append(acc_t)
+        
         print("Epoch: {}/{}, loss = {:.4f} - acc = {:.4f}".format(epoch + 1, num_epochs, loss, acc_t))
         if acc_t > best_acc:                                                            # save the best model (the highest accuracy in validation)
             torch.save(model.state_dict(), model_train_path + 'NN_128x128_best_model_trained.pt')
@@ -70,6 +71,9 @@ def train(trainset, data_size, learning_rate, momentum, num_epochs, lab_classes,
         # Reinitialize the variables to compute accuracy
         pred_label_train = torch.empty((0)).to(device)
         true_label_train = torch.empty((0)).to(device)
+
+
+    return {'loss': losses, 'accuracy': acc_train}
 
 def test(testset, data_size, lab_classes, model_train_path, channels):
     ### TEST MODEL ###
@@ -109,7 +113,7 @@ def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, ima
     print('Calculating scattering coefficients of data')
     #scatters = utils_our.scatter_mem(batch_size,device,scatter,dataset, channels)
     #scatters = utils_our.load_scatter(data_path)
-    scatter = utils_our.matlab_scatter('rgb', dataset, J, [4, 2], num_rotations)
+    scatter = utils_our.matlab_scatter('rgb', dataset, J, [2, 2], num_rotations)
     scatters = utils_our.load_scatter(data_path)
         
     if scatters is None:
@@ -123,11 +127,25 @@ def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, ima
     return *utils_our.batcher(xtrain, xtest, ytrain, ytest,batch_size= batch_size), np.prod(scatters[0][0].shape), scatter[1]
 
     #return *utils_our.batcher(*utils_our.get_data_split(data = scatters, test_perc=test_perc, lab_classes=lab_classes, data_path=data_path), batch_size = batch_size), np.prod(scatters[0][0].shape)
-def getScatNet(scatter):
+
+def printScatterInfo(scatter, print_func = print, graphs = False):
     import matlab.engine
     eng = matlab.engine.start_matlab()
-    _,_, f = eng.filterbank(scatter, nargout=3)
-    return f
+    _,_, scatnet = eng.filterbank(scatter, nargout=3)
+    
+    print_func('\t'.join([f'filterbank level {i}: {len(scatnet[i])} wavelets' for i in range(len(scatnet))]))
+    print_func(f'Coefficient size: {eng.coefficientSize(scatter, nargout=1)}')
+    print_func(f'Number of wavelet decompositions: {sum(np.asarray(eng.paths(scatter, nargout=2)[1]))}')
+
+    if graphs:
+        plt.figure()
+        plt.title('Scatter filters')
+        for index, points in enumerate(scatnet):            
+            plt.scatter([x[0] for x in points], [x[1] for x in points])
+
+        plt.legend([f"Filterbank level {i}" for i in range(len(scatnet))])
+        plt.show()
+
 
 def showPassBandScatterFilters(imageSize=(128, 128), J=3, num_rotations=8):
     filters_set, J, rotations = getFilterBank(imageSize=imageSize, J=J, num_rotations=num_rotations)

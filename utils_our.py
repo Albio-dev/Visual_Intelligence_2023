@@ -9,6 +9,7 @@ from torch.utils.data import Dataset
 from sklearn.model_selection import train_test_split
 from scipy.io import loadmat
 import random
+import matplotlib.pyplot as plt
 
 def loadData(path, folders):
 
@@ -22,6 +23,10 @@ def loadData(path, folders):
         
     random.seed(42)
     temp = random.sample(list(zip(numpy.asarray(data).astype(numpy.float32), labels)), 500)
+
+    for num, i in enumerate(temp):
+        cv2.imwrite(f'{path}/temp/{folders[i[1]]}/{num}.png', i[0])
+        pass
     
     return [i[0] for i in temp], [i[1] for i in temp]
 
@@ -36,7 +41,10 @@ def get_data_split(test_perc, data_path, lab_classes, data = None):
 def load_scatter(path):
     raw_data = loadmat(f'{path}/scatter.mat')['datas']
     data = raw_data[0][0]
-    labels = np.array([lab[0][0] for lab in raw_data[0][1][0]])
+    if raw_data[0][1][0].shape == (1,):
+        labels = np.array([lab[0] for lab in raw_data[0][1]])
+    else:
+        labels = np.array([lab[0][0] for lab in raw_data[0][1][0]])
     return data, labels
 
 def matlab_scatter(channels, data, J, qualityFactors, rotations):
@@ -135,6 +143,37 @@ def colorize(z):
     c[idx] = [hls_to_rgb(a, b, 0.8) for a, b in zip(A, B)]
     return c
 
+def display_stats_graphs(stats_CNN, stats_NN, epochs):
+    fig, axs = plt.subplots(2, 2)
+    axs[0][0].set_xlabel('Epochs')
+    axs[0][0].set_ylabel('Loss')
+    axs[0][0].set_xticks(range(epochs))
+    axs[0][0].set_ylim(.5, 1)
+    axs[0][0].set_title('loss in train for CNN')
+    axs[0][0].plot(range(epochs), list(stats_CNN.values())[0])
+    
+    axs[0][1].set_xlabel('Epochs')
+    axs[0][1].set_ylabel('Loss')
+    axs[0][1].set_xticks(range(epochs))
+    axs[0][1].set_ylim(.5, 1)
+    axs[0][1].set_title('loss in train for scattering NN')
+    axs[0][1].plot(range(epochs), list(stats_NN.values())[0])
+
+    axs[1][0].set_xlabel('Epochs')
+    axs[1][0].set_ylabel('Accuracy')
+    axs[1][0].set_xticks(range(epochs))
+    axs[1][0].set_ylim(.5, 1)
+    axs[1][0].set_title('Accuracy in training for CNN')
+    axs[1][0].plot(range(epochs), list(stats_CNN.values())[1])
+
+    axs[1][1].set_xlabel('Epochs')
+    axs[1][1].set_ylabel('Accuracy')
+    axs[1][1].set_xticks(range(epochs))
+    axs[1][1].set_ylim(.5, 1)
+    axs[1][1].set_title('Accuracy in training for scattering NN')
+    axs[1][1].plot(range(epochs), list(stats_NN.values())[1])
+    fig.show()
+    
 class CustomDataset(Dataset):
     def __init__(self, data, labels):
         self.labels = labels

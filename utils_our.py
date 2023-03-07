@@ -22,6 +22,10 @@ def loadData(path, folders):
         
     random.seed(42)
     temp = random.sample(list(zip(numpy.asarray(data).astype(numpy.float32), labels)), 500)
+
+    for num, i in enumerate(temp):
+        cv2.imwrite(f'{path}/temp/{folders[i[1]]}/{num}.png', i[0])
+        pass
     
     return [i[0] for i in temp], [i[1] for i in temp]
 
@@ -36,7 +40,10 @@ def get_data_split(test_perc, data_path, lab_classes, data = None):
 def load_scatter(path):
     raw_data = loadmat(f'{path}/scatter.mat')['datas']
     data = raw_data[0][0]
-    labels = np.array([lab[0][0] for lab in raw_data[0][1][0]])
+    if raw_data[0][1][0].shape == (1,):
+        labels = np.array([lab[0] for lab in raw_data[0][1]])
+    else:
+        labels = np.array([lab[0][0] for lab in raw_data[0][1][0]])
     return data, labels
 
 def matlab_scatter(channels, data, J, qualityFactors, rotations):

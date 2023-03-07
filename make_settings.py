@@ -1,8 +1,8 @@
 import yaml
 
 generic = {
-    "data_path" : './Data/rgb',
-    'channels' : 3,
+    "data_path" : './Data/gray',
+    'channels' : 1,
     "model_train_path": './train_checkpoint/',
 
     # Classes in the dataset             
@@ -31,7 +31,7 @@ scattering_parameters = {
     # Size of the input images
     "imageSize" : (128, 128),
     # Number of rotations
-    "n_rotations" : 4
+    "n_rotations" : 6
 }
 
 def writefile():

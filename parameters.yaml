@@ -13,5 +13,5 @@ J: 64
 imageSize: !!python/tuple
 - 128
 - 128
-n_rotations: 4
+n_rotations: 6
 order: 2

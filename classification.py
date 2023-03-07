@@ -19,8 +19,8 @@ logger.addHandler(fh)
 def classification_task(display = True):
     settings = utils_our.load_settings()
         
-    trainset_cnn, testset_cnn = CNN.getData(data_path=settings['data_path'], test_perc=settings['test_perc'], batch_size=settings['batch_size'], lab_classes=settings['lab_classes'], channels=settings['channels'], train_scale=.5)
-    trainset_scatter, testset_scatter, data_size, scatter = NN_scattering.getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'], channels=settings['channels'], train_scale=.5)
+    trainset_cnn, testset_cnn = CNN.getData(data_path=settings['data_path'], test_perc=settings['test_perc'], batch_size=settings['batch_size'], lab_classes=settings['lab_classes'], channels=settings['channels'], train_scale=1)
+    trainset_scatter, testset_scatter, data_size, scatter = NN_scattering.getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'], channels=settings['channels'], train_scale=1)
 
     
     if not CNN.isTrained(model_train_path=settings['model_train_path']):
@@ -58,19 +58,13 @@ def classification_task(display = True):
         #NN_scattering.showPassBandScatterFilters(J = settings['J'], num_rotations = settings['n_rotations'], imageSize= settings['imageSize'])
         CNN.showCNNFilters(CNN_model)
 
-        plt.figure()
-        plt.title('Scatter filters')
-        scatnet = NN_scattering.getScatNet(scatter)
-        for index, points in enumerate(scatnet):            
-            plt.scatter([x[0] for x in points], [x[1] for x in points])
-
-        plt.legend([f"Filterbank level {i}" for i in range(len(scatnet))])
-        logger.info('\t'.join([f'filterbank level {i}: {len(scatnet[i])} wavelets' for i in range(len(scatnet))]))
-        plt.show()
+        NN_scattering.printScatterInfo(scatter, logger.info, display)
+    else:
+        NN_scattering.printScatterInfo(scatter, print)
 
 if __name__ == "__main__":
     make_settings.writefile()
-    classification_task(False)
+    classification_task(True)
 
 def k_run(n):
     for i in range(n):

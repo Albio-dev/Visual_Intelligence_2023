@@ -62,12 +62,13 @@ def visTensor(tensor, ax, ch=0, allkernels=False, nrow=8, padding=1, filter_chan
 
         rows = np.min((tensor.shape[0] // nrow + 1, 64))    
 
-        if filter_channel is not None:
-          for filter in tensor:
-            for channel in range(0, c):
-              selected_filter = filter[filter_channel]
-              if channel != filter_channel:
-                filter[channel] = selected_filter.clone()
+        if c != 1:
+          if filter_channel is not None:
+            for filter in tensor:
+              for channel in range(0, c):
+                selected_filter = filter[filter_channel]
+                if channel != filter_channel:
+                  filter[channel] = selected_filter.clone()
 
         
         grid = utils.make_grid(tensor, nrow=nrow, normalize=True, padding=padding)

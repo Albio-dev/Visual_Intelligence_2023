@@ -37,7 +37,8 @@ function [datas, scatter] = scattering_function(sub_color, images, labels, invSc
     parfor i = 1:length(images)
        
         smat = featureMatrix(sn, images{i});
-        features = mean(smat, 2:4);
+        %features = mean(smat, 2:4);
+        features = smat
         features = reshape(features, 1, []);
         
         datafeatures{i} = features;       

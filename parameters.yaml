@@ -1,6 +1,6 @@
 batch_size: 12
-channels: 3
-data_path: ./Data/rgb
+channels: 1
+data_path: ./Data/gray
 lab_classes:
 - dog
 - whale

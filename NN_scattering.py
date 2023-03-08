@@ -141,9 +141,9 @@ def printScatterInfo(scatter, print_func = print, graphs = False):
 
     if graphs:
         fig = plt.figure()
-        fig.title('Scatter filters')
+        fig.suptitle('Scatter filters')
         for index, points in enumerate(scatnet):            
-            fig.scatter([x[0] for x in points], [x[1] for x in points])
+            plt.scatter([x[0] for x in points], [x[1] for x in points])
 
         fig.legend([f"Filterbank level {i}" for i in range(len(scatnet))])
         fig.show()

@@ -1,4 +1,4 @@
-batch_size: 12
+batch_size: 64
 channels: 3
 data_path: ./Data/rgb
 lab_classes:
@@ -6,12 +6,12 @@ lab_classes:
 - whale
 model_train_path: ./train_checkpoint/
 test_perc: 0.2
-learning_rate: 0.001
-momentum: 0.5
+learning_rate: 0.0001
+momentum: 0.9
 num_epochs: 50
-J: 64
+J: 32
 imageSize: !!python/tuple
 - 128
 - 128
-n_rotations: 6
+n_rotations: 8
 order: 2

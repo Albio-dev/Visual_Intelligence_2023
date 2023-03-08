@@ -3,3 +3,4 @@ train_checkpoint/
 __*
 Data/scatters/
 *.asv
+scatter.mat

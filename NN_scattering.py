@@ -80,7 +80,7 @@ def test(testset, data_size, lab_classes, model_train_path, channels):
     model_test = NN_128x128(input_channel=channels,num_classes=len(lab_classes) , data_size=data_size).to(device)                # Initialize a new model
     model_test.load_state_dict(torch.load(model_train_path+'NN_128x128_best_model_trained.pt'))   # Load the model
 
-    pred_label_test = torch.empty((0,len(lab_classes) )).to(device)
+    pred_label_test = torch.empty((0,len(lab_classes))).to(device)
     true_label_test = torch.empty((0)).to(device)
 
     model_test.eval()
@@ -100,7 +100,7 @@ def isTrained(model_train_path):
     return os.path.isfile(model_train_path+'NN_128x128_best_model_trained.pt')
 
 
-def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, imageSize, order, channels , train_scale = 1):
+def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, imageSize, order, channels , mode, train_scale = 1):
     # Split in train and test set
     #trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
     dataset = utils_our.loadData(path = data_path, folders = lab_classes)
@@ -113,7 +113,9 @@ def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, ima
     print('Calculating scattering coefficients of data')
     #scatters = utils_our.scatter_mem(batch_size,device,scatter,dataset, channels)
     #scatters = utils_our.load_scatter(data_path)
-    scatter = utils_our.matlab_scatter('rgb', dataset, J, [2, 2], num_rotations)
+    s = data_path.split("/")
+    sub_color = s[2]
+    scatter = utils_our.matlab_scatter(sub_color, dataset, J, [4, 2], num_rotations)
     scatters = utils_our.load_scatter(data_path)
         
     if scatters is None:
@@ -138,13 +140,13 @@ def printScatterInfo(scatter, print_func = print, graphs = False):
     print_func(f'Number of wavelet decompositions: {sum(np.asarray(eng.paths(scatter, nargout=2)[1]))}')
 
     if graphs:
-        plt.figure()
-        plt.title('Scatter filters')
+        fig = plt.figure()
+        fig.title('Scatter filters')
         for index, points in enumerate(scatnet):            
-            plt.scatter([x[0] for x in points], [x[1] for x in points])
+            fig.scatter([x[0] for x in points], [x[1] for x in points])
 
-        plt.legend([f"Filterbank level {i}" for i in range(len(scatnet))])
-        plt.show()
+        fig.legend([f"Filterbank level {i}" for i in range(len(scatnet))])
+        fig.show()
 
 
 def showPassBandScatterFilters(imageSize=(128, 128), J=3, num_rotations=8):
@@ -203,9 +205,11 @@ if __name__ == "__main__":
     trainset, testset, data_size, _ = getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'], channels=settings['channels'])
     
     print(f'Scatter data size: {data_size}')
-    train(trainset, data_size = data_size, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], model_train_path=settings['model_train_path'], channels=settings['channels'])
+    stats_NN = train(trainset, data_size = data_size, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], model_train_path=settings['model_train_path'], channels=settings['channels'])
     metrics = test(testset,data_size, lab_classes=settings['lab_classes'], model_train_path=settings['model_train_path'], channels=settings['channels'])       
     
     metrics.confMatDisplay().plot()
     print(metrics)
     plt.show()
+    #printScatterInfo(scatter, print)
+    #utils_our.display_stats_graphs(stats_CNN= None, stats_NN= stats_NN ,epochs= settings['num_epochs'])

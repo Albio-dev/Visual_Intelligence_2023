@@ -1,4 +1,3 @@
-
 import matplotlib.pyplot as plt
 import os
 import logging
@@ -18,10 +17,11 @@ logger.addHandler(fh)
 
 def classification_task(display = True):
     settings = utils_our.load_settings()
-        
+    
     trainset_cnn, testset_cnn = CNN.getData(data_path=settings['data_path'], test_perc=settings['test_perc'], batch_size=settings['batch_size'], lab_classes=settings['lab_classes'], channels=settings['channels'], train_scale=1)
-    trainset_scatter, testset_scatter, data_size, scatter = NN_scattering.getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'], channels=settings['channels'], train_scale=1)
-
+    mode = settings['data_path'].split('/')[-1]
+    trainset_scatter, testset_scatter, data_size, scatter = NN_scattering.getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'], channels=settings['channels'], train_scale=1, mode=mode)
+    
     
     if not CNN.isTrained(model_train_path=settings['model_train_path']):
         _, _, stats_CNN = CNN.train(trainset_cnn, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], batch_size=settings['batch_size'], model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], channels=settings['channels'])
@@ -37,7 +37,7 @@ def classification_task(display = True):
         os.remove(f"{settings['model_train_path']}CNN_128x128_best_model_trained.pt")
     if os.path.exists(f"{settings['model_train_path']}NN_128x128_best_model_trained.pt"):
         os.remove(f"{settings['model_train_path']}NN_128x128_best_model_trained.pt")
-        
+    
 
     # Write to file settings and metrics
     logger.info(settings)
@@ -48,7 +48,6 @@ def classification_task(display = True):
     NN_metrics.printMetrics("NN")
 
     if display == True:
-        
         utils_our.display_stats_graphs(stats_CNN, stats_NN, settings['num_epochs'])
 
         #NN_scattering.showPassBandScatterFilters(J = settings['J'], num_rotations = settings['n_rotations'], imageSize= settings['imageSize'])

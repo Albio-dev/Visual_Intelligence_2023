@@ -10,6 +10,7 @@ from sklearn.model_selection import train_test_split
 from scipy.io import loadmat
 import random
 import matplotlib.pyplot as plt
+import os
 
 def loadData(path, folders):
 
@@ -23,6 +24,10 @@ def loadData(path, folders):
         
     random.seed(42)
     temp = random.sample(list(zip(numpy.asarray(data).astype(numpy.float32), labels)), 500)
+
+    for label in folders:
+        if not os.path.exists(f'{path}/temp/{label}'):
+            os.makedirs(f'{path}/temp/{label}')
 
     for num, i in enumerate(temp):
         cv2.imwrite(f'{path}/temp/{folders[i[1]]}/{num}.png', i[0])

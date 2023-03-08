@@ -1,46 +1,33 @@
 function [datas, scatter] = scattering_function(sub_color, images, labels, invScale, qfact1,qfact2, num_rotations)
     
-%     imagedir = fullfile('Data', sub_color);
-%     
-%     Imds = imageDatastore(imagedir,'IncludeSubFolders',true,'FileExtensions',...
-%     '.jpg','LabelSource','foldernames');
-%     
-%     
-%     summary(Imds.Labels)
-    
-    
-%     images = readall(Imds);
-%     labels = Imds.Labels;
-%     
-%     labels = labels(:) ~= 'dog';
-%     images = images;
-%     labels = labels;
-       
-    
-%     invariance_scale = 32;
-%     quality_factors = [3 1];
-%     num_rotations = [4 4];
-    disp(qfact1);
-    disp(invScale);
     invariance_scale = invScale;
     quality_factors = [qfact1 qfact2];
     num_rotations = [num_rotations num_rotations];
-    
 
     sn = waveletScattering2('ImageSize',size(images{1}, [1, 2]),'InvarianceScale',invariance_scale,'QualityFactors',quality_factors,'NumRotations',num_rotations);
-    [~,npaths] = paths(sn);
-    sum(npaths)
-    coefficientSize(sn)
     
     
     datafeatures = cell(length(images), 1);
     parfor i = 1:length(images)
-       
-        smat = featureMatrix(sn, images{i});
-        %features = mean(smat, 2:4);
-        features = smat
-        features = reshape(features, 1, []);
         
+        
+        % Keep all scatter invariants
+        %smat = featureMatrix(sn, images{i});
+        % Mean only 3rd dimension
+        %features = mean(smat, 3);
+        
+        %features = smat
+
+        % Keep only highest order scatter
+        smat = scatteringTransform(sn, images{i});
+        % Reshape as scatter, size, size
+        features = smat{size(smat, 1)}.images;
+        features = reshape([features{:}], [], size(features{1}, 1), size(features{1}, 2));
+        % Mean invariants for every scatter
+        disp(size(features))
+        features = mean(features, 2:3)
+        
+        features = reshape(features, 1, [])
         datafeatures{i} = features;       
     end
     

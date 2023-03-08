@@ -1,6 +1,10 @@
-train_checkpoint/
+train_checkpoint/*
 *checkpoint*
 __*
-Data/scatters/
 *.asv
-scatter.mat
+*temp/
+*report/*
+*scatter.mat
+!report/*.tex
+!report/*.pdf
+*.yaml

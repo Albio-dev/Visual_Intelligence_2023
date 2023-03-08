@@ -141,7 +141,7 @@ def printScatterInfo(scatter, print_func = print, graphs = False):
 
     if graphs:
         fig = plt.figure()
-        fig.title('Scatter filters')
+        fig.suptitle('Scatter filters')
         for index, points in enumerate(scatnet):            
             fig.scatter([x[0] for x in points], [x[1] for x in points])
 
@@ -202,7 +202,7 @@ def getFilterBank(imageSize=(128, 128), J=3, num_rotations=8):
 if __name__ == "__main__":
     settings = utils_our.load_settings()
     
-    trainset, testset, data_size, _ = getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'], channels=settings['channels'])
+    trainset, testset, data_size, scatter = getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'], channels=settings['channels'])
     
     print(f'Scatter data size: {data_size}')
     stats_NN = train(trainset, data_size = data_size, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], model_train_path=settings['model_train_path'], channels=settings['channels'])
@@ -211,5 +211,7 @@ if __name__ == "__main__":
     metrics.confMatDisplay().plot()
     print(metrics)
     plt.show()
+    #printScatterInfo(scatter, print)
+    #utils_our.display_stats_graphs(stats_CNN= None, stats_NN= stats_NN ,epochs= settings['num_epochs'])
     #printScatterInfo(scatter, print)
     #utils_our.display_stats_graphs(stats_CNN= None, stats_NN= stats_NN ,epochs= settings['num_epochs'])

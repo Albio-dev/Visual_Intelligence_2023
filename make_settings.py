@@ -1,12 +1,12 @@
 import yaml
 
 generic = {
-    "data_path" : './Data/rgb',
-    'channels' : 3,
+    "data_path" : './Data/gray',
+    'channels' : 1,
     "model_train_path": './train_checkpoint/',
 
     # Classes in the dataset             
-    "lab_classes" : ['dog','whale'],
+    "lab_classes" : ['flower','dog'],
 
     # How many samples are used per-iteration
     "batch_size" : 64,
@@ -16,9 +16,9 @@ generic = {
 
 model_hyperparameters = {
     # Learning rate to scale how much new weighs are evaluated
-    "learning_rate": 0.0001,
+    "learning_rate": 0.01,
     # Scale for past experience to not be perturbated by new ones
-    "momentum" : 0.9,
+    "momentum" : 0.5,
     # The number of times the model is trained on the entire training dataset.
     "num_epochs" : 50
 }
@@ -31,7 +31,7 @@ scattering_parameters = {
     # Size of the input images
     "imageSize" : (128, 128),
     # Number of rotations
-    "n_rotations" : 8
+    "n_rotations" : 6
 }
 
 def writefile():

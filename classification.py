@@ -56,11 +56,12 @@ def classification_task(display = True):
         NN_scattering.printScatterInfo(scatter, logger.info, display)
         CNN_metrics.confMatDisplay().plot()
         NN_metrics.confMatDisplay().plot()
+        input()
         
     else:
         NN_scattering.printScatterInfo(scatter, print)
     
-    plt.show()
+    
     
 
 if __name__ == "__main__":

@@ -115,7 +115,7 @@ def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, ima
     #scatters = utils_our.load_scatter(data_path)
     s = data_path.split("/")
     sub_color = s[2]
-    scatter = utils_our.matlab_scatter(sub_color, dataset, J, [2, 2], num_rotations)
+    scatter = utils_our.matlab_scatter(sub_color, dataset, J, [3, 1], num_rotations)
     scatters = utils_our.load_scatter(data_path)
         
     if scatters is None:

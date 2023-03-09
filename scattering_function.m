@@ -24,8 +24,8 @@ function [datas, scatter] = scattering_function(sub_color, images, labels, invSc
         features = smat{size(smat, 1)}.images;
         features = reshape([features{:}], [], size(features{1}, 1), size(features{1}, 2));
         % Mean invariants for every scatter
-        disp(size(features))
-        features = mean(features, 2:3)
+        %disp(size(features))
+        %features = mean(features, 2:3)
         
         features = reshape(features, 1, [])
         datafeatures{i} = features;       

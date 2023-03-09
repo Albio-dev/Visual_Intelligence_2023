@@ -45,6 +45,6 @@ class CNN_128x128(nn.Module):
 
         # FC phase
         x = F.relu(self.fc1(x))
-        #x = self.drop2(x)
+        x = self.drop2(x)
         x = torch.softmax(self.fc3(x),dim=1)
         return x

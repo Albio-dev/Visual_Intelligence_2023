@@ -19,8 +19,8 @@ def classification_task(display = True):
     settings = utils_our.load_settings()
     
     trainset_cnn, testset_cnn = CNN.getData(data_path=settings['data_path'], test_perc=settings['test_perc'], batch_size=settings['batch_size'], lab_classes=settings['lab_classes'], channels=settings['channels'], train_scale=1)
-    mode = settings['data_path'].split('/')[-1]
-    trainset_scatter, testset_scatter, data_size, scatter = NN_scattering.getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'], channels=settings['channels'], train_scale=1, mode=mode)
+    #mode = settings['data_path'].split('/')[-1]
+    trainset_scatter, testset_scatter, data_size, scatter = NN_scattering.getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'], channels=settings['channels'], train_scale=1)
     
     
     if not CNN.isTrained(model_train_path=settings['model_train_path']):
@@ -54,8 +54,14 @@ def classification_task(display = True):
         CNN.showCNNFilters(CNN_model)
 
         NN_scattering.printScatterInfo(scatter, logger.info, display)
+        CNN_metrics.confMatDisplay().plot()
+        NN_metrics.confMatDisplay().plot()
+        
     else:
         NN_scattering.printScatterInfo(scatter, print)
+    
+    plt.show()
+    
 
 if __name__ == "__main__":
     make_settings.writefile()

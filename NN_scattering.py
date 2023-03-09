@@ -100,7 +100,7 @@ def isTrained(model_train_path):
     return os.path.isfile(model_train_path+'NN_128x128_best_model_trained.pt')
 
 
-def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, imageSize, order, channels , mode, train_scale = 1):
+def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, imageSize, order, channels, train_scale = 1):
     # Split in train and test set
     #trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
     dataset = utils_our.loadData(path = data_path, folders = lab_classes)
@@ -115,7 +115,7 @@ def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, ima
     #scatters = utils_our.load_scatter(data_path)
     s = data_path.split("/")
     sub_color = s[2]
-    scatter = utils_our.matlab_scatter(sub_color, dataset, J, [4, 2], num_rotations)
+    scatter = utils_our.matlab_scatter(sub_color, dataset, J, [2, 2], num_rotations)
     scatters = utils_our.load_scatter(data_path)
         
     if scatters is None:
@@ -143,7 +143,7 @@ def printScatterInfo(scatter, print_func = print, graphs = False):
         fig = plt.figure()
         fig.suptitle('Scatter filters')
         for index, points in enumerate(scatnet):            
-            fig.scatter([x[0] for x in points], [x[1] for x in points])
+            plt.scatter([x[0] for x in points], [x[1] for x in points])
 
         fig.legend([f"Filterbank level {i}" for i in range(len(scatnet))])
         fig.show()

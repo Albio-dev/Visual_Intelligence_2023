@@ -11,7 +11,9 @@ generic = {
     # How many samples are used per-iteration
     "batch_size" : 12,
     # Quantity of dataset used for the testing
-    "test_perc" : .2
+    "test_perc" : .2,
+    # Size of the input images
+    "imageSize" : (128, 128)
 }
 
 model_hyperparameters = {
@@ -25,19 +27,21 @@ model_hyperparameters = {
 
 scattering_parameters = {
     # Invariance scale
-    "J" : 64,
+    "J" : 6,
     # Order of scattering
     "order" : 2,
-    # Size of the input images
-    "imageSize" : (128, 128),
     # Number of rotations
-    "n_rotations" : 6
+    "num_rotations" : [6, 6],
+    # Quality factors
+    "quality_factors": [2, 1]
 }
 
 def writefile():
     with open('parameters.yaml', 'w') as f:
         f.write(yaml.dump(generic))
         f.write(yaml.dump(model_hyperparameters))
+
+    with open('scatter_parameters.yaml', 'w') as f:
         f.write(yaml.dump(scattering_parameters))
 
 writefile()

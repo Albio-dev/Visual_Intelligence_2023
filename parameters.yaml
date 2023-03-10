@@ -1,6 +1,9 @@
 batch_size: 12
 channels: 1
 data_path: ./Data/gray
+imageSize: !!python/tuple
+- 128
+- 128
 lab_classes:
 - dog
 - whale
@@ -9,9 +12,3 @@ test_perc: 0.2
 learning_rate: 0.001
 momentum: 0.5
 num_epochs: 50
-J: 64
-imageSize: !!python/tuple
-- 128
-- 128
-n_rotations: 6
-order: 2

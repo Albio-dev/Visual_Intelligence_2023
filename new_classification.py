@@ -1,7 +1,9 @@
 from lib import train_test
-from lib.models import NN_128x128, CNN_128x128
+from lib.models.CNN_128x128 import CNN_128x128
+from lib.models.NN_128x128 import NN_128x128
 from lib import utils_our
 from lib.metrics import metrics as metrics
+from lib import scatter_helper
 
 import torch
 
@@ -12,6 +14,11 @@ print('Device: ', device)
 def classify(display = False):
     settings = utils_our.load_settings()
 
+    # Scatter creation
+    scatter_params = utils_our.load_settings('scatter_parameters.yaml')
+    
+    scatter = scatter_helper.scatter(imageSize=settings['imageSize'], mode = 1, scatter_params=scatter_params)
+
     # Data loading
     # TODO: load data using specific helper functions
 
@@ -21,10 +28,10 @@ def classify(display = False):
 
     # Model creation
     CNN = CNN_128x128(input_channel=channels, 
-                      num_classes=len(classes)).to(device)
+                      num_classes=len(classes))
     NN = NN_128x128(input_channel=channels, 
                     num_classes=len(classes), 
-                    data_size = data_size).to(device)
+                    data_size = data_size)
     
     # Optimizer parameters
     learning_rate = settings['learning_rate']
@@ -46,3 +53,8 @@ def classify(display = False):
     NN_metrics = metrics(*train_test.test(model=best_NN, test_data=testset, device=device), classes)
 
     if display:
+        pass
+
+
+if __name__ == '__main__':
+    classify()

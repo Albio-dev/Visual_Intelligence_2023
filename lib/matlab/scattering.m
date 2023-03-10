@@ -1,12 +1,5 @@
-function [datas, scatter] = scattering_function(sub_color, images, labels, invScale, qfact1,qfact2, num_rotations)
-    
-    invariance_scale = invScale;
-    quality_factors = [qfact1 qfact2];
-    num_rotations = [num_rotations num_rotations];
-
-    sn = waveletScattering2('ImageSize',size(images{1}, [1, 2]),'InvarianceScale',invariance_scale,'QualityFactors',quality_factors,'NumRotations',num_rotations);
-    
-    
+function [data] = scattering(images, sn)
+        
     datafeatures = cell(length(images), 1);
     parfor i = 1:length(images)
         
@@ -31,11 +24,10 @@ function [datas, scatter] = scattering_function(sub_color, images, labels, invSc
         datafeatures{i} = features;       
     end
     
-    datas = {cell2mat(datafeatures),labels};
+    data = {cell2mat(datafeatures),labels};
 
-    save(sprintf(replace(fullfile("Data", sub_color, "scatter.mat"), '\', '/')), "datas")
+    %save(sprintf(replace(fullfile("Data", sub_color, "scatter.mat"), '\', '/')), "datas")
     disp('done')
 
-    scatter = sn;
 end
 

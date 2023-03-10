@@ -55,7 +55,7 @@ def load_scatter(path):
 def matlab_scatter(channels, data, J, qualityFactors, rotations):
     import matlab.engine
     eng = matlab.engine.start_matlab()
-    eng.addpath(r'..\lib\matlab')
+    eng.addpath(r'lib/matlab')
     images = data[0]
     labels = data[1]
     qfact1 = qualityFactors[0]

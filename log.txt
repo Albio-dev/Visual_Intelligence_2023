@@ -252,3 +252,53 @@ F1:				0.3555555555555555
 2023-03-07 11:08:03,950 - filterbank level 0: 66 wavelets	filterbank level 1: 36 wavelets
 2023-03-07 11:08:05,137 - Coefficient size: [[8.0,8.0]]
 2023-03-07 11:08:05,940 - Number of wavelet decompositions: [283.]
+2023-03-08 18:38:25,714 - {'batch_size': 12, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['dog', 'whale'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.2, 'learning_rate': 0.001, 'momentum': 0.5, 'num_epochs': 50, 'J': 64, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 2}
+2023-03-08 18:38:25,731 - CNN metrics: 
+Accuracy:		0.59375
+Precision:		0.5714285714285714
+Recall:			0.9411764705882353
+F1:				0.7111111111111111
+2023-03-08 18:38:25,732 - NN metrics: 
+Accuracy:		0.78125
+Precision:		0.8571428571428571
+Recall:			0.7058823529411765
+F1:				0.7741935483870968
+2023-03-08 18:40:40,900 - {'batch_size': 12, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['dog', 'whale'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.2, 'learning_rate': 0.001, 'momentum': 0.5, 'num_epochs': 50, 'J': 64, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 2}
+2023-03-08 18:40:40,901 - CNN metrics: 
+Accuracy:		0.8125
+Precision:		0.8367346938775511
+Recall:			0.803921568627451
+F1:				0.8200000000000001
+2023-03-08 18:40:40,901 - NN metrics: 
+Accuracy:		0.7083333333333334
+Precision:		0.8285714285714286
+Recall:			0.5686274509803921
+F1:				0.6744186046511628
+2023-03-08 18:42:56,872 - filterbank level 0: 66 wavelets	filterbank level 1: 36 wavelets
+2023-03-08 18:42:57,042 - Coefficient size: [[8.0,8.0]]
+2023-03-08 18:42:57,304 - Number of wavelet decompositions: [283.]
+2023-03-08 18:46:21,749 - {'batch_size': 12, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['dog', 'whale'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.2, 'learning_rate': 0.001, 'momentum': 0.5, 'num_epochs': 50, 'J': 64, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 2}
+2023-03-08 18:46:21,765 - CNN metrics: 
+Accuracy:		0.8229166666666666
+Precision:		0.8863636363636364
+Recall:			0.7647058823529411
+F1:				0.8210526315789474
+2023-03-08 18:46:21,765 - NN metrics: 
+Accuracy:		0.46875
+Precision:		0.0
+Recall:			0.0
+F1:				0.0
+2023-03-08 18:46:40,980 - filterbank level 0: 66 wavelets	filterbank level 1: 36 wavelets
+2023-03-08 18:46:41,259 - Coefficient size: [[8.0,8.0]]
+2023-03-08 18:46:41,669 - Number of wavelet decompositions: [283.]
+2023-03-08 19:33:08,279 - {'batch_size': 12, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['dog', 'whale'], 'model_train_path': './train_checkpoint/', 'test_perc': 0.2, 'learning_rate': 0.001, 'momentum': 0.5, 'num_epochs': 50, 'J': 64, 'imageSize': (128, 128), 'n_rotations': 6, 'order': 2}
+2023-03-08 19:33:08,304 - CNN metrics: 
+Accuracy:		0.7916666666666666
+Precision:		0.803921568627451
+Recall:			0.803921568627451
+F1:				0.8039215686274509
+2023-03-08 19:33:08,305 - NN metrics: 
+Accuracy:		0.8333333333333334
+Precision:		0.9487179487179487
+Recall:			0.7254901960784313
+F1:				0.8222222222222223

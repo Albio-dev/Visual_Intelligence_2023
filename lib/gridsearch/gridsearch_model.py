@@ -1,4 +1,4 @@
-import make_settings
+import lib.scripts.make_settings as make_settings
 import classification
 
 nums_epochs = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]

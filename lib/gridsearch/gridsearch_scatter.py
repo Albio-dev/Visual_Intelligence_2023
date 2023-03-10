@@ -1,4 +1,4 @@
-import make_settings
+import lib.scripts.make_settings as make_settings
 import classification
 
 js = [1, 2, 3, 4, 5, 6, 7]

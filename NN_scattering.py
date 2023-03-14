@@ -100,10 +100,10 @@ def isTrained(model_train_path):
     return os.path.isfile(model_train_path+'NN_128x128_best_model_trained.pt')
 
 
-def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, imageSize, order, channels, train_scale = 1):
+def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, imageSize, order, channels, training_data_size, train_scale = 1):
     # Split in train and test set
     #trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
-    dataset = utils_our.loadData(path = data_path, folders = lab_classes)
+    dataset = utils_our.loadData(path = data_path, folders = lab_classes, training_data_size=training_data_size)
 
     ### SCATTERING DATA ###
     #scatter = kt.Scattering2D(J, shape = imageSize, max_order = order, L=num_rotations)#, backend='torch_skcuda')
@@ -123,14 +123,14 @@ def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, ima
         sys.exit()
     print('Scattering coefficients calculated')
 
-    xtrain, xtest, ytrain, ytest = utils_our.get_data_split(data = scatters, test_perc=test_perc, lab_classes=lab_classes, data_path=data_path)
+    xtrain, xtest, ytrain, ytest = utils_our.get_data_split(data = scatters, test_perc=test_perc, lab_classes=lab_classes, data_path=data_path, training_data_size=training_data_size)
     xtrain = xtrain[:int(len(xtrain)*train_scale)]
     ytrain = ytrain[:int(len(ytrain)*train_scale)]
     return *utils_our.batcher(xtrain, xtest, ytrain, ytest,batch_size= batch_size), np.prod(scatters[0][0].shape), scatter[1]
 
     #return *utils_our.batcher(*utils_our.get_data_split(data = scatters, test_perc=test_perc, lab_classes=lab_classes, data_path=data_path), batch_size = batch_size), np.prod(scatters[0][0].shape)
 
-def printScatterInfo(scatter, print_func = print, graphs = False):
+def printScatterInfo(scatter, print_func = print, graphs = False, save_path=None):
     import matlab.engine
     eng = matlab.engine.start_matlab()
     _,_, scatnet = eng.filterbank(scatter, nargout=3)
@@ -146,6 +146,10 @@ def printScatterInfo(scatter, print_func = print, graphs = False):
             plt.scatter([x[0] for x in points], [x[1] for x in points])
 
         fig.legend([f"Filterbank level {i}" for i in range(len(scatnet))])
+        
+        if save_path is not None:
+            fig.savefig(save_path, dpi=300)
+
         fig.show()
 
 

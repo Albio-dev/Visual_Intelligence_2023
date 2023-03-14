@@ -23,7 +23,7 @@ class CNN_128x128(nn.Module):
         self.conv2 = nn.Conv2d(in_channels=self.channels[0],out_channels=self.channels[1],kernel_size=(9),stride=(1))
         self.conv3 = nn.Conv2d(in_channels=self.channels[1],out_channels=self.channels[2],kernel_size=(5),stride=(1))
         self.conv4 = nn.Conv2d(in_channels=self.channels[2],out_channels=self.channels[3],kernel_size=(5),stride=(1))
-        self.drop1 = nn.Dropout1d(p=0.1)
+        self.drop1 = nn.Dropout2d(p=0.1)
 
         # Flatten layer (from ConvLayer to fully-connected)
         self.flat = nn.Flatten()
@@ -46,5 +46,5 @@ class CNN_128x128(nn.Module):
         # FC phase
         x = F.relu(self.fc1(x))
         x = self.drop2(x)
-        x = torch.softmax(self.fc3(x),dim=1)
+        x = self.fc3(x)
         return x

@@ -4,6 +4,7 @@ generic = {
     "data_path" : './Data/gray',
     'channels' : 1,
     "model_train_path": './train_checkpoint/',
+    "results_path": './results/',
 
     # Classes in the dataset             
     "lab_classes" : ['flower','dog'],
@@ -11,16 +12,17 @@ generic = {
     # How many samples are used per-iteration
     "batch_size" : 64,
     # Quantity of dataset used for the testing
-    "test_perc" : .2
+    "test_perc" : .2,
+    "training_data_size": 500
 }
 
 model_hyperparameters = {
     # Learning rate to scale how much new weighs are evaluated
-    "learning_rate": 0.01,
+    "learning_rate": 0.001,
     # Scale for past experience to not be perturbated by new ones
-    "momentum" : 0.5,
+    "momentum" : 0.9,
     # The number of times the model is trained on the entire training dataset.
-    "num_epochs" : 50
+    "num_epochs" : 100
 }
 
 scattering_parameters = {
@@ -31,7 +33,7 @@ scattering_parameters = {
     # Size of the input images
     "imageSize" : (128, 128),
     # Number of rotations
-    "n_rotations" : 6
+    "n_rotations" : 8
 }
 
 def writefile():

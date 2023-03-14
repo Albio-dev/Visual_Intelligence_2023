@@ -99,10 +99,10 @@ def test(testset, batch_size, lab_classes, model_train_path, channels):
     return utils_our.metrics(true_label_test.cpu(), pred_label_test.cpu(), lab_classes), model_test
 
 
-def getData(data_path, lab_classes, test_perc, batch_size, channels,train_scale=1):
+def getData(data_path, lab_classes, test_perc, batch_size, channels,training_data_size, train_scale=1):
     # Split in train and test set
 
-    xtrain, xtest, ytrain, ytest = utils_our.get_data_split(test_perc = test_perc, data_path=data_path, lab_classes = lab_classes)
+    xtrain, xtest, ytrain, ytest = utils_our.get_data_split(test_perc = test_perc, data_path=data_path, lab_classes = lab_classes, training_data_size=training_data_size)
     xtrain = xtrain[:int(len(xtrain)*train_scale)]
     ytrain = ytrain[:int(len(ytrain)*train_scale)]
     return utils_our.batcher(xtrain, xtest, ytrain, ytest,batch_size= batch_size)
@@ -196,13 +196,17 @@ def visualize_features_map(model,X_te, channels):
     plt.axis('off')
     plt.show()
 
-def showCNNFilters(model):
+def showCNNFilters(model, save_path=None):
     layer = 0
     filter = list(model.children())[layer].weight.data.clone()
     fig, axs = plt.subplots(3,1)
     utils.visTensor(filter.clone(), ch=0, allkernels=False,ax= axs[0], filter_channel=0)
     utils.visTensor(filter.clone(), ch=0, allkernels=False,ax= axs[1], filter_channel=1)
     utils.visTensor(filter.clone(), ch=0, allkernels=False,ax= axs[2], filter_channel=2)
+
+    if save_path is not None:
+        fig.savefig(save_path, dpi=300)
+
     fig.show()
 
 

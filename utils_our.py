@@ -12,7 +12,7 @@ import random
 import matplotlib.pyplot as plt
 import os
 
-def loadData(path, folders):
+def loadData(path, folders, training_data_size=500):
 
     data = []
     labels = []
@@ -23,7 +23,7 @@ def loadData(path, folders):
         labels += [index]*len(new_data)
         
     random.seed(42)
-    temp = random.sample(list(zip(numpy.asarray(data).astype(numpy.float32), labels)), 500)
+    temp = random.sample(list(zip(numpy.asarray(data).astype(numpy.float32), labels)), training_data_size)
 
     for label in folders:
         if not os.path.exists(f'{path}/temp/{label}'):
@@ -35,11 +35,11 @@ def loadData(path, folders):
     
     return [i[0] for i in temp], [i[1] for i in temp]
 
-def get_data_split(test_perc, data_path, lab_classes, data = None):
+def get_data_split(test_perc, data_path, lab_classes, training_data_size, data = None):
     random_state = 42
     shuffle = True
     if data is None:
-        return train_test_split(*loadData(data_path, lab_classes), test_size=test_perc, random_state=random_state, shuffle=shuffle)
+        return train_test_split(*loadData(data_path, lab_classes, training_data_size=training_data_size), test_size=test_perc, random_state=random_state, shuffle=shuffle)
     else:
         return train_test_split(*data, test_size=test_perc, random_state=random_state, shuffle=shuffle)
 
@@ -148,35 +148,41 @@ def colorize(z):
     c[idx] = [hls_to_rgb(a, b, 0.8) for a, b in zip(A, B)]
     return c
 
-def display_stats_graphs(stats_CNN, stats_NN, epochs):
+def display_stats_graphs(stats_CNN, stats_NN, epochs, save_path=None):
+    loss_limit = max(max(list(stats_CNN.values())[0]), max(list(stats_NN.values())[0]))
     fig, axs = plt.subplots(2, 2)
     axs[0][0].set_xlabel('Epochs')
     axs[0][0].set_ylabel('Loss')
     axs[0][0].set_xticks(range(epochs))
-    axs[0][0].set_ylim(.5, 1)
+    axs[0][0].set_ylim(0, loss_limit)
     axs[0][0].set_title('loss in train for CNN')
     axs[0][0].plot(range(epochs), list(stats_CNN.values())[0])
     
     axs[0][1].set_xlabel('Epochs')
     axs[0][1].set_ylabel('Loss')
     axs[0][1].set_xticks(range(epochs))
-    axs[0][1].set_ylim(.5, 1)
+    axs[0][1].set_ylim(0, loss_limit)
     axs[0][1].set_title('loss in train for scattering NN')
     axs[0][1].plot(range(epochs), list(stats_NN.values())[0])
 
+    acc_worst = min(min(list(stats_CNN.values())[1]), min(list(stats_NN.values())[1]))
     axs[1][0].set_xlabel('Epochs')
     axs[1][0].set_ylabel('Accuracy')
     axs[1][0].set_xticks(range(epochs))
-    axs[1][0].set_ylim(.5, 1)
+    axs[1][0].set_ylim(acc_worst, 1)
     axs[1][0].set_title('Accuracy in training for CNN')
     axs[1][0].plot(range(epochs), list(stats_CNN.values())[1])
 
     axs[1][1].set_xlabel('Epochs')
     axs[1][1].set_ylabel('Accuracy')
     axs[1][1].set_xticks(range(epochs))
-    axs[1][1].set_ylim(.5, 1)
+    axs[1][1].set_ylim(acc_worst, 1)
     axs[1][1].set_title('Accuracy in training for scattering NN')
     axs[1][1].plot(range(epochs), list(stats_NN.values())[1])
+
+    if save_path is not None:
+        fig.savefig(save_path,dpi=300)
+
     fig.show()
     
 class CustomDataset(Dataset):
@@ -209,3 +215,6 @@ def load_settings(filename = 'parameters.yaml'):
     with open(filename) as f:
         settings = yaml.load(f, Loader=yaml.loader.FullLoader)
     return settings
+
+def get_folder_index(path):
+    return str(len(os.listdir(path)) + 1)

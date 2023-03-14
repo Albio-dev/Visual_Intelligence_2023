@@ -7,7 +7,7 @@ generic = {
     "results_path": './results/',
 
     # Classes in the dataset             
-    "lab_classes" : ['whale','dog'],
+    "lab_classes" : ['flower','dog'],
 
     # How many samples are used per-iteration
     "batch_size" : 64,

@@ -1,4 +1,4 @@
-import torch
+import torch, numpy
 from sklearn.metrics import accuracy_score
 
 def train(model, train_data, num_epochs, best_model_path, device, optimizer_parameters):    
@@ -18,6 +18,7 @@ def train(model, train_data, num_epochs, best_model_path, device, optimizer_para
     # Loss function
     criterion = torch.nn.CrossEntropyLoss()
 
+    model = model.to(device)    # .to(device) to move the data/model on GPU or CPU (default)
 
     ### FIT MODEL ###
     for epoch in range(num_epochs):
@@ -30,7 +31,7 @@ def train(model, train_data, num_epochs, best_model_path, device, optimizer_para
             x = x.float().to(device)     # change the size for the input data - convert to float type
             y = y.to(device)
 
-            y_pred = model(x)                                        # run the model
+            y_pred = numpy.squeeze(model(x))                                        # run the model()
             loss = criterion(y_pred,y)                               # compute loss
             _,pred = y_pred.max(1)                                      # get the index == class of the output along the rows (each sample)
             pred_label_train = torch.cat((pred_label_train,pred),dim=0)
@@ -59,6 +60,7 @@ def test(model, test_data, device):
 
     pred_label_test = torch.empty((0,)).to(device)
     true_label_test = torch.empty((0)).to(device)
+    model = model.to(device)
 
     with torch.no_grad():
         for data in test_data:

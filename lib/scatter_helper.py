@@ -1,4 +1,4 @@
-
+import numpy as np
 
 import matplotlib.pyplot as plt
 
@@ -34,7 +34,7 @@ class scatter:
 
             # Create scattering function
             self.scatterNet = self.eng.get_scatterNet(2**J, quality_factors, num_rotations, imageSize, nargout=1)
-            self.scatterFunc = lambda x: self.eng.get_scatter(x, self.eng.scattering(x, self.scatterNet), nargout=1)
+            self.scatterFunc = lambda x: self.eng.scattering(x, self.scatterNet, nargout=1)
 
             # Get informations about scattering
             _, _, filterbank = self.eng.filterbank(self.scatterNet, nargout=3)
@@ -45,9 +45,9 @@ class scatter:
 
         def __init__(self, scatter, filterbank, wavelets, coefficients) -> None:
             self.scatter = scatter
-            self.filterbank = filterbank
-            self.wavelets = wavelets
-            self.coefficients = coefficients
+            self.filterbank = [np.asarray(x) for x in filterbank]
+            self.wavelets = np.asarray(wavelets)
+            self.coefficients = np.asarray(coefficients)[0]
 
         # Return scattering info as string
         def __str__(self) -> str:
@@ -63,6 +63,7 @@ class scatter:
 
             fig.legend([f"Filterbank level {i}" for i in range(len(self.filterbank))])
             fig.show()
+
     
     # Return scattering information class
     def get_info(self):
@@ -70,7 +71,7 @@ class scatter:
 
     # Compute scattering coefficients
     def scatter(self, data):
-        return self.scatterFunc(data)
+        return np.asarray(self.scatterFunc(self.eng.uint8(data)))#[np.asarray(x._data) for x in self.scatterFunc(data)]
 
 
 

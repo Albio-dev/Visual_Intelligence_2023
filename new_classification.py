@@ -6,6 +6,7 @@ from lib.metrics import metrics as metrics
 from lib import scatter_helper
 
 import torch
+import numpy as np
 
 # Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -21,6 +22,18 @@ def classify(display = False):
 
     # Data loading
     # TODO: load data using specific helper functions
+    from lib.data_handler import data_handler
+    data_path = settings['data_path']
+    classes = settings['lab_classes']
+    batch_size = settings['batch_size']
+    test_perc = settings['test_perc']
+    data_handler = data_handler(data_path, classes, batch_size, test_perc)
+    data_handler.loadData(samples=200)
+    trainset, testset = data_handler.batcher()
+
+    # Getting scattering coefficients
+    data, labels = data_handler.get_data()
+    scatter_trainset, scatter_testset = data_handler.batcher(data = (scatter.scatter(data), labels))
 
     # Model parameters
     classes = settings['lab_classes']
@@ -31,7 +44,7 @@ def classify(display = False):
                       num_classes=len(classes))
     NN = NN_128x128(input_channel=channels, 
                     num_classes=len(classes), 
-                    data_size = data_size)
+                    data_size = np.prod(list(scatter_trainset)[0][0][0].shape))
     
     # Optimizer parameters
     learning_rate = settings['learning_rate']
@@ -44,13 +57,15 @@ def classify(display = False):
 
     # Call the function in temp.py
     train_test.train(model = CNN, train_data=trainset, num_epochs=num_epochs, best_model_path=CNN_best_path, device=device, optimizer_parameters=(learning_rate, momentum))
-    train_test.train(model = NN, train_data=trainset, num_epochs=num_epochs, best_model_path=NN_best_path, device=device, optimizer_parameters=(learning_rate, momentum))
+    train_test.train(model = NN, train_data=scatter_trainset, num_epochs=num_epochs, best_model_path=NN_best_path, device=device, optimizer_parameters=(learning_rate, momentum))
 
     best_NN = NN.load_state_dict(torch.load(NN_best_path))
     best_CNN = CNN.load_state_dict(torch.load(CNN_best_path))
 
+    # TODO: Check models loading
+
     CNN_metrics = metrics(*train_test.test(model=best_CNN, test_data=testset, device=device), classes)
-    NN_metrics = metrics(*train_test.test(model=best_NN, test_data=testset, device=device), classes)
+    NN_metrics = metrics(*train_test.test(model=best_NN, test_data=scatter_testset, device=device), classes)
 
     if display:
         pass

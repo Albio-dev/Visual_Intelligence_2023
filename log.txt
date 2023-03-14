@@ -1486,3 +1486,308 @@ F1:				0.8571428571428571
 2023-03-14 13:10:24,156 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
 2023-03-14 13:10:24,316 - Coefficient size: [[16.0,16.0]]
 2023-03-14 13:10:24,546 - Number of wavelet decompositions: [361.]
+2023-03-14 14:26:18,518 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 14:26:18,518 - CNN metrics: 
+Accuracy:		0.625
+Precision:		0.6470588235294118
+Recall:			0.6470588235294118
+F1:				0.6470588235294118
+2023-03-14 14:26:18,518 - NN metrics: 
+Accuracy:		0.828125
+Precision:		0.8709677419354839
+Recall:			0.7941176470588235
+F1:				0.8307692307692308
+2023-03-14 14:26:24,969 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 14:26:25,190 - Coefficient size: [[16.0,16.0]]
+2023-03-14 14:26:25,412 - Number of wavelet decompositions: [361.]
+2023-03-14 14:32:32,476 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 14:32:32,476 - CNN metrics: 
+Accuracy:		0.65625
+Precision:		0.6764705882352942
+Recall:			0.6764705882352942
+F1:				0.6764705882352942
+2023-03-14 14:32:32,476 - NN metrics: 
+Accuracy:		0.8125
+Precision:		0.8666666666666667
+Recall:			0.7647058823529411
+F1:				0.8125
+2023-03-14 14:32:58,748 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 14:32:58,906 - Coefficient size: [[16.0,16.0]]
+2023-03-14 14:32:59,105 - Number of wavelet decompositions: [361.]
+2023-03-14 14:37:37,449 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 14:37:37,450 - CNN metrics: 
+Accuracy:		0.578125
+Precision:		0.6296296296296297
+Recall:			0.5
+F1:				0.5573770491803278
+2023-03-14 14:37:37,450 - NN metrics: 
+Accuracy:		0.8125
+Precision:		0.8666666666666667
+Recall:			0.7647058823529411
+F1:				0.8125
+2023-03-14 14:37:44,098 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 14:37:44,253 - Coefficient size: [[16.0,16.0]]
+2023-03-14 14:37:44,460 - Number of wavelet decompositions: [361.]
+2023-03-14 14:39:38,519 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 14:39:38,519 - CNN metrics: 
+Accuracy:		0.734375
+Precision:		0.7575757575757576
+Recall:			0.7352941176470589
+F1:				0.746268656716418
+2023-03-14 14:39:38,519 - NN metrics: 
+Accuracy:		0.8125
+Precision:		0.8666666666666667
+Recall:			0.7647058823529411
+F1:				0.8125
+2023-03-14 14:39:45,435 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 14:39:45,597 - Coefficient size: [[16.0,16.0]]
+2023-03-14 14:39:45,811 - Number of wavelet decompositions: [361.]
+2023-03-14 14:44:28,210 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 14:44:28,212 - CNN metrics: 
+Accuracy:		0.6875
+Precision:		0.75
+Recall:			0.6176470588235294
+F1:				0.6774193548387097
+2023-03-14 14:44:28,212 - NN metrics: 
+Accuracy:		0.84375
+Precision:		0.875
+Recall:			0.8235294117647058
+F1:				0.8484848484848485
+2023-03-14 14:48:16,961 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 14:48:16,964 - CNN metrics: 
+Accuracy:		0.5
+Precision:		0.53125
+Recall:			0.5
+F1:				0.5151515151515151
+2023-03-14 14:48:16,964 - NN metrics: 
+Accuracy:		0.828125
+Precision:		0.8709677419354839
+Recall:			0.7941176470588235
+F1:				0.8307692307692308
+2023-03-14 14:48:48,740 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 14:48:48,887 - Coefficient size: [[16.0,16.0]]
+2023-03-14 14:48:49,089 - Number of wavelet decompositions: [361.]
+2023-03-14 14:50:48,664 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 14:50:48,665 - CNN metrics: 
+Accuracy:		0.71875
+Precision:		0.7666666666666667
+Recall:			0.6764705882352942
+F1:				0.71875
+2023-03-14 14:50:48,665 - NN metrics: 
+Accuracy:		0.8125
+Precision:		0.8666666666666667
+Recall:			0.7647058823529411
+F1:				0.8125
+2023-03-14 14:51:15,029 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 14:51:15,296 - Coefficient size: [[16.0,16.0]]
+2023-03-14 14:51:15,439 - Number of wavelet decompositions: [361.]
+2023-03-14 14:56:31,069 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 14:56:31,072 - CNN metrics: 
+Accuracy:		0.75
+Precision:		0.78125
+Recall:			0.7352941176470589
+F1:				0.7575757575757576
+2023-03-14 14:56:31,072 - NN metrics: 
+Accuracy:		0.8125
+Precision:		0.8666666666666667
+Recall:			0.7647058823529411
+F1:				0.8125
+2023-03-14 14:56:38,912 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 14:56:39,040 - Coefficient size: [[16.0,16.0]]
+2023-03-14 14:56:39,262 - Number of wavelet decompositions: [361.]
+2023-03-14 14:58:03,407 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 14:58:03,407 - CNN metrics: 
+Accuracy:		0.71875
+Precision:		0.7666666666666667
+Recall:			0.6764705882352942
+F1:				0.71875
+2023-03-14 14:58:03,408 - NN metrics: 
+Accuracy:		0.84375
+Precision:		0.875
+Recall:			0.8235294117647058
+F1:				0.8484848484848485
+2023-03-14 14:58:29,787 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 14:58:29,970 - Coefficient size: [[16.0,16.0]]
+2023-03-14 14:58:30,163 - Number of wavelet decompositions: [361.]
+2023-03-14 15:01:55,213 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 15:01:55,214 - CNN metrics: 
+Accuracy:		0.59375
+Precision:		0.6111111111111112
+Recall:			0.6470588235294118
+F1:				0.6285714285714287
+2023-03-14 15:01:55,214 - NN metrics: 
+Accuracy:		0.8125
+Precision:		0.8666666666666667
+Recall:			0.7647058823529411
+F1:				0.8125
+2023-03-14 15:02:01,525 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 15:02:01,689 - Coefficient size: [[16.0,16.0]]
+2023-03-14 15:02:01,888 - Number of wavelet decompositions: [361.]
+2023-03-14 15:05:30,550 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 15:05:30,550 - CNN metrics: 
+Accuracy:		0.421875
+Precision:		0.38461538461538464
+Recall:			0.14705882352941177
+F1:				0.21276595744680854
+2023-03-14 15:05:30,550 - NN metrics: 
+Accuracy:		0.8125
+Precision:		0.8666666666666667
+Recall:			0.7647058823529411
+F1:				0.8125
+2023-03-14 15:05:57,166 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 15:05:57,360 - Coefficient size: [[16.0,16.0]]
+2023-03-14 15:05:57,558 - Number of wavelet decompositions: [361.]
+2023-03-14 15:22:15,088 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 15:22:15,088 - CNN metrics: 
+Accuracy:		0.6875
+Precision:		0.75
+Recall:			0.6176470588235294
+F1:				0.6774193548387097
+2023-03-14 15:22:15,088 - NN metrics: 
+Accuracy:		0.8125
+Precision:		0.8666666666666667
+Recall:			0.7647058823529411
+F1:				0.8125
+2023-03-14 15:22:21,376 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 15:22:21,540 - Coefficient size: [[16.0,16.0]]
+2023-03-14 15:22:21,745 - Number of wavelet decompositions: [361.]
+2023-03-14 15:30:50,845 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 1387, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 15:30:50,845 - CNN metrics: 
+Accuracy:		0.703125
+Precision:		0.7264957264957265
+Recall:			0.6589147286821705
+F1:				0.6910569105691057
+2023-03-14 15:30:50,845 - NN metrics: 
+Accuracy:		0.7890625
+Precision:		0.8
+Recall:			0.7751937984496124
+F1:				0.7874015748031497
+2023-03-14 15:31:17,045 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 15:31:17,335 - Coefficient size: [[16.0,16.0]]
+2023-03-14 15:31:17,540 - Number of wavelet decompositions: [361.]
+2023-03-14 15:40:24,146 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 2000, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 15:40:24,147 - CNN metrics: 
+Accuracy:		0.703125
+Precision:		0.7539267015706806
+Recall:			0.6824644549763034
+F1:				0.7164179104477613
+2023-03-14 15:40:24,147 - NN metrics: 
+Accuracy:		0.8333333333333334
+Precision:		0.9060773480662984
+Recall:			0.7772511848341233
+F1:				0.8367346938775512
+2023-03-14 15:40:31,060 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 15:40:31,228 - Coefficient size: [[16.0,16.0]]
+2023-03-14 15:40:31,430 - Number of wavelet decompositions: [361.]
+2023-03-14 15:47:36,823 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.01, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 15:47:36,823 - CNN metrics: 
+Accuracy:		0.46875
+Precision:		0.0
+Recall:			0.0
+F1:				0.0
+2023-03-14 15:47:36,824 - NN metrics: 
+Accuracy:		0.734375
+Precision:		0.8695652173913043
+Recall:			0.5882352941176471
+F1:				0.7017543859649124
+2023-03-14 15:48:01,659 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 15:48:01,917 - Coefficient size: [[16.0,16.0]]
+2023-03-14 15:48:02,068 - Number of wavelet decompositions: [361.]
+2023-03-14 15:50:04,468 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.01, 'momentum': 0.5, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 15:50:04,469 - CNN metrics: 
+Accuracy:		0.53125
+Precision:		0.53125
+Recall:			1.0
+F1:				0.6938775510204082
+2023-03-14 15:50:04,469 - NN metrics: 
+Accuracy:		0.78125
+Precision:		0.8571428571428571
+Recall:			0.7058823529411765
+F1:				0.7741935483870968
+2023-03-14 15:50:41,480 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 15:50:41,658 - Coefficient size: [[16.0,16.0]]
+2023-03-14 15:50:41,846 - Number of wavelet decompositions: [361.]
+2023-03-14 15:52:50,744 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.0001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 15:52:50,746 - CNN metrics: 
+Accuracy:		0.65625
+Precision:		0.6764705882352942
+Recall:			0.6764705882352942
+F1:				0.6764705882352942
+2023-03-14 15:52:50,746 - NN metrics: 
+Accuracy:		0.71875
+Precision:		0.75
+Recall:			0.7058823529411765
+F1:				0.7272727272727272
+2023-03-14 15:53:01,030 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 15:53:01,195 - Coefficient size: [[16.0,16.0]]
+2023-03-14 15:53:01,399 - Number of wavelet decompositions: [361.]
+2023-03-14 15:54:17,220 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.0001, 'momentum': 0.5, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 15:54:17,220 - CNN metrics: 
+Accuracy:		0.59375
+Precision:		0.625
+Recall:			0.5882352941176471
+F1:				0.6060606060606061
+2023-03-14 15:54:17,220 - NN metrics: 
+Accuracy:		0.609375
+Precision:		0.68
+Recall:			0.5
+F1:				0.576271186440678
+2023-03-14 15:54:23,433 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 15:54:23,635 - Coefficient size: [[16.0,16.0]]
+2023-03-14 15:54:23,888 - Number of wavelet decompositions: [361.]
+2023-03-14 15:57:19,869 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['whale', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 15:57:19,869 - CNN metrics: 
+Accuracy:		0.734375
+Precision:		0.7878787878787878
+Recall:			0.7222222222222222
+F1:				0.7536231884057971
+2023-03-14 15:57:19,870 - NN metrics: 
+Accuracy:		0.96875
+Precision:		0.9473684210526315
+Recall:			1.0
+F1:				0.972972972972973
+2023-03-14 15:57:26,118 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 15:57:26,268 - Coefficient size: [[16.0,16.0]]
+2023-03-14 15:57:26,466 - Number of wavelet decompositions: [361.]
+2023-03-14 15:59:29,608 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['whale', 'flower'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 15:59:29,617 - CNN metrics: 
+Accuracy:		0.765625
+Precision:		0.7586206896551724
+Recall:			0.7333333333333333
+F1:				0.7457627118644068
+2023-03-14 15:59:29,617 - NN metrics: 
+Accuracy:		0.953125
+Precision:		0.9354838709677419
+Recall:			0.9666666666666667
+F1:				0.9508196721311476
+2023-03-14 15:59:35,958 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 15:59:36,143 - Coefficient size: [[16.0,16.0]]
+2023-03-14 15:59:36,404 - Number of wavelet decompositions: [361.]
+2023-03-14 16:03:00,471 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['whale', 'flower'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 16:03:00,471 - CNN metrics: 
+Accuracy:		0.96875
+Precision:		0.9666666666666667
+Recall:			0.9666666666666667
+F1:				0.9666666666666667
+2023-03-14 16:03:00,471 - NN metrics: 
+Accuracy:		0.953125
+Precision:		0.9354838709677419
+Recall:			0.9666666666666667
+F1:				0.9508196721311476
+2023-03-14 16:03:06,821 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 16:03:07,017 - Coefficient size: [[16.0,16.0]]
+2023-03-14 16:03:07,276 - Number of wavelet decompositions: [361.]
+2023-03-14 16:05:35,619 - {'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['whale', 'dog'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+2023-03-14 16:05:35,620 - CNN metrics: 
+Accuracy:		0.953125
+Precision:		1.0
+Recall:			0.9166666666666666
+F1:				0.9565217391304348
+2023-03-14 16:05:35,620 - NN metrics: 
+Accuracy:		0.96875
+Precision:		0.9473684210526315
+Recall:			1.0
+F1:				0.972972972972973
+2023-03-14 16:05:41,893 - filterbank level 0: 40 wavelets	filterbank level 1: 24 wavelets
+2023-03-14 16:05:42,192 - Coefficient size: [[16.0,16.0]]
+2023-03-14 16:05:42,389 - Number of wavelet decompositions: [361.]

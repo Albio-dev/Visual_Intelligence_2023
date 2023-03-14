@@ -88,4 +88,4 @@ if __name__ == "__main__":
 
 def k_run(n):
     for i in range(n):
-        classification_task(False)
+        classification_task(True)

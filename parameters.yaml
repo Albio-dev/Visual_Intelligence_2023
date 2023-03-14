@@ -2,7 +2,7 @@ batch_size: 64
 channels: 1
 data_path: ./Data/gray
 lab_classes:
-- flower
+- whale
 - dog
 model_train_path: ./train_checkpoint/
 results_path: ./results/

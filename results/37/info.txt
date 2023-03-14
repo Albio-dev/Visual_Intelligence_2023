@@ -1,0 +1,11 @@
+{'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'lab_classes': ['whale', 'flower'], 'model_train_path': './train_checkpoint/', 'results_path': './results/', 'test_perc': 0.2, 'training_data_size': 500, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 100, 'J': 32, 'imageSize': (128, 128), 'n_rotations': 8, 'order': 2}
+CNN metrics: 
+Accuracy:		0.765625
+Precision:		0.7586206896551724
+Recall:			0.7333333333333333
+F1:				0.7457627118644068
+NN metrics: 
+Accuracy:		0.953125
+Precision:		0.9354838709677419
+Recall:			0.9666666666666667
+F1:				0.9508196721311476

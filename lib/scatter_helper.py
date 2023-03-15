@@ -75,7 +75,6 @@ class scatter:
 
 
 
-
 def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, imageSize, order, channels , train_scale = 1):
     # Split in train and test set
     #trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
@@ -105,17 +104,3 @@ def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, ima
     return *utils_our.batcher(xtrain, xtest, ytrain, ytest,batch_size= batch_size), np.prod(scatters[0][0].shape), scatter[1]
 
     #return *utils_our.batcher(*utils_our.get_data_split(data = scatters, test_perc=test_perc, lab_classes=lab_classes, data_path=data_path), batch_size = batch_size), np.prod(scatters[0][0].shape)
-
-'''
-
-s = data_path.split("/")
-sub_color = s[2]
-scatter = utils_our.matlab_scatter(sub_color, dataset, J, [4, 2], num_rotations)
-scatters = utils_our.load_scatter(data_path)
-
-
-xtrain, xtest, ytrain, ytest = utils_our.get_data_split(data = scatters, test_perc=test_perc, lab_classes=lab_classes, data_path=data_path)
-xtrain = xtrain[:int(len(xtrain)*train_scale)]
-ytrain = ytrain[:int(len(ytrain)*train_scale)]
-return *utils_our.batcher(xtrain, xtest, ytrain, ytest,batch_size= batch_size), np.prod(scatters[0][0].shape), scatter[1]
-'''

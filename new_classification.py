@@ -4,8 +4,9 @@ from lib.models.NN_128x128 import NN_128x128
 from lib import utils_our
 from lib.metrics import metrics as metrics
 from lib import scatter_helper
-import matplotlib.pylab as plt
+from lib.data_handler import data_handler
 
+import matplotlib.pyplot as plt
 import torch
 import numpy as np
 
@@ -22,18 +23,20 @@ def classify(display = False):
     scatter = scatter_helper.scatter(imageSize=settings['imageSize'], mode = 1, scatter_params=scatter_params)
 
     # Data loading
-    # TODO: load data using specific helper functions
-    from lib.data_handler import data_handler
     data_path = settings['data_path']
     classes = settings['lab_classes']
     batch_size = settings['batch_size']
     test_perc = settings['test_perc']
     data_handler = data_handler(data_path, classes, batch_size, test_perc)
     data_handler.loadData(samples=200)
+
+    # Get CNN dataset
     trainset, testset = data_handler.batcher()
 
     # Getting scattering coefficients
     data, labels = data_handler.get_data()
+
+    # get NN dataset
     scatter_trainset, scatter_testset = data_handler.batcher(data = (scatter.scatter(data), labels))
 
     # Model parameters
@@ -60,14 +63,17 @@ def classify(display = False):
     CNN_train_data = train_test.train(model = CNN, train_data=trainset, num_epochs=num_epochs, best_model_path=CNN_best_path, device=device, optimizer_parameters=(learning_rate, momentum))
     NN_train_data = train_test.train(model = NN, train_data=scatter_trainset, num_epochs=num_epochs, best_model_path=NN_best_path, device=device, optimizer_parameters=(learning_rate, momentum))
 
+    # Load best models
     NN.load_state_dict(torch.load(NN_best_path))
     CNN.load_state_dict(torch.load(CNN_best_path))
 
+    # Test models
     CNN_metrics = metrics(*train_test.test(model=CNN, test_data=testset, device=device), classes)
     NN_metrics = metrics(*train_test.test(model=NN, test_data=scatter_testset, device=device), classes)
 
-    print(f'CNN: {CNN_metrics}')
-    print(f'NN: {NN_metrics}')
+    # Print testing results
+    CNN_metrics.printMetrics('CNN')
+    NN_metrics.printMetrics("NN")
 
     if display:
         
@@ -76,8 +82,10 @@ def classify(display = False):
         fig.suptitle('Scatter filters')
         metrics.plotTraining(data = CNN_train_data, axs=axs[0][:])
         metrics.plotTraining(data = NN_train_data, axs=axs[1][:])
+        # Decide scale
         max_loss = max(max(CNN_train_data['loss']), max(NN_train_data['loss']))
         min_acc = min(min(CNN_train_data['accuracy']), min(NN_train_data['accuracy']))
+        # Apply scale to graphs
         axs[0][0].set_ylim(0, max_loss)
         axs[0][1].set_ylim(min_acc, 1)
         axs[1][0].set_ylim(0, max_loss)

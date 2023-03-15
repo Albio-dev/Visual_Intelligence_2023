@@ -7,16 +7,19 @@ class data_handler:
     def __init__(self, data_path, classes, batch_size, test_perc, channels = 1, samples = 1):
         self.seed = 42
         random.seed(self.seed)
+
+        # Save parameters as class variables
         self.data_path = data_path
         self.classes = classes
         self.batch_size = batch_size
         self.test_perc = test_perc
         self.channels = channels
 
+        # Load data from folders
         self.data, self.labels = None, None
         self.loadData(samples = samples)
 
-
+    # Load data from folders and eventually properly subsample equally on each class
     def loadData(self, samples = None):
         data = {}
         labels = {}
@@ -56,12 +59,14 @@ class data_handler:
             self.raw_data = new_data
             self.raw_labels = new_labels
             
+            # Extract samples as list
             self.data = numpy.asarray([j for i in new_data.values() for j in i])
             self.labels = [j for i in new_labels.values() for j in i]
 
         # Return the data
         return self.data.reshape(-1, 1, *self.data.shape[1:]), self.labels
 
+    # Write the data to a temporary folder
     def writeTempDataset(self):  
         for label in self.classes:
             if not os.path.exists(f'{self.data_path}/temp/{label}'):
@@ -70,6 +75,7 @@ class data_handler:
             for num, i in enumerate(self.raw_data[label]):
                 cv2.imwrite(f'{self.data_path}/temp/{label}/{num}.png', i)
                 
+    # Clean the temporary folder
     def deleteTempDataset(self):
         for label in self.classes:
             if os.path.exists(f'{self.data_path}/temp/{label}'):
@@ -79,18 +85,19 @@ class data_handler:
     def get_data_split(self, test_perc = None, data = None):
         # Check random state
         shuffle = True
+
+        # Use provided test percentage if provided
         if test_perc is None:
             test_perc = self.test_perc
 
-        if data is None:
-            if self.data is None:
-                self.loadData()
-            
+        # If no data is provided, use the class data
+        if data is None:            
             return train_test_split(self.data, self.labels, test_size=test_perc, random_state=self.seed, shuffle=shuffle)
             
         else:
             return train_test_split(data[0], data[1], test_size=test_perc, random_state=self.seed, shuffle=shuffle)
 
+    # Create a custom dataset class
     class CustomDataset(Dataset):
         def __init__(self, data, labels):
             self.labels = labels
@@ -105,6 +112,7 @@ class data_handler:
             sample = [data,label]
             return sample
         
+    # Create a batcher for the data
     # Input required in order:
     # x_train, x_test, y_train, y_test
     def batcher(self, batch_size = 64, data = None):
@@ -113,14 +121,17 @@ class data_handler:
         # If no data is provided, use the class data
         if data is None:
             x_train, x_test, y_train, y_test = self.get_data_split(test_perc = self.test_perc)
+        
+        # If data is in the form (data, labels)
         elif len(data) == 2:
             x_train, x_test, y_train, y_test = self.get_data_split(test_perc = self.test_perc, data = data)
-        else:
+        
+        # If data is in the form (x_train, x_test, y_train, y_test)
+        elif len(data) == 4:
             x_train, x_test, y_train, y_test = data
 
-        #x_train = numpy.asarray(x_train)
+        # Reshape data as channels, height, width
         x_train = x_train.reshape(-1, self.channels, *x_train.shape[1:])
-        #x_test = numpy.asarray(x_test)
         x_test = x_test.reshape(-1, self.channels, *x_test.shape[1:])
 
         # Create Dataloader with batch size
@@ -132,10 +143,10 @@ class data_handler:
 
         return trainset, testset
         
+    # Getter for list data
     def get_data(self):
-        if self.data is None:
-            self.loadData()
         return self.data, self.labels
     
+    # Getter for raw data (class dictionaries)
     def get_raw_data(self):
         return self.raw_data, self.raw_labels

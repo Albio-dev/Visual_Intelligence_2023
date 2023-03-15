@@ -1,4 +1,5 @@
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_curve, RocCurveDisplay, ConfusionMatrixDisplay, PrecisionRecallDisplay
+from matplotlib import pyplot as plt
 class metrics:
 
     def __init__(self, y_true, y_pred, lab_classes) -> None:
@@ -39,3 +40,13 @@ class metrics:
 
     def precisionRecallDisplay(self):
         return PrecisionRecallDisplay(self.precision, self.recall)
+
+
+    def plotTraining( data, axs = None):   
+        if axs is None:
+            fig, axs = plt.subplots(1,2, figsize=(15,5))
+        axs[0].plot(data['loss'])
+        axs[0].set_title('Loss')
+        axs[1].plot(data['accuracy'])
+        axs[1].set_title('Accuracy')
+        return plt

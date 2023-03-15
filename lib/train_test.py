@@ -62,6 +62,7 @@ def test(model, test_data, device):
     true_label_test = torch.empty((0)).to(device)
     model = model.to(device)
 
+    model.eval()
     with torch.no_grad():
         for data in test_data:
             X_te, y_te = data
@@ -72,4 +73,4 @@ def test(model, test_data, device):
             pred_label_test = torch.cat((pred_label_test,output_test),dim=0)
             true_label_test = torch.cat((true_label_test,y_te),dim=0)
 
-    return true_label_test.cpu(), pred_label_test.cpu()
+    return numpy.squeeze(true_label_test.cpu()), numpy.squeeze(pred_label_test.cpu())

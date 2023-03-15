@@ -4,6 +4,7 @@ from lib.models.NN_128x128 import NN_128x128
 from lib import utils_our
 from lib.metrics import metrics as metrics
 from lib import scatter_helper
+import matplotlib.pylab as plt
 
 import torch
 import numpy as np
@@ -56,19 +57,44 @@ def classify(display = False):
     CNN_best_path = settings['model_train_path']+'CNN_128x128_best_model_trained.pt'
 
     # Call the function in temp.py
-    train_test.train(model = CNN, train_data=trainset, num_epochs=num_epochs, best_model_path=CNN_best_path, device=device, optimizer_parameters=(learning_rate, momentum))
-    train_test.train(model = NN, train_data=scatter_trainset, num_epochs=num_epochs, best_model_path=NN_best_path, device=device, optimizer_parameters=(learning_rate, momentum))
+    CNN_train_data = train_test.train(model = CNN, train_data=trainset, num_epochs=num_epochs, best_model_path=CNN_best_path, device=device, optimizer_parameters=(learning_rate, momentum))
+    NN_train_data = train_test.train(model = NN, train_data=scatter_trainset, num_epochs=num_epochs, best_model_path=NN_best_path, device=device, optimizer_parameters=(learning_rate, momentum))
 
-    best_NN = NN.load_state_dict(torch.load(NN_best_path))
-    best_CNN = CNN.load_state_dict(torch.load(CNN_best_path))
+    NN.load_state_dict(torch.load(NN_best_path))
+    CNN.load_state_dict(torch.load(CNN_best_path))
 
-    # TODO: Check models loading
+    CNN_metrics = metrics(*train_test.test(model=CNN, test_data=testset, device=device), classes)
+    NN_metrics = metrics(*train_test.test(model=NN, test_data=scatter_testset, device=device), classes)
 
-    CNN_metrics = metrics(*train_test.test(model=best_CNN, test_data=testset, device=device), classes)
-    NN_metrics = metrics(*train_test.test(model=best_NN, test_data=scatter_testset, device=device), classes)
+    print(f'CNN: {CNN_metrics}')
+    print(f'NN: {NN_metrics}')
 
     if display:
-        pass
+        
+        # Plot training data
+        fig, axs = plt.subplots(2, 2)
+        fig.suptitle('Scatter filters')
+        metrics.plotTraining(data = CNN_train_data, axs=axs[0][:])
+        metrics.plotTraining(data = NN_train_data, axs=axs[1][:])
+        max_loss = max(max(CNN_train_data['loss']), max(NN_train_data['loss']))
+        min_acc = min(min(CNN_train_data['accuracy']), min(NN_train_data['accuracy']))
+        axs[0][0].set_ylim(0, max_loss)
+        axs[0][1].set_ylim(min_acc, 1)
+        axs[1][0].set_ylim(0, max_loss)
+        axs[1][1].set_ylim(min_acc, 1)
+        fig.show()
+
+        # Plot confusion matrices
+        fig, axs = plt.subplots(1, 2)
+        fig.suptitle('Confusion matrices')
+        CNN_metrics.confMatDisplay().plot(ax = axs[0])
+        axs[0].set_title('CNN')
+        NN_metrics.confMatDisplay().plot(ax = axs[1])
+        axs[1].set_title('NN')
+        fig.show()
+        
+        input()
+
 
 
 if __name__ == '__main__':

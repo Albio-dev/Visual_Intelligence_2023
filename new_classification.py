@@ -5,6 +5,7 @@ from lib import utils_our
 from lib.metrics import metrics as metrics
 from lib import scatter_helper
 from lib.data_handler import data_handler
+from lib.cnn_explorer import explorer
 
 import matplotlib.pyplot as plt
 import torch
@@ -27,17 +28,17 @@ def classify(display = False):
     classes = settings['lab_classes']
     batch_size = settings['batch_size']
     test_perc = settings['test_perc']
-    data_handler = data_handler(data_path, classes, batch_size, test_perc)
-    data_handler.loadData(samples=200)
+    handler = data_handler(data_path, classes, batch_size, test_perc)
+    handler.loadData(samples=200)
 
     # Get CNN dataset
-    trainset, testset = data_handler.batcher()
+    trainset, testset = handler.batcher()
 
     # Getting scattering coefficients
-    data, labels = data_handler.get_data()
+    data, labels = handler.get_data()
 
     # get NN dataset
-    scatter_trainset, scatter_testset = data_handler.batcher(data = (scatter.scatter(data), labels))
+    scatter_trainset, scatter_testset = handler.batcher(data = (scatter.scatter(data), labels))
 
     # Model parameters
     classes = settings['lab_classes']
@@ -75,6 +76,11 @@ def classify(display = False):
     CNN_metrics.printMetrics('CNN')
     NN_metrics.printMetrics("NN")
 
+    
+
+
+
+
     if display:
         
         # Plot training data
@@ -100,10 +106,16 @@ def classify(display = False):
         NN_metrics.confMatDisplay().plot(ax = axs[1])
         axs[1].set_title('NN')
         fig.show()
+
+        
+        cnn_inspect = explorer(CNN)        
+        cnn_inspect.show_filters()
         
         input()
+
+    
 
 
 
 if __name__ == '__main__':
-    classify()
+    classify(True)

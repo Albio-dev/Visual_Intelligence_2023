@@ -52,9 +52,12 @@ class metrics:
     # Helper to plot training data
     def plotTraining( data, axs = None):   
         if axs is None:
-            fig, axs = plt.subplots(1,2, figsize=(15,5))
+            fig, axes = plt.subplots(1,2, figsize=(15,5))
+            fig.show()
+            
         axs[0].plot(data['loss'])
         axs[0].set_title('Loss')
         axs[1].plot(data['accuracy'])
         axs[1].set_title('Accuracy')
-        return fig
+        
+        

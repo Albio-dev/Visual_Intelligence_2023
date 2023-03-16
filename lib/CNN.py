@@ -1,11 +1,11 @@
 import torch, os
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from CNN_128x128 import CNN_128x128
-from utils import plot_weights, visTensor
+from lib.models.CNN_128x128 import CNN_128x128
+from lib.utils import plot_weights, visTensor
 import matplotlib.pyplot as plt
-import utils
-import utils_our
+import lib.utils as utils
+import lib.utils_our as utils_our
 
 # Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

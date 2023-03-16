@@ -1,6 +1,9 @@
 batch_size: 64
 channels: 1
 data_path: ./Data/gray
+imageSize: !!python/tuple
+- 128
+- 128
 lab_classes:
 - flower
 - dog
@@ -17,3 +20,5 @@ imageSize: !!python/tuple
 - 128
 n_rotations: 8
 order: 2
+momentum: 0.5
+num_epochs: 50

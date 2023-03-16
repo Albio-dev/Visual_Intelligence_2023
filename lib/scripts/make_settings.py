@@ -4,42 +4,44 @@ generic = {
     "data_path" : './Data/gray',
     'channels' : 1,
     "model_train_path": './train_checkpoint/',
-    "results_path": './results/',
 
     # Classes in the dataset             
-    "lab_classes" : ['flower','dog'],
+    "lab_classes" : ['dog','whale'],
 
     # How many samples are used per-iteration
-    "batch_size" : 64,
+    "batch_size" : 12,
     # Quantity of dataset used for the testing
     "test_perc" : .2,
-    "training_data_size": 500
+    # Size of the input images
+    "imageSize" : (128, 128)
 }
 
 model_hyperparameters = {
     # Learning rate to scale how much new weighs are evaluated
     "learning_rate": 0.001,
     # Scale for past experience to not be perturbated by new ones
-    "momentum" : 0.9,
+    "momentum" : 0.5,
     # The number of times the model is trained on the entire training dataset.
-    "num_epochs" : 100
+    "num_epochs" : 50
 }
 
 scattering_parameters = {
     # Invariance scale
-    "J" : 32,
+    "J" : 6,
     # Order of scattering
     "order" : 2,
-    # Size of the input images
-    "imageSize" : (128, 128),
     # Number of rotations
-    "n_rotations" : 8
+    "num_rotations" : [6, 6],
+    # Quality factors
+    "quality_factors": [2, 1]
 }
 
 def writefile():
     with open('parameters.yaml', 'w') as f:
         f.write(yaml.dump(generic))
         f.write(yaml.dump(model_hyperparameters))
+
+    with open('scatter_parameters.yaml', 'w') as f:
         f.write(yaml.dump(scattering_parameters))
 
 writefile()

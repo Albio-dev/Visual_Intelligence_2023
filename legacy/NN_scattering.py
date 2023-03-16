@@ -6,7 +6,7 @@ from lib.models.NN_128x128 import NN_128x128
 import matplotlib.pyplot as plt
 import sys
 from scipy.fft import fft2
-import lib.utils_our as utils_our
+import legacy.utils_our as utils_our
 import kymatio.torch as kt
 from kymatio.scattering2d.filter_bank import filter_bank
 

@@ -1,5 +1,5 @@
 import lib.scripts.make_settings as make_settings
-import classification
+import legacy.classification as classification
 
 js = [1, 2, 3, 4, 5, 6, 7]
 orders = [1, 2]

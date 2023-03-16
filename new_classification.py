@@ -1,7 +1,7 @@
 from lib import train_test
 from lib.models.CNN_128x128 import CNN_128x128
 from lib.models.NN_128x128 import NN_128x128
-from lib import utils_our
+from legacy import utils_our
 from lib.metrics import metrics as metrics
 from lib import scatter_helper
 from lib.data_handler import data_handler

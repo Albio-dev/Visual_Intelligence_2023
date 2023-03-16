@@ -1,5 +1,5 @@
 import lib.scripts.make_settings as make_settings
-import classification
+import legacy.classification as classification
 
 test_percs = [0.1, 0.2, 0.3, 0.4, 0.5]
 

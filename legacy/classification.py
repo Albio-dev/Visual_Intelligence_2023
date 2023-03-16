@@ -1,10 +1,10 @@
 import matplotlib.pyplot as plt
 import os
 import logging
-import lib.CNN as CNN
-import lib.NN_scattering as NN_scattering
+import legacy.CNN as CNN
+import legacy.NN_scattering as NN_scattering
 import lib.scripts.make_settings as make_settings
-import lib.utils_our as utils_our
+import legacy.utils_our as utils_our
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

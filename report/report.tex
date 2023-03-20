@@ -1,5 +1,6 @@
 \documentclass{report}
 \usepackage{listings}
+\usepackage{graphicx}
 
 \title{Report on CNN/Scattering classification comparison}
 \author{Alberto Carli \and Gabriele Roncolato \and Leonardo Zecchin }
@@ -103,6 +104,53 @@ we tried optimizing the scattering transform to try and reach the CNN's performa
 We tried different scales (J) and rotations (L) and we found that \\
 We tried different trainset sizes and we found that \\
 We tried different number of epochs and we found that \\
+(\textbf{Da Controllare da qui in poi.})\\
+In this chapter we are going to compare the results obtained with \textbf{CNN} and \textbf{wavelet scattering}.\\
+We tried different values for the following parameters:
+\begin{itemize}
+    \item \texttt{batch size}, the number of samples used in one iteration to update the model's weights;
+    \item \texttt{learning rate}, controls the speed of weight updates during training;
+    \item \texttt{momentum}, scale for past experience to not be perturbated by new ones;
+    \item \texttt{epochs}, the number of times the model is trained on the entire training dataset;
+    \item \texttt{invariance scale}, specifies the spatial support in the row and column dimensions of the scaling filter;
+    \item \texttt{rotations}, number of rotations per wavelet per filter bank in the scattering network;
+    \item \texttt{quality factor}, the quality factor is the number of wavelet filters per octave;
+    \item \texttt{training datasize}, the number of images used.
+\end{itemize}
+To influence the results of CNN we modified these parameters: batch size, learning rate, momentum, epochs and the training datasize and to influence the results of the wavelet scattering + NN we modified these parameters: invariance scale, rotations, quality factor.\\
+We found that the best results for the CNN were obtained with the following parameters:
+\begin{itemize}
+    \item \texttt{batch size = 64}
+    \item \texttt{learning rate = 0.001}
+    \item \texttt{momentum = 0.5}
+    \item \texttt{epochs = 100}
+    \item \texttt{training datasize = 500}
+\end{itemize}
+and the best results for the wavelet scattering + NN were obtained with:
+\begin{itemize}
+    \item \texttt{invariance scale = 5}
+    \item \texttt{rotations =  [8,8]};
+    \item \texttt{quality factor = [2,1]}
+\end{itemize}
+\textbf{CNN metrics}: \\
+Accuracy:               0.82\\
+Precision:              0.875\\
+Recall:                 0.7777777777777778\\
+F1:                     0.823529411764706\\
+\textbf{NN metrics}:\\
+Accuracy:               0.87\\
+Precision:              0.9019607843137255\\
+Recall:                 0.8518518518518519\\
+F1:                             0.8761904761904761\\
+\begin{figure}
+    \centering
+    \includegraphics[width=8cm]{images/0.82/training_infos.png}\hfill
+    \includegraphics[width=8cm]{images/0.82/conf_mat.png}\hfill
+    \includegraphics[width=8cm]{images/0.82/cnn_filters.png}
+    \caption{First run}
+    \label{fig:my_label}
+\end{figure}
+
 \chapter{Filters}
 \chapter{Conclusions}
 \end{document}

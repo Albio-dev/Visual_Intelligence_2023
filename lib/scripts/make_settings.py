@@ -6,10 +6,10 @@ generic = {
     "model_train_path": './train_checkpoint/',
 
     # Classes in the dataset             
-    "lab_classes" : ['dog','whale'],
+    "lab_classes" : ['flower','dog'],
 
     # How many samples are used per-iteration
-    "batch_size" : 12,
+    "batch_size" : 64,
     # Quantity of dataset used for the testing
     "test_perc" : .2,
     # Size of the input images
@@ -22,16 +22,16 @@ model_hyperparameters = {
     # Scale for past experience to not be perturbated by new ones
     "momentum" : 0.5,
     # The number of times the model is trained on the entire training dataset.
-    "num_epochs" : 50
+    "num_epochs" : 100
 }
 
 scattering_parameters = {
     # Invariance scale
-    "J" : 6,
+    "J" : 5,
     # Order of scattering
     "order" : 2,
     # Number of rotations
-    "num_rotations" : [6, 6],
+    "num_rotations" : [8, 8],
     # Quality factors
     "quality_factors": [2, 1]
 }

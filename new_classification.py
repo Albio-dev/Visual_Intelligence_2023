@@ -29,7 +29,7 @@ def classify(display = False):
     batch_size = settings['batch_size']
     test_perc = settings['test_perc']
     handler = data_handler(data_path, classes, batch_size, test_perc)
-    handler.loadData(samples=200)
+    handler.loadData(samples=500)
 
     # Get CNN dataset
     trainset, testset = handler.batcher()
@@ -85,7 +85,7 @@ def classify(display = False):
         
         # Plot training data
         fig, axs = plt.subplots(2, 2)
-        fig.suptitle('Scatter filters')
+        fig.suptitle('Training infos')
         metrics.plotTraining(data = CNN_train_data, axs=axs[0][:])
         metrics.plotTraining(data = NN_train_data, axs=axs[1][:])
         # Decide scale

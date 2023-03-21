@@ -29,7 +29,7 @@ def classify(display = False):
     batch_size = settings['batch_size']
     test_perc = settings['test_perc']
     handler = data_handler(data_path, classes, batch_size, test_perc)
-    handler.loadData(samples=500)
+    handler.loadData(samples=settings['num_samples'])
 
     # Get CNN dataset
     trainset, testset = handler.batcher()

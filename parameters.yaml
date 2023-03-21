@@ -8,7 +8,8 @@ lab_classes:
 - flower
 - dog
 model_train_path: ./train_checkpoint/
+num_samples: 500
 test_perc: 0.2
-learning_rate: 0.001
+learning_rate: 0.01
 momentum: 0.5
 num_epochs: 100

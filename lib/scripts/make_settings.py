@@ -13,12 +13,16 @@ generic = {
     # Quantity of dataset used for the testing
     "test_perc" : .2,
     # Size of the input images
-    "imageSize" : (128, 128)
+    "imageSize" : (128, 128),
+    #The number of samples (images) used
+    "num_samples" : 500
+
+
 }
 
 model_hyperparameters = {
     # Learning rate to scale how much new weighs are evaluated
-    "learning_rate": 0.001,
+    "learning_rate": 0.01,
     # Scale for past experience to not be perturbated by new ones
     "momentum" : 0.5,
     # The number of times the model is trained on the entire training dataset.
@@ -27,7 +31,7 @@ model_hyperparameters = {
 
 scattering_parameters = {
     # Invariance scale
-    "J" : 5,
+    "J" : 6,
     # Order of scattering
     "order" : 2,
     # Number of rotations

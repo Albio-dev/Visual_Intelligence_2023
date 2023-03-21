@@ -141,7 +141,7 @@ F1:                     0.823529411764706\\
 Accuracy:               0.87\\
 Precision:              0.9019607843137255\\
 Recall:                 0.8518518518518519\\
-F1:                             0.8761904761904761\\
+F1:                     0.8761904761904761\\
 \begin{figure}
     \centering
     \includegraphics[width=8cm]{images/0.82/training_infos.png}\hfill
@@ -150,9 +150,39 @@ F1:                             0.8761904761904761\\
     \caption{First run}
     \label{fig:my_label}
 \end{figure}
-
+\newpage
+Then we tried with more images (\texttt{training datasize = 2700}) and we obtained the following results:\\\\
+\textbf{CNN metrics}: \\
+Accuracy:\quad0.7537037037037037\\
+Precision:\quad0.7259786476868327\\
+Recall: \quad0.7846153846153846\\
+F1:\quad0.7541589648798521\\
+\textbf{NN metrics}:\\
+Accuracy:\quad0.85\\
+Precision:\quad0.8509803921568627\\
+Recall:\quad0.8346153846153846\\
+F1:\quad0.8427184466019418\\
+From these results we see that the dataset size from 500 to 2700 does not positively affect the results.\\\\
+We change the learning rate and the results are worse.\\
+with \texttt{learning rate = 0.0001} the results are: \\
+\textbf{CNN metrics}:\\
+Accuracy:\quad0.69\\
+Precision:\quad0.7090909090909091\\
+Recall:\quad0.7222222222222222\\
+F1:\quad0.7155963302752293\\
+\textbf{NN metrics}:\\
+Accuracy:\quad0.74\\
+Precision:\quad0.9117647058823529\\
+Recall:\quad0.5740740740740741\\
+F1:\quad0.7045454545454545\\
 \chapter{Filters}
 \chapter{Conclusions}
+During the tests what we found was that the learning rate should not be too low but not too high either, that the more we increase the number of epochs the better it goes, but it risks overfitting; then as a measure of batch we found 64 to be the best value or at most 32. The number of images used instead with 500 we achieved the best results but using 2700 the results do not change much except with worse performance. The momentum varies the results and the ideal is between 0.5 and 0.9.
+Regarding the parameters to be passed to the scatter the optimal values are: 
+J = 5 or 6
+order = 2 because it is fixed
+number of rotations 8 (if we increase it does not change)
+quality factor [2,1]
 \end{document}
 
 

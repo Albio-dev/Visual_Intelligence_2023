@@ -10,6 +10,7 @@ from lib.cnn_explorer import explorer
 import matplotlib.pyplot as plt
 import torch
 import numpy as np
+import os
 
 # Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -76,8 +77,18 @@ def classify(display = False):
     CNN_metrics.printMetrics('CNN')
     NN_metrics.printMetrics("NN")
 
-    
 
+    results_path = settings['results_path']
+    current_results_path = f"{results_path}{handler.get_folder_index(results_path)}"
+
+    if not os.path.isdir(current_results_path):
+        os.makedirs(current_results_path)
+    
+    
+    file = open(f"{current_results_path}/info.txt", 'w')
+    file.write(f"{settings}\n{CNN_metrics.getMetrics(type='CNN')}\n{NN_metrics.getMetrics(type='NN')}")
+    file.write(f'{scatter}')
+    file.close()
 
 
 
@@ -97,6 +108,9 @@ def classify(display = False):
         axs[1][0].set_ylim(0, max_loss)
         axs[1][1].set_ylim(min_acc, 1)
         fig.show()
+        
+        fig.savefig(f"{current_results_path}/conf_mat.png", dpi=300)
+    
 
         # Plot confusion matrices
         fig, axs = plt.subplots(1, 2)
@@ -106,10 +120,14 @@ def classify(display = False):
         NN_metrics.confMatDisplay().plot(ax = axs[1])
         axs[1].set_title('NN')
         fig.show()
-
+        
+        fig.savefig(f"{current_results_path}/conf_mat.png", dpi=300)
+    
         
         cnn_inspect = explorer(CNN)        
         cnn_inspect.show_filters()
+
+        cnn_inspect.savefig(f"{current_results_path}/conf_mat.png", dpi=300)
         
         input()
 

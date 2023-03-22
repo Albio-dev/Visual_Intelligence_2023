@@ -150,3 +150,7 @@ class data_handler:
     # Getter for raw data (class dictionaries)
     def get_raw_data(self):
         return self.raw_data, self.raw_labels
+    
+    
+    def get_folder_index(path):
+        return str(len(os.listdir(path)) + 1)

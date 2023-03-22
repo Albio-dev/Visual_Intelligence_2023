@@ -9,7 +9,8 @@ lab_classes:
 - dog
 model_train_path: ./train_checkpoint/
 num_samples: 500
+results_path: ./results/
 test_perc: 0.2
-learning_rate: 0.01
+learning_rate: 0.001
 momentum: 0.5
 num_epochs: 100

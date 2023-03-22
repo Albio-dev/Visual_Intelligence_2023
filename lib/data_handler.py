@@ -152,5 +152,5 @@ class data_handler:
         return self.raw_data, self.raw_labels
     
     
-    def get_folder_index(path):
+    def get_folder_index(self,path):
         return str(len(os.listdir(path)) + 1)

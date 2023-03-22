@@ -17,14 +17,14 @@ generic = {
     # Size of the input images
     "imageSize" : (128, 128),
     #The number of samples (images) used
-    "num_samples" : 500
+    "num_samples" : 500  #max 2774 (with flowers)
 
 
 }
 
 model_hyperparameters = {
     # Learning rate to scale how much new weighs are evaluated
-    "learning_rate": 0.01,
+    "learning_rate": 0.001,
     # Scale for past experience to not be perturbated by new ones
     "momentum" : 0.5,
     # The number of times the model is trained on the entire training dataset.

@@ -109,7 +109,7 @@ def classify(display = False):
         axs[1][1].set_ylim(min_acc, 1)
         fig.show()
         
-        fig.savefig(f"{current_results_path}/conf_mat.png", dpi=300)
+        fig.savefig(f"{current_results_path}/training_infos.png", dpi=300)
     
 
         # Plot confusion matrices
@@ -125,10 +125,8 @@ def classify(display = False):
     
         
         cnn_inspect = explorer(CNN)        
-        cnn_inspect.show_filters()
+        cnn_inspect.show_filters(current_results_path)
 
-        cnn_inspect.savefig(f"{current_results_path}/conf_mat.png", dpi=300)
-        
         input()
 
     

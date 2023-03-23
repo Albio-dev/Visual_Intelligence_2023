@@ -27,9 +27,7 @@ class explorer:
         for i in range(filters):
             self.visTensor(self.getLayer(i), axs[i])
         
-        if save_path is not None:
-            fig.savefig(f"{save_path}/CNN_filters.png", dpi=300)
-        fig.show()
+        return fig
 
 
 

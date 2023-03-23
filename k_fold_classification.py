@@ -49,12 +49,14 @@ def classify(display = False):
     x_train, x_test, y_train, y_test = handler.get_data_split()
     y_train = np.asarray(y_train)
     y_test = np.asarray(y_test)
+    _, testset = handler.batcher()
 
     # Get NN dataset
     scatter_dataset = data_handler(data_path, classes, batch_size, test_perc, data = (scatter.scatter(handler.get_data()[0]), handler.get_data()[1]))
     x_train_scatter, x_test_scatter, _, _ = scatter_dataset.get_data_split()
+    _, testset_scatter = scatter_dataset.batcher()
 
-    for train_index,test_index in kf.split(x_train):
+    for i, (train_index,test_index) in enumerate(kf.split(x_train)):
         x_train_par, x_val, y_train_par, y_val = x_train[train_index], x_train[test_index], y_train[train_index], y_train[test_index]
         trainset, valset = handler.batcher(data=[x_train_par, x_val, y_train_par, y_val])
 
@@ -106,52 +108,44 @@ def classify(display = False):
         axs[1][1].set_ylim(min_acc, 1)
         fig.show()
         
-        #fig.savefig(f"{current_results_path}/training_infos.png", dpi=300)
+        fig.savefig(f"{current_results_path}/training_infos_{i}.png", dpi=300)
+        
+
+
+        
+    # Test models
+    CNN_metrics = metrics(*train_test.test(model=CNN, test_data=testset, device=device), classes)
+    NN_metrics = metrics(*train_test.test(model=NN, test_data=testset_scatter, device=device), classes)
+
+    # Print testing results
+    CNN_metrics.printMetrics('CNN')
+    NN_metrics.printMetrics("NN")
+
+    # Plot confusion matrices
+    fig, axs = plt.subplots(1, 2)
+    fig.suptitle('Confusion matrices')
+    CNN_metrics.confMatDisplay().plot(ax = axs[0])
+    axs[0].set_title('CNN')
+    NN_metrics.confMatDisplay().plot(ax = axs[1])
+    axs[1].set_title('NN')
+    fig.show()
+    fig.savefig(f"{current_results_path}/conf_mat.png", dpi=300)
+
+
+
+
+    #cnn_inspect = explorer(CNN)        
+    #fig = cnn_inspect.show_filters(current_results_path)
+    #fig.show()
+    #fig.savefig(f"{current_results_path}/CNN_filters.png", dpi=300)
     
-
-        # Plot confusion matrices
-        #fig, axs = plt.subplots(1, 2)
-        #fig.suptitle('Confusion matrices')
-        #CNN_metrics.confMatDisplay().plot(ax = axs[0])
-        #axs[0].set_title('CNN')
-        #NN_metrics.confMatDisplay().plot(ax = axs[1])
-        #axs[1].set_title('NN')
-        #fig.show()
-        
-        #fig.savefig(f"{current_results_path}/conf_mat.png", dpi=300)
     
-        
-        #cnn_inspect = explorer(CNN)        
-        #cnn_inspect.show_filters(current_results_path)
-
-        input()
-
-        
-        '''
-        # Test models
-        #CNN_metrics = metrics(*train_test.test(model=CNN, test_data=testset, device=device), classes)
-        #NN_metrics = metrics(*train_test.test(model=NN, test_data=scatter_testset, device=device), classes)
-
-        # Print testing results
-        CNN_metrics.printMetrics('CNN')
-        #NN_metrics.printMetrics("NN")
-
-
-        results_path = settings['results_path']
-        current_results_path = f"{results_path}{handler.get_folder_index(results_path)}"
-
-        if not os.path.isdir(current_results_path):
-            os.makedirs(current_results_path)
-        
-        
-        file = open(f"{current_results_path}/info.txt", 'w')
-        file.write(f"{settings}\n{CNN_metrics.getMetrics(type='CNN')}") #\n{NN_metrics.getMetrics(type='NN')
-        file.write(f'{scatter}')
-        file.close()
-        '''
-
-
+    file = open(f"{current_results_path}/info.txt", 'w')
+    file.write(f"{settings}\n{CNN_metrics.getMetrics(type='CNN')}") #\n{NN_metrics.getMetrics(type='NN')
+    file.write(f'{scatter}')
+    file.close()
     
+    input()
 
 
 

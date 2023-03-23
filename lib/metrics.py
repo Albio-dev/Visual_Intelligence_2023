@@ -10,14 +10,17 @@ class metrics:
 
         # Calculate metrics
         self.accuracy = accuracy_score(self.y_true, self.y_pred)
-        self.precision = precision_score(self.y_true, self.y_pred)
-        self.recall = recall_score(self.y_true, self.y_pred)
-        self.f1 = f1_score(self.y_true, self.y_pred)
+        self.precision = precision_score(self.y_true, self.y_pred, average='micro')
+        self.recall = recall_score(self.y_true, self.y_pred, average='micro')
+        self.f1 = f1_score(self.y_true, self.y_pred, average='micro')
 
         # Calculate confusion matrix
         self.confmat = confusion_matrix(self.y_true, self.y_pred, labels=list(range(0,len(self.classes))))
-        fpr, tpr, threshold = roc_curve(self.y_true, self.y_pred)
-        self.roc = (fpr, tpr)
+        if len(lab_classes) <= 2:
+            fpr, tpr, threshold = roc_curve(self.y_true, self.y_pred)
+            self.roc = (fpr, tpr)
+        else:
+            self.roc = None
 
     # Method to turn metrics into string
     def __str__(self) -> str:
@@ -50,19 +53,19 @@ class metrics:
         return PrecisionRecallDisplay(self.precision, self.recall)
 
     # Helper to plot training data
-    def plotTraining( data, axs = None):   
+    def plotTraining( data, axs = None, title = '', iteration = ''):   
         if axs is None:
             fig, axes = plt.subplots(1,2, figsize=(15,5))
             fig.show()
             
         x_scale = range(len(data['loss']))
         x_scale_val = [i*10 for i in range(len(data['loss_val']))]
-        axs[0].plot(x_scale, data['loss'], label='training_loss')
-        axs[0].plot(x_scale_val, data['loss_val'], label='validation_loss')
-        axs[0].set_title('Loss')
+        axs[0].plot(x_scale, data['loss'], label='training_loss'+ ' ' + str(iteration))
+        axs[0].plot(x_scale_val, data['loss_val'], label='validation_loss'+ ' ' + str(iteration))
+        axs[0].set_title('Loss ' + title)
         axs[0].legend()
-        axs[1].plot(x_scale, data['accuracy'], label='training_accuracy')        
-        axs[1].plot(x_scale_val, data['accuracy_val'], label='validation_accuracy')
-        axs[1].set_title('Accuracy')
+        axs[1].plot(x_scale, data['accuracy'], label='training_accuracy'+ ' ' + str(iteration))        
+        axs[1].plot(x_scale_val, data['accuracy_val'], label='validation_accuracy'+ ' ' + str(iteration))
+        axs[1].set_title('Accuracy ' + title)
         axs[1].legend()
         

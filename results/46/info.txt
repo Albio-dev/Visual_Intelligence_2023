@@ -1,0 +1,6 @@
+{'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'epoch_val': 10, 'imageSize': (128, 128), 'lab_classes': ['flower', 'dog', 'whale'], 'model_train_path': './train_checkpoint/', 'num_samples': 500, 'results_path': './results/', 'test_perc': 0.2, 'learning_rate': 0.001, 'momentum': 0.5, 'num_epochs': 100}
+CNN metrics: 
+Accuracy:		0.63
+Precision:		0.63
+Recall:			0.63
+F1:				0.63<lib.scatter_helper.scatter object at 0x000001332D884130>

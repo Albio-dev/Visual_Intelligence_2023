@@ -1,4 +1,4 @@
-batch_size: 64
+batch_size: 512
 channels: 1
 data_path: ./Data/gray
 epoch_val: 10
@@ -8,10 +8,12 @@ imageSize: !!python/tuple
 lab_classes:
 - flower
 - dog
+- whale
 model_train_path: ./train_checkpoint/
-num_samples: 500
+num_k_folds: 3
+num_samples: 4100
 results_path: ./results/
 test_perc: 0.2
 learning_rate: 0.001
 momentum: 0.5
-num_epochs: 100
+num_epochs: 1000

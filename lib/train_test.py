@@ -66,6 +66,8 @@ def train(model, train_data, val_data, num_epochs, best_model_path, device, opti
                     loss = criterion(y_pred,y_te)
             losses_val.append(loss.cpu().detach().numpy())
             acc_val.append(accuracy_score(true_label_val.cpu(),pred_label_val.cpu()))
+            print(f'Validation loss = {loss:.4f}')
+        
 
         # Reinitialize the variables to compute accuracy
         pred_label_train = torch.empty((0)).to(device)

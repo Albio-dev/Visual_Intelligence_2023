@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 
 class data_handler:
 
-    def __init__(self, data_path, classes, batch_size, test_perc, channels = 1, samples = 1):
+    def __init__(self, data_path, classes, batch_size, test_perc, channels = 1, samples = 1, data = None):
         self.seed = 42
         random.seed(self.seed)
 
@@ -16,8 +16,13 @@ class data_handler:
         self.channels = channels
 
         # Load data from folders
-        self.data, self.labels = None, None
-        self.loadData(samples = samples)
+        if data is None:
+            self.data, self.labels = None, None
+            self.loadData(samples = samples)
+        else:
+            self.data, self.labels = data
+
+    
 
     # Load data from folders and eventually properly subsample equally on each class
     def loadData(self, samples = None):

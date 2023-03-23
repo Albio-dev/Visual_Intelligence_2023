@@ -1,15 +1,18 @@
 import torch, numpy
 from sklearn.metrics import accuracy_score
 
-def train(model, train_data, num_epochs, best_model_path, device, optimizer_parameters):    
+def train(model, train_data, val_data, num_epochs, best_model_path, device, optimizer_parameters,epoch_val):    
 
     best_acc = 0.0
     # Variables to store the results
     losses = []
     acc_train = []
+    losses_val = []
+    acc_val = []
     pred_label_train = torch.empty((0)).to(device)    # .to(device) to move the data/model on GPU or CPU (default)
     true_label_train = torch.empty((0)).to(device)
-
+    pred_label_val = torch.empty((0)).to(device)
+    true_label_val = torch.empty((0)).to(device)
     ### CREATE MODEL ###
 
     # Optimizer
@@ -29,7 +32,7 @@ def train(model, train_data, num_epochs, best_model_path, device, optimizer_para
 
             x,y = data_tr                        # unlist the data from the train set
             x = x.float().to(device)     # change the size for the input data - convert to float type
-            y = y.to(device)
+            y = y.to(torch.int64).to(device)
 
             y_pred = numpy.squeeze(model(x))                                        # run the model()
             loss = criterion(y_pred,y)                               # compute loss
@@ -48,11 +51,29 @@ def train(model, train_data, num_epochs, best_model_path, device, optimizer_para
             torch.save(model.state_dict(), best_model_path)
             best_acc = acc_t
 
+        if val_data is not None and epoch % epoch_val == 0:                                                             # compute the accuracy on validation set
+            model.eval()
+            with torch.no_grad():
+                for data in val_data:
+                    x_te, y_te = data
+                    x_te = x_te.float().to(device)
+                    y_te = y_te.to(torch.int64).to(device)
+
+                    y_pred = numpy.squeeze(model(x_te))
+                    _,pred = y_pred.max(1)
+                    pred_label_val = torch.cat((pred_label_val,pred),dim=0)
+                    true_label_val = torch.cat((true_label_val,y_te),dim=0)
+                    loss = criterion(y_pred,y_te)
+            losses_val.append(loss.cpu().detach().numpy())
+            acc_val.append(accuracy_score(true_label_val.cpu(),pred_label_val.cpu()))
+
         # Reinitialize the variables to compute accuracy
         pred_label_train = torch.empty((0)).to(device)
         true_label_train = torch.empty((0)).to(device)
+        pred_label_val = torch.empty((0)).to(device)
+        true_label_val = torch.empty((0)).to(device)
     
-    return {'loss': losses, 'accuracy': acc_train}
+    return {'loss': losses, 'accuracy': acc_train, 'loss_val': losses_val, 'accuracy_val': acc_val}
 
 def test(model, test_data, device): 
 

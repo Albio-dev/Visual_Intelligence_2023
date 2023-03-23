@@ -71,6 +71,7 @@ class scatter:
 
     # Compute scattering coefficients
     def scatter(self, data):
+        print("Scattering data...")
         return np.asarray(self.scatterFunc(self.eng.uint8(data)))#[np.asarray(x._data) for x in self.scatterFunc(data)]
 
 

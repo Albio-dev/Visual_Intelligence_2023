@@ -17,7 +17,9 @@ generic = {
     # Size of the input images
     "imageSize" : (128, 128),
     #The number of samples (images) used
-    "num_samples" : 500  #max 2774 (with flowers)
+    "num_samples" : 500,  #max 2774 (with flowers)
+    # How many training epochs for every validation
+    "epoch_val": 10
 
 
 }

@@ -55,9 +55,14 @@ class metrics:
             fig, axes = plt.subplots(1,2, figsize=(15,5))
             fig.show()
             
-        axs[0].plot(data['loss'])
+        x_scale = range(len(data['loss']))
+        x_scale_val = [i*10 for i in range(len(data['loss_val']))]
+        axs[0].plot(x_scale, data['loss'], label='training_loss')
+        axs[0].plot(x_scale_val, data['loss_val'], label='validation_loss')
         axs[0].set_title('Loss')
-        axs[1].plot(data['accuracy'])
+        axs[0].legend()
+        axs[1].plot(x_scale, data['accuracy'], label='training_accuracy')        
+        axs[1].plot(x_scale_val, data['accuracy_val'], label='validation_accuracy')
         axs[1].set_title('Accuracy')
-        
+        axs[1].legend()
         

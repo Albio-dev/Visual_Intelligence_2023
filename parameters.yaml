@@ -1,6 +1,7 @@
 batch_size: 64
 channels: 1
 data_path: ./Data/gray
+epoch_val: 10
 imageSize: !!python/tuple
 - 128
 - 128

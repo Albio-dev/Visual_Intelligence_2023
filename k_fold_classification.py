@@ -147,7 +147,7 @@ def classify(display = False):
     fig.savefig(f"{current_results_path}/CNN_filters.png", dpi=300)    
     
     file = open(f"{current_results_path}/info.txt", 'w')
-    file.write(f"{settings}\n{CNN_metrics.getMetrics(type='CNN')}\n{NN_metrics.getMetrics(type='NN')}")
+    file.write(f"{settings}\n{CNN_metrics.getMetrics(type='CNN')}\n{NN_metrics.getMetrics(type='NN')}\n")
     file.write(f'{scatter.info}')
     file.close()
     

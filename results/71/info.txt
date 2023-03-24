@@ -1,0 +1,12 @@
+{'batch_size': 512, 'channels': 1, 'data_path': './Data/gray', 'epoch_val': 5, 'imageSize': (128, 128), 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'num_k_folds': 3, 'num_samples': 500, 'results_path': './results/', 'test_perc': 0.2, 'learning_rate': 0.001, 'momentum': 0.5, 'num_epochs': 500}
+CNN metrics: 
+Accuracy:		0.75
+Precision:		0.75
+Recall:			0.75
+F1:				0.75
+NN metrics: 
+Accuracy:		0.84
+Precision:		0.84
+Recall:			0.84
+F1:				0.8399999999999999wavelets: [48 32]
+coefficients: [8. 8.]

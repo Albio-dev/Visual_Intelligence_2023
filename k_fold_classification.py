@@ -39,7 +39,6 @@ def classify(display = False):
     test_perc = settings['test_perc']
     handler = data_handler(data_path, classes, batch_size, test_perc)
     handler.loadData(samples=settings['num_samples'])
-    epoch_val = settings['epoch_val']
     results_path = settings['results_path']
     current_results_path = f"{results_path}{handler.get_folder_index(results_path)}"
 
@@ -95,13 +94,14 @@ def classify(display = False):
         num_epochs = settings['num_epochs']
         NN_best_path = settings['model_train_path']+'NN_128x128_best_model_trained.pt'
         CNN_best_path = settings['model_train_path']+'CNN_128x128_best_model_trained.pt'
+        epoch_val = settings['epoch_val']
 
         # Call the function in temp.py
         CNN_train_data = train_test.train(model = CNN, train_data=trainset, val_data = valset, num_epochs=num_epochs, best_model_path=CNN_best_path+str(i), device=device, optimizer_parameters=(learning_rate, momentum),epoch_val= epoch_val)
         NN_train_data = train_test.train(model = NN, train_data=trainset_scatter,val_data = valset_scatter, num_epochs=num_epochs, best_model_path=NN_best_path+str(i), device=device, optimizer_parameters=(learning_rate, momentum),epoch_val= epoch_val)
         
-        metrics.plotTraining(data = CNN_train_data, axs=training_axs[0][:], title = 'CNN', iteration=i)
-        metrics.plotTraining(data = NN_train_data, axs=training_axs[1][:], title = 'NN', iteration=i)
+        metrics.plotTraining(data = CNN_train_data, axs=training_axs[0][:], title = 'CNN', iteration=i, epochs_per_validation=epoch_val)
+        metrics.plotTraining(data = NN_train_data, axs=training_axs[1][:], title = 'NN', iteration=i, epochs_per_validation=epoch_val)
 
         # Decide scale
         max_loss = max(max_loss, max(CNN_train_data['loss']), max(CNN_train_data['loss_val']), max(NN_train_data['loss']), max(NN_train_data['loss_val']))
@@ -148,7 +148,7 @@ def classify(display = False):
     
     file = open(f"{current_results_path}/info.txt", 'w')
     file.write(f"{settings}\n{CNN_metrics.getMetrics(type='CNN')}\n{NN_metrics.getMetrics(type='NN')}")
-    file.write(f'{scatter}')
+    file.write(f'{scatter.scatter_info}')
     file.close()
     
     input()

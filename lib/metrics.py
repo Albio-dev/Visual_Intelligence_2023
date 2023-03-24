@@ -53,13 +53,13 @@ class metrics:
         return PrecisionRecallDisplay(self.precision, self.recall)
 
     # Helper to plot training data
-    def plotTraining( data, axs = None, title = '', iteration = ''):   
+    def plotTraining( data, axs = None, title = '', iteration = '', epochs_per_validation = 10):   
         if axs is None:
             fig, axes = plt.subplots(1,2, figsize=(15,5))
             fig.show()
             
         x_scale = range(len(data['loss']))
-        x_scale_val = [i*10 for i in range(len(data['loss_val']))]
+        x_scale_val = [i*epochs_per_validation for i in range(len(data['loss_val']))]
         axs[0].plot(x_scale, data['loss'], label='training_loss'+ ' ' + str(iteration))
         axs[0].plot(x_scale_val, data['loss_val'], label='validation_loss'+ ' ' + str(iteration))
         axs[0].set_title('Loss ' + title)

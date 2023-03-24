@@ -6,7 +6,7 @@ generic = {
     "model_train_path": './train_checkpoint/',
 
     # Classes in the dataset             
-    "lab_classes" : ['flower','dog', 'whale'],
+    "lab_classes" : ['flower','dog'],
     
     "results_path" : './results/',
 
@@ -17,22 +17,20 @@ generic = {
     # Size of the input images
     "imageSize" : (128, 128),
     #The number of samples (images) used
-    "num_samples" : 4100,  #max 2774 (with flowers)
+    "num_samples" : 54,  #max 2774 (with flowers) # max 4100 with whales (3 class)
     # How many training epochs for every validation
-    "epoch_val": 10,
+    "epoch_val": 5,
     #The number of folds of KFold
     "num_k_folds": 3
-
-
 }
 
 model_hyperparameters = {
     # Learning rate to scale how much new weighs are evaluated
-    "learning_rate": 0.001,
+    "learning_rate": 0.01,
     # Scale for past experience to not be perturbated by new ones
     "momentum" : 0.5,
     # The number of times the model is trained on the entire training dataset.
-    "num_epochs" : 1000
+    "num_epochs" : 250
 }
 
 scattering_parameters = {

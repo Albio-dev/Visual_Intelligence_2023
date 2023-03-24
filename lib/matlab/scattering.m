@@ -2,7 +2,7 @@ function [data] = scattering(images, sn)
 
     %images = num2cell(images, length(images));    
     
-    len = length(images);
+    len = size(images, 1);
     %gpudata = gpuArray(images); 
 
     data = images;   

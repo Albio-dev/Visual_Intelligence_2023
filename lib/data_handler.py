@@ -17,8 +17,8 @@ class data_handler:
 
         # Load data from folders
         if data is None:
-            self.data, self.labels = None, None
-            self.loadData(samples = samples)
+            self.data, self.labels = self.loadData(samples = samples)
+            
         else:
             self.data, self.labels = data
 

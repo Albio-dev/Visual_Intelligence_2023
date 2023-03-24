@@ -6,6 +6,7 @@ from lib.metrics import metrics as metrics
 from lib import scatter_helper
 from lib.data_handler import data_handler
 from lib.cnn_explorer import explorer
+from lib.scripts import make_settings
 
 import matplotlib.pyplot as plt
 import torch
@@ -17,6 +18,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 print('Device: ', device)
 def classify(display = False):
+    make_settings.writefile()
     settings = utils_our.load_settings()
 
     # Scatter creation
@@ -29,17 +31,19 @@ def classify(display = False):
     classes = settings['lab_classes']
     batch_size = settings['batch_size']
     test_perc = settings['test_perc']
-    handler = data_handler(data_path, classes, batch_size, test_perc)
+    handler = data_handler(data_path, classes, batch_size, test_perc, samples=settings['num_samples'])
     handler.loadData(samples=settings['num_samples'])
 
     # Get CNN dataset
-    trainset, testset = handler.batcher()
-
-    # Getting scattering coefficients
-    data, labels = handler.get_data()
+    x_train, x_test, y_train, y_test = handler.get_data_split()
+    trainset, valset = handler.batcher(data = (x_train, y_train))
+    _, testset = handler.batcher(data = (x_test, y_test))
 
     # get NN dataset
-    scatter_trainset, scatter_testset = handler.batcher(data = (scatter.scatter(data), labels))
+    scatter_dataset = data_handler(data_path, classes, batch_size, test_perc, data = (scatter.scatter(handler.get_data()[0]), handler.get_data()[1]))
+    x_scatter_train, x_scatter_test, y_scatter_train, y_scatter_test = scatter_dataset.get_data_split()    
+    trainset_scatter, valset_scatter = handler.batcher(data = (x_scatter_train, y_scatter_train))
+    _, testset_scatter = handler.batcher(data = (x_scatter_test, y_scatter_test))
 
     # Model parameters
     classes = settings['lab_classes']
@@ -50,7 +54,7 @@ def classify(display = False):
                       num_classes=len(classes))
     NN = NN_128x128(input_channel=channels, 
                     num_classes=len(classes), 
-                    data_size = np.prod(list(scatter_trainset)[0][0][0].shape))
+                    data_size = np.prod(list(trainset_scatter)[0][0][0].shape))
     
     # Optimizer parameters
     learning_rate = settings['learning_rate']
@@ -60,10 +64,11 @@ def classify(display = False):
     num_epochs = settings['num_epochs']
     NN_best_path = settings['model_train_path']+'NN_128x128_best_model_trained.pt'
     CNN_best_path = settings['model_train_path']+'CNN_128x128_best_model_trained.pt'
+    epoch_val = settings['epoch_val']
 
     # Call the function in temp.py
-    CNN_train_data = train_test.train(model = CNN, train_data=trainset, num_epochs=num_epochs, best_model_path=CNN_best_path, device=device, optimizer_parameters=(learning_rate, momentum))
-    NN_train_data = train_test.train(model = NN, train_data=scatter_trainset, num_epochs=num_epochs, best_model_path=NN_best_path, device=device, optimizer_parameters=(learning_rate, momentum))
+    CNN_train_data = train_test.train(model = CNN, train_data=trainset, val_data = valset, num_epochs=num_epochs, best_model_path=CNN_best_path, device=device, optimizer_parameters=(learning_rate, momentum), epoch_val= epoch_val)
+    NN_train_data = train_test.train(model = NN, train_data=trainset_scatter, val_data = valset_scatter, num_epochs=num_epochs, best_model_path=NN_best_path, device=device, optimizer_parameters=(learning_rate, momentum), epoch_val= epoch_val)
 
     # Load best models
     NN.load_state_dict(torch.load(NN_best_path))
@@ -71,7 +76,7 @@ def classify(display = False):
 
     # Test models
     CNN_metrics = metrics(*train_test.test(model=CNN, test_data=testset, device=device), classes)
-    NN_metrics = metrics(*train_test.test(model=NN, test_data=scatter_testset, device=device), classes)
+    NN_metrics = metrics(*train_test.test(model=NN, test_data=testset_scatter, device=device), classes)
 
     # Print testing results
     CNN_metrics.printMetrics('CNN')
@@ -87,7 +92,7 @@ def classify(display = False):
     
     file = open(f"{current_results_path}/info.txt", 'w')
     file.write(f"{settings}\n{CNN_metrics.getMetrics(type='CNN')}\n{NN_metrics.getMetrics(type='NN')}")
-    file.write(f'{scatter}')
+    file.write(f'{str(scatter.scatter_info)}')
     file.close()
 
 
@@ -97,18 +102,17 @@ def classify(display = False):
         # Plot training data
         fig, axs = plt.subplots(2, 2)
         fig.suptitle('Training infos')
-        metrics.plotTraining(data = CNN_train_data, axs=axs[0][:])
-        metrics.plotTraining(data = NN_train_data, axs=axs[1][:])
+        metrics.plotTraining(data = CNN_train_data, axs=axs[0][:], epochs_per_validation=epoch_val)
+        metrics.plotTraining(data = NN_train_data, axs=axs[1][:], epochs_per_validation=epoch_val)
         # Decide scale
-        max_loss = max(max(CNN_train_data['loss']), max(NN_train_data['loss']))
-        min_acc = min(min(CNN_train_data['accuracy']), min(NN_train_data['accuracy']))
+        max_loss = min(max(max(CNN_train_data['loss']), max(CNN_train_data['loss_val']), max(NN_train_data['loss']), max(NN_train_data['loss_val'])), 1)
+        min_acc = min(min(CNN_train_data['accuracy']), min(CNN_train_data['accuracy_val']), min(NN_train_data['accuracy']), min(NN_train_data['accuracy_val']))
         # Apply scale to graphs
         axs[0][0].set_ylim(0, max_loss)
         axs[0][1].set_ylim(min_acc, 1)
         axs[1][0].set_ylim(0, max_loss)
         axs[1][1].set_ylim(min_acc, 1)
-        fig.show()
-        
+        fig.show()        
         fig.savefig(f"{current_results_path}/training_infos.png", dpi=300)
     
 
@@ -119,13 +123,14 @@ def classify(display = False):
         axs[0].set_title('CNN')
         NN_metrics.confMatDisplay().plot(ax = axs[1])
         axs[1].set_title('NN')
-        fig.show()
-        
+        fig.show()        
         fig.savefig(f"{current_results_path}/conf_mat.png", dpi=300)
     
         
         cnn_inspect = explorer(CNN)        
-        cnn_inspect.show_filters(current_results_path)
+        fig = cnn_inspect.show_filters(current_results_path)
+        fig.show()
+        fig.savefig(f"{current_results_path}/CNN_filters.png", dpi=300) 
 
         input()
 

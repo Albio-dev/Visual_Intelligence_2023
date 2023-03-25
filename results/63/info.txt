@@ -1,11 +1,13 @@
-{'batch_size': 512, 'channels': 1, 'data_path': './Data/gray', 'epoch_val': 10, 'imageSize': (128, 128), 'lab_classes': ['flower', 'dog', 'whale'], 'model_train_path': './train_checkpoint/', 'num_k_folds': 3, 'num_samples': 200, 'results_path': './results/', 'test_perc': 0.2, 'learning_rate': 0.001, 'momentum': 0.5, 'num_epochs': 500}
+{'batch_size': 32, 'channels': 1, 'data_path': './Data/gray', 'epoch_val': 5, 'imageSize': (128, 128), 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'num_k_folds': 3, 'num_samples': 2000, 'results_path': './results/', 'test_perc': 0.2, 'learning_rate': 0.0005, 'momentum': 0.9, 'num_epochs': 60}
 CNN metrics: 
-Accuracy:		0.5
-Precision:		0.5
-Recall:			0.5
-F1:				0.5
+Accuracy:		0.7125
+Precision:		0.7125
+Recall:			0.7125
+F1:				0.7125
 NN metrics: 
-Accuracy:		0.775
-Precision:		0.775
-Recall:			0.775
-F1:				0.775<class 'lib.scatter_helper.scatter.scatter_info'>
+Accuracy:		0.8475
+Precision:		0.8475
+Recall:			0.8475
+F1:				0.8475
+wavelets: [48 32]
+coefficients: [8. 8.]

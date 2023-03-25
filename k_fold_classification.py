@@ -42,6 +42,8 @@ def classify(display = False):
     results_path = settings['results_path']
     current_results_path = f"{results_path}{handler.get_folder_index(results_path)}"
 
+    print(current_results_path)
+
     if not os.path.isdir(current_results_path):
         os.makedirs(current_results_path)
 
@@ -116,7 +118,7 @@ def classify(display = False):
     training_axs[1][0].set_ylim(0, max_loss)
     training_axs[1][1].set_ylim(min_acc, 1)
 
-    training_fig.show()    
+    #training_fig.show()    
     training_fig.savefig(f"{current_results_path}/training_infos_{i}.png", dpi=300)
         
     # Load best models
@@ -138,20 +140,20 @@ def classify(display = False):
     axs[0].set_title('CNN')
     NN_metrics.confMatDisplay().plot(ax = axs[1])
     axs[1].set_title('NN')
-    fig.show()
+    #fig.show()
     fig.savefig(f"{current_results_path}/conf_mat.png", dpi=300)
 
     cnn_inspect = explorer(CNN)        
     fig = cnn_inspect.show_filters(current_results_path)
-    fig.show()
+    #fig.show()
     fig.savefig(f"{current_results_path}/CNN_filters.png", dpi=300)    
     
     file = open(f"{current_results_path}/info.txt", 'w')
     file.write(f"{settings}\n{CNN_metrics.getMetrics(type='CNN')}\n{NN_metrics.getMetrics(type='NN')}\n")
     file.write(f'{scatter.info}')
     file.close()
-    
-    input()
+
+    print("Done")
 
 
 

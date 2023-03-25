@@ -17,7 +17,7 @@ generic = {
     # Size of the input images
     "imageSize" : (128, 128),
     #The number of samples (images) used
-    "num_samples" : 500,  #max 2774 (with flowers) # max 4100 with whales (3 class)
+    "num_samples" : 2000,  #max 2774 (with flowers) # max 4100 with whales (3 class)
     # How many training epochs for every validation
     "epoch_val": 5,
     #The number of folds of KFold
@@ -26,11 +26,11 @@ generic = {
 
 model_hyperparameters = {
     # Learning rate to scale how much new weighs are evaluated
-    "learning_rate": 0.001,
+    "learning_rate": 0.0005,
     # Scale for past experience to not be perturbated by new ones
     "momentum" : 0.9,
     # The number of times the model is trained on the entire training dataset.
-    "num_epochs" : 500
+    "num_epochs" : 60
 }
 
 scattering_parameters = {

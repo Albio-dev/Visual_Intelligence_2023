@@ -41,6 +41,7 @@ def classify(display = False):
     test_perc = settings['test_perc']
     handler = data_handler(data_path, classes, batch_size, test_perc)
     handler.loadData(samples=settings['num_samples'])
+    handler.to(device)
     results_path = settings['results_path']
     current_results_path = f"{results_path}{handler.get_folder_index(results_path)}"
 
@@ -52,8 +53,8 @@ def classify(display = False):
 
     # Get CNN dataset
     x_train, x_test, y_train, y_test = handler.get_data_split()
-    y_train = np.asarray(y_train)
-    y_test = np.asarray(y_test)
+    #y_train = np.asarray(y_train)
+    #y_test = np.asarray(y_test)
     _, testset = handler.batcher()
 
     
@@ -73,28 +74,30 @@ def classify(display = False):
         print(f"K-fold cycle {i+1}/{folds}")
         x_train_par, x_val, y_train_par, y_val = x_train[train_index], x_train[test_index], y_train[train_index], y_train[test_index]
 
+        
         aug_x_train_par = []
         aug_x_val = []
         aug_y_train_par = []
         aug_y_val = []
         
         
+        
         for x, y in zip(x_train_par, y_train_par):
-            aug_x_train_par += [np.squeeze(augmenter(torch.unsqueeze(torch.from_numpy(x), dim=0)).numpy())for _ in range(augmentation_amount)]
+            aug_x_train_par += [torch.squeeze(augmenter(torch.unsqueeze((x), dim=0))) for _ in range(augmentation_amount)]
             aug_y_train_par += [y] * augmentation_amount
         
         for x, y in zip(x_val, y_val):
-            aug_x_val += [np.squeeze(augmenter(torch.unsqueeze(torch.from_numpy(x), dim=0)).numpy()) for _ in range(augmentation_amount)]
+            aug_x_val += [torch.squeeze(augmenter(torch.unsqueeze((x), dim=0))) for _ in range(augmentation_amount)]
             aug_y_val += [y] * augmentation_amount
 
-        aug_x_train_par = np.asarray(aug_x_train_par)
-        aug_x_val = np.asarray(aug_x_val)
-        aug_y_train_par = np.asarray(aug_y_train_par)
-        aug_y_val = np.asarray(aug_y_val)
+        aug_x_train_par = torch.stack(aug_x_train_par).to(device)
+        aug_x_val = torch.stack(aug_x_val).to(device)
+        aug_y_train_par = torch.stack(aug_y_train_par).to(device)
+        aug_y_val = torch.stack(aug_y_val).to(device)
         
 
-        trainset, valset = handler.batcher(data=[aug_x_train_par, aug_x_val, aug_y_train_par, aug_y_val])
-        #trainset, valset = handler.batcher(data=[x_train_par, x_val, y_train_par, y_val])
+        #trainset, valset = handler.batcher(data=[aug_x_train_par, aug_x_val, aug_y_train_par, aug_y_val])
+        trainset, valset = handler.batcher(data=[x_train_par, x_val, y_train_par, y_val])
 
         # Model parameters
         classes = settings['lab_classes']

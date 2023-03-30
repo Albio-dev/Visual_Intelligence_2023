@@ -1,4 +1,5 @@
 import numpy, cv2, glob, random, os
+import torch
 from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import train_test_split
 
@@ -161,3 +162,7 @@ class data_handler:
     def get_folder_index(self,path):
         return max([int(x) for x in os.listdir(path)])+1
        
+    def to(self, device):
+        self.data = torch.tensor(self.data).to(device)
+        self.labels = torch.tensor(self.labels).to(device)
+        return self

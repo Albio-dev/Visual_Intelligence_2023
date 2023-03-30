@@ -68,7 +68,7 @@ def classify(display = False):
 
     policy = T.AutoAugmentPolicy.IMAGENET
     augmenter = T.AutoAugment(policy)
-    augmentation_amount = 4
+    augmentation_amount = 8
     
     for i, (train_index,test_index) in enumerate(kf.split(x_train)):
         print(f"K-fold cycle {i+1}/{folds}")
@@ -79,8 +79,6 @@ def classify(display = False):
         aug_x_val = []
         aug_y_train_par = []
         aug_y_val = []
-        
-        
         
         for x, y in zip(x_train_par, y_train_par):
             aug_x_train_par += [torch.squeeze(augmenter(torch.unsqueeze((x), dim=0))) for _ in range(augmentation_amount)]
@@ -96,8 +94,10 @@ def classify(display = False):
         aug_y_val = torch.stack(aug_y_val).to(device)
         
 
-        #trainset, valset = handler.batcher(data=[aug_x_train_par, aug_x_val, aug_y_train_par, aug_y_val])
+        trainset, valset = handler.batcher(data=[aug_x_train_par, aug_x_val, aug_y_train_par, aug_y_val])
+        '''
         trainset, valset = handler.batcher(data=[x_train_par, x_val, y_train_par, y_val])
+        '''
 
         # Model parameters
         classes = settings['lab_classes']

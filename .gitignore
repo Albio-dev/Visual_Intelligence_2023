@@ -4,6 +4,7 @@ __*
 *.asv
 *temp/
 *report/*
+!report/images
 *scatter.mat
 !report/*.tex
 !report/*.pdf

@@ -16,10 +16,10 @@ def train(model, train_data, val_data, num_epochs, best_model_path, device, opti
     ### CREATE MODEL ###
 
     # Optimizer
-    optim = torch.optim.SGD(model.parameters(), lr = optimizer_parameters[0], weight_decay=0.01, momentum=optimizer_parameters[1] )
+    optim = torch.optim.Adam(model.parameters(), lr = optimizer_parameters[0], weight_decay=0.01)#, momentum=optimizer_parameters[1] )
 
     # Loss function
-    criterion = torch.nn.CrossEntropyLoss()
+    criterion = torch.nn.CrossEntropyLoss().to(device)
 
     model = model.to(device)    # .to(device) to move the data/model on GPU or CPU (default)
 

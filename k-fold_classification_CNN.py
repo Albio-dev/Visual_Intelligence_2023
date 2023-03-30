@@ -56,12 +56,6 @@ def classify(display = False):
     y_test = np.asarray(y_test)
     _, testset = handler.batcher()
 
-    # Get NN dataset
-    scatter_dataset = data_handler(data_path, classes, batch_size, test_perc, data = (scatter.scatter(handler.get_data()[0]), handler.get_data()[1]))
-    x_train_scatter, _, _, _ = scatter_dataset.get_data_split()
-    _, testset_scatter = scatter_dataset.batcher()
-
-
     
     # Plot training data
     training_fig, training_axs = plt.subplots(2, 2, figsize=(15, 10))
@@ -83,7 +77,8 @@ def classify(display = False):
         aug_x_val = []
         aug_y_train_par = []
         aug_y_val = []
-
+        
+        
         for x, y in zip(x_train_par, y_train_par):
             aug_x_train_par += [np.squeeze(augmenter(torch.unsqueeze(torch.from_numpy(x), dim=0)).numpy())for _ in range(augmentation_amount)]
             aug_y_train_par += [y] * augmentation_amount
@@ -96,12 +91,10 @@ def classify(display = False):
         aug_x_val = np.asarray(aug_x_val)
         aug_y_train_par = np.asarray(aug_y_train_par)
         aug_y_val = np.asarray(aug_y_val)
+        
 
         trainset, valset = handler.batcher(data=[aug_x_train_par, aug_x_val, aug_y_train_par, aug_y_val])
-
-        # get NN dataset
-        x_train_scatter_par, x_scatter_val, _, _ = x_train_scatter[train_index], x_train_scatter[test_index], y_train[train_index], y_train[test_index]
-        trainset_scatter, valset_scatter = handler.batcher(data=[x_train_scatter_par, x_scatter_val, y_train_par, y_val])
+        #trainset, valset = handler.batcher(data=[x_train_par, x_val, y_train_par, y_val])
 
         # Model parameters
         classes = settings['lab_classes']
@@ -109,7 +102,6 @@ def classify(display = False):
 
         # Model creation
         CNN = CNN_128x128(input_channel=channels, num_classes=len(classes))
-        NN = NN_128x128(input_channel=channels, num_classes=len(classes), data_size = np.prod(list(trainset_scatter)[0][0][0].shape))
         
         # Optimizer parameters
         learning_rate = settings['learning_rate']
@@ -123,16 +115,13 @@ def classify(display = False):
 
         # Call the function in temp.py
         CNN_train_data = train_test.train(model = CNN, train_data=trainset, val_data = valset, num_epochs=num_epochs, best_model_path=CNN_best_path+str(i), device=device, optimizer_parameters=(learning_rate, momentum),epoch_val= epoch_val)
-        NN_train_data = train_test.train(model = NN, train_data=trainset_scatter,val_data = valset_scatter, num_epochs=num_epochs, best_model_path=NN_best_path+str(i), device=device, optimizer_parameters=(learning_rate, momentum),epoch_val= epoch_val)
         
         metrics.plotTraining(data = CNN_train_data, axs=training_axs[0][:], title = 'CNN', iteration=i, epochs_per_validation=epoch_val)
-        metrics.plotTraining(data = NN_train_data, axs=training_axs[1][:], title = 'NN', iteration=i, epochs_per_validation=epoch_val)
-
+        
         # Decide scale
-        max_loss = min(max(max_loss, max(CNN_train_data['loss']), max(CNN_train_data['loss_val']), max(NN_train_data['loss']), max(NN_train_data['loss_val'])), 1)
-        min_acc = min(min_acc, min(CNN_train_data['accuracy']), min(CNN_train_data['accuracy_val']), min(NN_train_data['accuracy']), min(NN_train_data['accuracy_val']))
+        max_loss = min(max(max_loss, max(CNN_train_data['loss']), max(CNN_train_data['loss_val'])), 1)#, max(NN_train_data['loss']), max(NN_train_data['loss_val']))
+        min_acc = min(min_acc, min(CNN_train_data['accuracy']), min(CNN_train_data['accuracy_val']))#, min(NN_train_data['accuracy']), min(NN_train_data['accuracy_val']))
 
-        acc_nn.append(NN_train_data['accuracy'])
         acc_cnn.append(CNN_train_data['accuracy'])
 
     # Apply scale to graphs
@@ -145,37 +134,30 @@ def classify(display = False):
     training_fig.savefig(f"{current_results_path}/training_infos_{i}.png", dpi=300)
         
     # Load best models
-    NN.load_state_dict(torch.load(NN_best_path + str(acc_nn.index(max(acc_nn)))))
     CNN.load_state_dict(torch.load(CNN_best_path + str(acc_cnn.index(max(acc_cnn)))))
 
     # Test models
     CNN_metrics = metrics(*train_test.test(model=CNN, test_data=testset, device=device), classes)
-    NN_metrics = metrics(*train_test.test(model=NN, test_data=testset_scatter, device=device), classes)
-
+    
     # Print testing results
     CNN_metrics.printMetrics('CNN')
-    NN_metrics.printMetrics("NN")
-
+    
     # Plot confusion matrices
-    fig, axs = plt.subplots(1, 2)
+    fig, axs = plt.subplots(1, 1)
     fig.suptitle('Confusion matrices')
-    CNN_metrics.confMatDisplay().plot(ax = axs[0])
-    axs[0].set_title('CNN')
-    NN_metrics.confMatDisplay().plot(ax = axs[1])
-    axs[1].set_title('NN')
-    #fig.show()
+    CNN_metrics.confMatDisplay().plot(ax = axs)
+    axs.set_title('CNN')
     fig.savefig(f"{current_results_path}/conf_mat.png", dpi=300)
 
     cnn_inspect = explorer(CNN)        
     fig = cnn_inspect.show_filters(current_results_path)
     #fig.show()
     fig.savefig(f"{current_results_path}/CNN_filters.png", dpi=300)    
-    
-    file = open(f"{current_results_path}/info.txt", 'w')
-    file.write(f"{settings}\n{CNN_metrics.getMetrics(type='CNN')}\n{NN_metrics.getMetrics(type='NN')}\n")
-    file.write(f'{scatter.info}')
-    file.close()
 
+    file = open(f"{current_results_path}/info.txt", 'w')
+    file.write(f"{settings}\n{CNN_metrics.getMetrics(type='CNN')}\n")
+    file.close()
+  
     print("Done")
 
 

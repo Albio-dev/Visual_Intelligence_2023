@@ -1,7 +1,7 @@
-batch_size: 32
+batch_size: 128
 channels: 1
 data_path: ./Data/gray
-epoch_val: 5
+epoch_val: 2
 imageSize: !!python/tuple
 - 128
 - 128
@@ -10,9 +10,9 @@ lab_classes:
 - dog
 model_train_path: ./train_checkpoint/
 num_k_folds: 3
-num_samples: 2000
+num_samples: 2500
 results_path: ./results/
 test_perc: 0.2
-learning_rate: 0.0005
+learning_rate: 0.0001
 momentum: 0.9
-num_epochs: 60
+num_epochs: 100

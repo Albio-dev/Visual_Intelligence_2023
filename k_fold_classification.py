@@ -14,6 +14,8 @@ import torch
 import numpy as np
 import os
 
+import torchvision.transforms.autoaugment as T
+
 # Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -68,24 +70,45 @@ def classify(display = False):
     min_acc = 500
     acc_cnn = []
     acc_nn = []
+
+    policy = T.AutoAugmentPolicy.IMAGENET
+    augmenter = T.AutoAugment(policy)
+    augmentation_amount = 4
     
     for i, (train_index,test_index) in enumerate(kf.split(x_train)):
         print(f"K-fold cycle {i+1}/{folds}")
         x_train_par, x_val, y_train_par, y_val = x_train[train_index], x_train[test_index], y_train[train_index], y_train[test_index]
-        trainset, valset = handler.batcher(data=[x_train_par, x_val, y_train_par, y_val])
+
+        aug_x_train_par = []
+        aug_x_val = []
+        aug_y_train_par = []
+        aug_y_val = []
+
+        for x, y in zip(x_train_par, y_train_par):
+            aug_x_train_par += [np.squeeze(augmenter(torch.unsqueeze(torch.from_numpy(x), dim=0)).numpy())for _ in range(augmentation_amount)]
+            aug_y_train_par += [y] * augmentation_amount
+        
+        for x, y in zip(x_val, y_val):
+            aug_x_val += [np.squeeze(augmenter(torch.unsqueeze(torch.from_numpy(x), dim=0)).numpy()) for _ in range(augmentation_amount)]
+            aug_y_val += [y] * augmentation_amount
+
+        aug_x_train_par = np.asarray(aug_x_train_par)
+        aug_x_val = np.asarray(aug_x_val)
+        aug_y_train_par = np.asarray(aug_y_train_par)
+        aug_y_val = np.asarray(aug_y_val)
+
+        trainset, valset = handler.batcher(data=[aug_x_train_par, aug_x_val, aug_y_train_par, aug_y_val])
 
         # get NN dataset
         x_train_scatter_par, x_scatter_val, _, _ = x_train_scatter[train_index], x_train_scatter[test_index], y_train[train_index], y_train[test_index]
         trainset_scatter, valset_scatter = handler.batcher(data=[x_train_scatter_par, x_scatter_val, y_train_par, y_val])
-
 
         # Model parameters
         classes = settings['lab_classes']
         channels = settings['channels']
 
         # Model creation
-        CNN = CNN_128x128(input_channel=channels, 
-                        num_classes=len(classes))
+        CNN = CNN_128x128(input_channel=channels, num_classes=len(classes))
         NN = NN_128x128(input_channel=channels, num_classes=len(classes), data_size = np.prod(list(trainset_scatter)[0][0][0].shape))
         
         # Optimizer parameters
@@ -94,8 +117,8 @@ def classify(display = False):
 
         # Training parameters
         num_epochs = settings['num_epochs']
-        NN_best_path = settings['model_train_path']+'NN_128x128_best_model_trained.pt'
-        CNN_best_path = settings['model_train_path']+'CNN_128x128_best_model_trained.pt'
+        NN_best_path = settings['model_train_path'] + 'NN_128x128_best_model_trained.pt'
+        CNN_best_path = settings['model_train_path'] + 'CNN_128x128_best_model_trained.pt'
         epoch_val = settings['epoch_val']
 
         # Call the function in temp.py

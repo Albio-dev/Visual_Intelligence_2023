@@ -26,11 +26,11 @@ generic = {
 
 model_hyperparameters = {
     # Learning rate to scale how much new weighs are evaluated
-    "learning_rate": 0.0005,
+    "learning_rate": 0.001,
     # Scale for past experience to not be perturbated by new ones
     "momentum" : 0.9,
     # The number of times the model is trained on the entire training dataset.
-    "num_epochs" : 60
+    "num_epochs" : 20
 }
 
 scattering_parameters = {

@@ -159,4 +159,5 @@ class data_handler:
     
     
     def get_folder_index(self,path):
-        return str(len(os.listdir(path)) + 1)
+        return max([int(x) for x in os.listdir(path)])+1
+       

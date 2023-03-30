@@ -16,7 +16,7 @@ def train(model, train_data, val_data, num_epochs, best_model_path, device, opti
     ### CREATE MODEL ###
 
     # Optimizer
-    optim = torch.optim.SGD(model.parameters(), lr = optimizer_parameters[0], momentum=optimizer_parameters[1], weight_decay=0.1)
+    optim = torch.optim.SGD(model.parameters(), lr = optimizer_parameters[0], momentum=optimizer_parameters[1], weight_decay=0.01)
 
     # Loss function
     criterion = torch.nn.CrossEntropyLoss()

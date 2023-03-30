@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 {'batch_size': 32, 'channels': 1, 'data_path': './Data/gray', 'epoch_val': 2, 'imageSize': (128, 128), 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'num_k_folds': 3, 'num_samples': 600, 'results_path': './results/', 'test_perc': 0.2, 'learning_rate': 0.0005, 'momentum': 0.9, 'num_epochs': 60}
 CNN metrics: 
 Accuracy:		0.7833333333333333
 Precision:		0.7833333333333333
 Recall:			0.7833333333333333
 F1:				0.7833333333333333
+=======
+{'batch_size': 32, 'channels': 1, 'data_path': './Data/gray', 'epoch_val': 5, 'imageSize': (128, 128), 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'num_k_folds': 3, 'num_samples': 2000, 'results_path': './results/', 'test_perc': 0.2, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 20}
+CNN metrics: 
+Accuracy:		0.7675
+Precision:		0.7675
+Recall:			0.7675
+F1:				0.7675
+>>>>>>> 9048dc8c35d5dabc56c43db987efc9fd85d67643
 NN metrics: 
 Accuracy:		0.8666666666666667
 Precision:		0.8666666666666667

@@ -68,6 +68,7 @@ class data_handler:
             self.data = numpy.asarray([j for i in new_data.values() for j in i])
             self.labels = [j for i in new_labels.values() for j in i]
 
+
         # Return the data
         return self.data.reshape(-1, 1, *self.data.shape[1:]), self.labels
 

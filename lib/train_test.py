@@ -75,6 +75,9 @@ def train(model, train_data, val_data, num_epochs, best_model_path, device, opti
         pred_label_val = torch.empty((0)).to(device)
         true_label_val = torch.empty((0)).to(device)
     
+    if losses_val == []:
+        losses_val = [0]
+        acc_val = [0]
     return {'loss': losses, 'accuracy': acc_train, 'loss_val': losses_val, 'accuracy_val': acc_val}
 
 def test(model, test_data, device): 

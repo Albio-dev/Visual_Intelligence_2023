@@ -67,7 +67,7 @@ def classify(display = False):
     acc_nn = []
 
     policy = T.AutoAugmentPolicy.IMAGENET
-    augmenter = T.AutoAugment(policy)
+    augmenter = T.AutoAugment(policy).to(device)
     augmentation_amount = 8
     
     for i, (train_index,test_index) in enumerate(kf.split(x_train)):
@@ -81,11 +81,11 @@ def classify(display = False):
         aug_y_val = []
         
         for x, y in zip(x_train_par, y_train_par):
-            aug_x_train_par += [torch.squeeze(augmenter(torch.unsqueeze((x), dim=0))) for _ in range(augmentation_amount)]
+            aug_x_train_par += [torch.squeeze(augmenter(torch.unsqueeze((x), dim=0))).to(device) for _ in range(augmentation_amount)]
             aug_y_train_par += [y] * augmentation_amount
         
         for x, y in zip(x_val, y_val):
-            aug_x_val += [torch.squeeze(augmenter(torch.unsqueeze((x), dim=0))) for _ in range(augmentation_amount)]
+            aug_x_val += [torch.squeeze(augmenter(torch.unsqueeze((x), dim=0))).to(device) for _ in range(augmentation_amount)]
             aug_y_val += [y] * augmentation_amount
 
         aug_x_train_par = torch.stack(aug_x_train_par).to(device)
@@ -94,11 +94,10 @@ def classify(display = False):
         aug_y_val = torch.stack(aug_y_val).to(device)
         
 
-        trainset, valset = handler.batcher(data=[aug_x_train_par, aug_x_val, aug_y_train_par, aug_y_val])
-        '''
-        trainset, valset = handler.batcher(data=[x_train_par, x_val, y_train_par, y_val])
-        '''
-
+        trainset, valset = handler.batcher(data=[aug_x_train_par, aug_x_val, aug_y_train_par, aug_y_val])        
+        #trainset, valset = handler.batcher(data=[x_train_par, x_val, y_train_par, y_val])
+        
+        
         # Model parameters
         classes = settings['lab_classes']
         channels = settings['channels']

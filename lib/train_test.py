@@ -1,5 +1,7 @@
 import torch, numpy
 from sklearn.metrics import accuracy_score
+from lib.scripts import make_settings
+from legacy import utils_our
 
 def train(model, train_data, val_data, num_epochs, best_model_path, device, optimizer_parameters,epoch_val):    
 
@@ -15,8 +17,19 @@ def train(model, train_data, val_data, num_epochs, best_model_path, device, opti
     true_label_val = torch.empty((0)).to(device)
     ### CREATE MODEL ###
 
+    make_settings.writefile()
+    settings = utils_our.load_settings()
+    w_decay = settings['weight_decay']
+    optimizer = settings['optimizer']
     # Optimizer
-    optim = torch.optim.SGD(model.parameters(), lr = optimizer_parameters[0], weight_decay=0.01, momentum=optimizer_parameters[1] )
+    if optimizer == 0:
+        print('SGD')
+        optim = torch.optim.SGD(model.parameters(), lr = optimizer_parameters[0], weight_decay=w_decay, momentum=optimizer_parameters[1] )
+    elif optimizer == 1:
+        print('Adam')
+        optim = torch.optim.Adam(model.parameters(), lr = optimizer_parameters[0], weight_decay=w_decay)
+    #optim = torch.optim.SGD(model.parameters(), lr = optimizer_parameters[0], weight_decay=0.01, momentum=optimizer_parameters[1] )
+    #optim = torch.optim.Adam(model.parameters(), lr = optimizer_parameters[0], weight_decay=w_decay)#, momentum=optimizer_parameters[1] )
 
     # Loss function
     criterion = torch.nn.CrossEntropyLoss().to(device)

@@ -9,3 +9,4 @@ __*
 !report/*.tex
 !report/*.pdf
 *.yaml
+results/*

@@ -56,14 +56,9 @@ def train(model, train_data, val_data, num_epochs, best_model_path, device, opti
             optim.step()                                                # parameter update
 
         losses.append(loss.cpu().detach().numpy())
-        acc_t = accuracy_score(true_label_train.cpu(),pred_label_train.cpu())
-        acc_train.append(acc_t)
-        print(f'Epoch: {epoch+1}/{num_epochs}, loss = {loss:.4f} - acc = {acc_t:.4f}')
+        acc_train.append(accuracy_score(true_label_train.cpu(),pred_label_train.cpu()))
+        print(f'Epoch: {epoch+1}/{num_epochs}, loss = {loss:.4f} - acc = {acc_train[-1]:.4f}')
         
-        if acc_t > best_acc:                                                            # save the best model (the highest accuracy in validation)
-            torch.save(model.state_dict(), best_model_path)
-            best_acc = acc_t
-
         if val_data is not None and epoch % epoch_val == 0:                                                             # compute the accuracy on validation set
             model.eval()
             with torch.no_grad():
@@ -81,6 +76,15 @@ def train(model, train_data, val_data, num_epochs, best_model_path, device, opti
             acc_val.append(accuracy_score(true_label_val.cpu(),pred_label_val.cpu()))
             print(f'Validation loss = {loss:.4f}')
         
+        
+        if val_data is not None:
+            if acc_val[-1] > best_acc:                                                            # save the best model (the highest accuracy in validation)
+                torch.save(model.state_dict(), best_model_path)
+                best_acc = acc_val[-1]
+        else:            
+            if acc_train[-1] > best_acc:                                                            # save the best model (the highest accuracy in validation)
+                torch.save(model.state_dict(), best_model_path)
+                best_acc = acc_train[-1]        
 
         # Reinitialize the variables to compute accuracy
         pred_label_train = torch.empty((0)).to(device)
@@ -88,6 +92,9 @@ def train(model, train_data, val_data, num_epochs, best_model_path, device, opti
         pred_label_val = torch.empty((0)).to(device)
         true_label_val = torch.empty((0)).to(device)
     
+    if losses_val == []:
+        losses_val = [0]
+        acc_val = [0]
     return {'loss': losses, 'accuracy': acc_train, 'loss_val': losses_val, 'accuracy_val': acc_val}
 
 def test(model, test_data, device): 

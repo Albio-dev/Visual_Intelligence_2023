@@ -50,7 +50,9 @@ def classify(display = False):
     if not os.path.isdir(current_results_path):
         os.makedirs(current_results_path)
 
-    handler.augment(augmentations=3)
+    n_augmentations = settings['augmentations']
+    if n_augmentations > 1:
+        handler.augment(augmentations=n_augmentations)
 
     # Get CNN dataset
     x_train, x_test, y_train, y_test = handler.get_data_split()

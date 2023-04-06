@@ -50,6 +50,7 @@ def classify(display = False):
     if not os.path.isdir(current_results_path):
         os.makedirs(current_results_path)
 
+    handler.augment(augmentations=3)
 
     # Get CNN dataset
     x_train, x_test, y_train, y_test = handler.get_data_split()
@@ -66,15 +67,18 @@ def classify(display = False):
     acc_cnn = []
     acc_nn = []
 
+    '''
     policy = T.AutoAugmentPolicy.IMAGENET
     augmenter = T.AutoAugment(policy).to(device)
     augmentation_amount = 8
-    
+    '''
+
     for i, (train_index,test_index) in enumerate(kf.split(x_train)):
         print(f"K-fold cycle {i+1}/{folds}")
         x_train_par, x_val, y_train_par, y_val = x_train[train_index], x_train[test_index], y_train[train_index], y_train[test_index]
 
         
+        '''
         aug_x_train_par = []
         aug_x_val = []
         aug_y_train_par = []
@@ -91,11 +95,11 @@ def classify(display = False):
         aug_x_train_par = torch.stack(aug_x_train_par).to(device)
         aug_x_val = torch.stack(aug_x_val).to(device)
         aug_y_train_par = torch.stack(aug_y_train_par).to(device)
-        aug_y_val = torch.stack(aug_y_val).to(device)
+        aug_y_val = torch.stack(aug_y_val).to(device)'''
         
 
-        trainset, valset = handler.batcher(data=[aug_x_train_par, aug_x_val, aug_y_train_par, aug_y_val])        
-        #trainset, valset = handler.batcher(data=[x_train_par, x_val, y_train_par, y_val])
+        #trainset, valset = handler.batcher(data=[aug_x_train_par, aug_x_val, aug_y_train_par, aug_y_val])        
+        trainset, valset = handler.batcher(data=[x_train_par, x_val, y_train_par, y_val])
         
         
         # Model parameters

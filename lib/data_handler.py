@@ -2,6 +2,8 @@ import numpy, cv2, glob, random, os
 import torch
 from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import train_test_split
+import torchvision.transforms as transforms
+import itertools
 
 class data_handler:
 
@@ -23,6 +25,8 @@ class data_handler:
         else:
             self.data, self.labels = data
 
+        self.transforms = None
+
     
 
     # Load data from folders and eventually properly subsample equally on each class
@@ -41,7 +45,7 @@ class data_handler:
 
         # Extract samples in single list
         self.data = numpy.asarray([j for i in data.values() for j in i])
-        self.labels = [j for i in labels.values() for j in i]
+        self.labels = numpy.asarray([j for i in labels.values() for j in i])
 
         # If subsamples are required, return a random subsample, balanced on classes
         if samples is not None:
@@ -67,7 +71,7 @@ class data_handler:
             
             # Extract samples as list
             self.data = numpy.asarray([j for i in new_data.values() for j in i])
-            self.labels = [j for i in new_labels.values() for j in i]
+            self.labels = numpy.asarray([j for i in new_labels.values() for j in i])
 
 
         # Return the data
@@ -160,9 +164,37 @@ class data_handler:
     
     
     def get_folder_index(self,path):
-        return max([int(x) for x in os.listdir(path)])+1
+        try:
+            return max([int(x) for x in os.listdir(path)])+1
+        except:
+            return 0
        
     def to(self, device):
         self.data = torch.tensor(self.data).to(device)
         self.labels = torch.tensor(self.labels).to(device)
         return self
+    
+    def get_augmentation_transforms(self):
+        if self.transforms is None:
+            self.transforms = torch.nn.Sequential(
+                transforms.RandomAffine(degrees=(0), translate=(0.0, 0.1), scale=(0.95, 1.05))
+                # TODO: add transforms
+            )
+        return self.transforms
+
+
+    def augment(self, augmentations = 2, data = None):
+
+        if data is None:
+            data = self.data
+            labels = self.labels
+        else:
+            labels = data[1]
+            data = data[0]
+    
+        augmented_data = torch.squeeze(torch.cat([self.get_augmentation_transforms()(torch.unsqueeze(data, dim=1)) for _ in range(augmentations)]))
+        labels = torch.repeat_interleave(labels, augmentations)
+
+        self.data = augmented_data
+        self.labels = labels
+        return augmented_data

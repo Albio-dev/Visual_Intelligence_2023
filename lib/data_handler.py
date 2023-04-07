@@ -5,6 +5,7 @@ from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import train_test_split
 import torchvision.transforms as transforms
 import torchvision.transforms.autoaugment as autoaugment
+from lib import custom_augment as T
 
 class data_handler:
 
@@ -176,11 +177,32 @@ class data_handler:
         return self
     
     def get_augmentation_transforms(self):
-        if self.transforms is None:
-            self.transforms = torch.nn.Sequential(
-                transforms.RandomAffine(degrees=(-45, 45), scale=(0.95, 1.05))
-                # TODO: add transforms
-            )
+        if True:
+            op = random.randint(0, 6)
+            if op == 0:
+                self.transforms = torch.nn.Sequential(
+                    transforms.RandomAffine(degrees=(15, 15)),
+                )
+            elif op == 1:
+                self.transforms = torch.nn.Sequential(
+                    transforms.RandomAffine(degrees=(30, 30)),
+                )
+            elif op == 2:
+                self.transforms = torch.nn.Sequential(
+                    transforms.RandomAffine(degrees=(45, 45)),
+                )
+            elif op == 3:
+                self.transforms = torch.nn.Sequential(
+                    transforms.RandomAffine(degrees=(60, 60)),
+                )
+            elif op == 4:
+                self.transforms = torch.nn.Sequential(
+                    transforms.RandomAffine(degrees=(75, 75)),
+                )
+            else:
+                self.transforms = torch.nn.Sequential(
+                    transforms.RandomAffine(degrees=(90, 90)),
+                )
         return self.transforms
 
 
@@ -192,12 +214,57 @@ class data_handler:
             labels = data[1]
             data = data[0]
     
-        augmented_data = torch.squeeze(torch.cat([self.get_augmentation_transforms()(torch.unsqueeze(data, dim=1)) for _ in range(augmentations)]))
-        labels = torch.repeat_interleave(labels, augmentations)
+        #augmented_data = torch.squeeze(torch.cat([self.get_augmentation_transforms()(torch.unsqueeze(data, dim=1)) for _ in range(augmentations)]))
+
+        
+        policy = T.AutoAugmentPolicy.CUSTOM_POLICY
+        augmenter = T.AutoAugment(policy)
+
+        augmented_data = []
+        augmented_labels = []
+
+        if augmentations > 0:
+
+            for x, y in zip(data, labels):
+                augmented_data += [torch.squeeze(augmenter(torch.unsqueeze(x, dim=0))) for _ in range(augmentations)]
+                augmented_labels += [y] * augmentations
+
+            aug_train_lists = list(zip(augmented_data, augmented_labels))
+            random.shuffle(aug_train_lists)
+            augmented_data, augmented_labels = zip(*aug_train_lists)
+            
+            augmented_data = torch.stack(augmented_data)
+            augmented_labels = torch.stack(augmented_labels)
+        else:
+            augmented_data = data
+            augmented_labels = labels
+        
+        #labels = torch.repeat_interleave(labels, augmentations)
 
         plt.imshow(augmented_data[0].cpu())
-        plt.savefig('testfig.jpg')
+        plt.savefig('testfig1.jpg')
+
+        plt.imshow(augmented_data[1].cpu())
+        plt.savefig('testfig2.jpg')
+
+        plt.imshow(augmented_data[2].cpu())
+        plt.savefig('testfig3.jpg')
+        
+        plt.imshow(augmented_data[3].cpu())
+        plt.savefig('testfig4.jpg')
+        
+        plt.imshow(augmented_data[4].cpu())
+        plt.savefig('testfig5.jpg')
+        
+        plt.imshow(augmented_data[5].cpu())
+        plt.savefig('testfig6.jpg')
+        
+        plt.imshow(augmented_data[6].cpu())
+        plt.savefig('testfig7.jpg')
+        
+        plt.imshow(augmented_data[7].cpu())
+        plt.savefig('testfig8.jpg')
 
         self.data = augmented_data
-        self.labels = labels
+        self.labels = augmented_labels
         return augmented_data

@@ -133,31 +133,7 @@ class AutoAugment(torch.nn.Module):
     ) -> List[Tuple[Tuple[str, float, Optional[int]], Tuple[str, float, Optional[int]]]]:
         if policy == AutoAugmentPolicy.CUSTOM_POLICY:
             return [
-                (("Posterize", 0.4, 8), ("Rotate", 0.6, 9)),
-                (("Solarize", 0.6, 5), ("AutoContrast", 0.6, None)),
-                (("Equalize", 0.8, None), ("Equalize", 0.6, None)),
-                (("Posterize", 0.6, 7), ("Posterize", 0.6, 6)),
-                (("Equalize", 0.4, None), ("Solarize", 0.2, 4)),
-                (("Equalize", 0.4, None), ("Rotate", 0.8, 8)),
-                (("Solarize", 0.6, 3), ("Equalize", 0.6, None)),
-                (("Posterize", 0.8, 5), ("Equalize", 1.0, None)),
-                (("Rotate", 0.2, 3), ("Solarize", 0.6, 8)),
-                (("Equalize", 0.6, None), ("Posterize", 0.4, 6)),
-                (("Rotate", 0.8, 8), ("Color", 0.4, 0)),
-                (("Rotate", 0.4, 9), ("Equalize", 0.6, None)),
-                (("Equalize", 0.0, None), ("Equalize", 0.8, None)),
-                (("Invert", 0.6, None), ("Equalize", 1.0, None)),
-                (("Color", 0.6, 4), ("Contrast", 1.0, 8)),
-                (("Rotate", 0.8, 8), ("Color", 1.0, 2)),
-                (("Color", 0.8, 8), ("Solarize", 0.8, 7)),
-                (("Sharpness", 0.4, 7), ("Invert", 0.6, None)),
-                (("ShearX", 0.6, 5), ("Equalize", 1.0, None)),
-                (("Color", 0.4, 0), ("Equalize", 0.6, None)),
-                (("Equalize", 0.4, None), ("Solarize", 0.2, 4)),
-                (("Solarize", 0.6, 5), ("AutoContrast", 0.6, None)),
-                (("Invert", 0.6, None), ("Equalize", 1.0, None)),
-                (("Color", 0.6, 4), ("Contrast", 1.0, 8)),
-                (("Equalize", 0.8, None), ("Equalize", 0.6, None)),
+                (("Rotate", 0.0, 1), ("Rotate", 1.0, 1)),
             ]
         elif policy == AutoAugmentPolicy.IMAGENET:
             return [

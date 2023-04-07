@@ -15,6 +15,7 @@ def train(model, train_data, val_data, num_epochs, best_model_path, device, opti
     true_label_train = torch.empty((0)).to(device)
     pred_label_val = torch.empty((0)).to(device)
     true_label_val = torch.empty((0)).to(device)
+
     ### CREATE MODEL ###
 
     make_settings.writefile()

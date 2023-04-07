@@ -6,7 +6,7 @@ generic = {
     "model_train_path": './train_checkpoint/',
 
     # Classes in the dataset             
-    "lab_classes" : ['cat_cifar','dog_cifar'],
+    "lab_classes" : ['flower','dog'],
     ""
     "results_path" : './results/',
 

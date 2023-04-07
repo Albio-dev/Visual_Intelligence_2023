@@ -195,7 +195,6 @@ class data_handler:
         augmented_data = torch.squeeze(torch.cat([self.get_augmentation_transforms()(torch.unsqueeze(data, dim=1)) for _ in range(augmentations)]))
         labels = torch.repeat_interleave(labels, augmentations)
 
-        autoaugment.AutoAugmentPolicy.IMAGENET
         plt.imshow(augmented_data[0].cpu())
         plt.savefig('testfig.jpg')
 

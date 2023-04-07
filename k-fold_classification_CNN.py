@@ -14,7 +14,7 @@ import torch
 import numpy as np
 import os
 
-import torchvision.transforms.autoaugment as T
+import lib.custom_augment as T
 
 # Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -50,9 +50,9 @@ def classify(display = False):
     if not os.path.isdir(current_results_path):
         os.makedirs(current_results_path)
 
-    n_augmentations = settings['augmentations']
-    if n_augmentations > 1:
-        handler.augment(augmentations=n_augmentations)
+    #n_augmentations = settings['augmentations']
+    #if n_augmentations > 1:
+    #    handler.augment(augmentations=n_augmentations)
 
     # Get CNN dataset
     x_train, x_test, y_train, y_test = handler.get_data_split()
@@ -69,17 +69,39 @@ def classify(display = False):
     acc_cnn = []
     acc_nn = []
 
-    '''
-    policy = T.AutoAugmentPolicy.IMAGENET
+    policy = T.AutoAugmentPolicy.CUSTOM_POLICY
     augmenter = T.AutoAugment(policy).to(device)
-    augmentation_amount = 8
-    '''
+    augmentation_amount = settings['augmentations']
 
     for i, (train_index,test_index) in enumerate(kf.split(x_train)):
         print(f"K-fold cycle {i+1}/{folds}")
         x_train_par, x_val, y_train_par, y_val = x_train[train_index], x_train[test_index], y_train[train_index], y_train[test_index]
 
-        
+        print(f"Train data size: {len(x_train_par)}")
+        print(f"Validation data size: {len(x_val)}")
+
+        if augmentation_amount > 0:
+            aug_x_train_par = []
+            aug_x_val = []
+            aug_y_train_par = []
+            aug_y_val = []
+
+            for x, y in zip(x_train_par, y_train_par):
+                aug_x_train_par += [torch.squeeze(augmenter(torch.unsqueeze(x, dim=0)))for _ in range(augmentation_amount)]
+                aug_y_train_par += [y] * augmentation_amount
+
+            for x, y in zip(x_val, y_val):
+                aug_x_val += [torch.squeeze(augmenter(torch.unsqueeze(x, dim=0))) for _ in range(augmentation_amount)]
+                aug_y_val += [y] * augmentation_amount
+            
+            x_train_par = torch.stack(aug_x_train_par)
+            y_train_par = torch.stack(aug_y_train_par)
+            x_val = torch.stack(aug_x_val)
+            y_val = torch.stack(aug_y_val)
+
+        print(f"Augmented train data size: {len(x_train_par)}")
+        print(f"Augmented validation data size: {len(x_val)}")
+
         '''
         aug_x_train_par = []
         aug_x_val = []

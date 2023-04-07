@@ -7,8 +7,8 @@ imageSize: !!python/tuple
 - 128
 - 128
 lab_classes:
-- cat_cifar
-- dog_cifar
+- flower
+- dog
 model_train_path: ./train_checkpoint/
 num_k_folds: 5
 num_samples: 2500

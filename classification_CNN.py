@@ -103,6 +103,8 @@ def classify(display = False):
         # Optimizer parameters
         learning_rate = settings['learning_rate']
         momentum = settings['momentum']
+        weight_decay = settings['weight_decay']
+        optimizer = settings['optimizer']
 
         # Training parameters
         num_epochs = settings['num_epochs']
@@ -111,7 +113,8 @@ def classify(display = False):
         epoch_val = settings['epoch_val']
 
         # Call the function in temp.py
-        CNN_train_data = train_test.train(model = CNN, train_data=trainset, val_data = valset, num_epochs=num_epochs, best_model_path=CNN_best_path+str(i), device=device, optimizer_parameters=(learning_rate, momentum),epoch_val= epoch_val)
+        CNN_train_data = train_test.train(model = CNN, train_data=trainset, val_data = valset, num_epochs=num_epochs, best_model_path=CNN_best_path+str(i), device=device, 
+                                          optimizer=optimizer, optimizer_parameters=(learning_rate, momentum, weight_decay),epoch_val= epoch_val)
         
         metrics.plotTraining(data = CNN_train_data, axs=training_axs[0][:], title = 'CNN', iteration=i, epochs_per_validation=epoch_val)
         

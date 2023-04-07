@@ -1,11 +1,11 @@
 import os
 from PIL import Image
 
-path = './Data'
+path = '../../Data/'
 
 # Load the data
-for filename in os.listdir(path+'/rgb/whale'):
-    img = Image.open(path+'/rgb/whale/'+filename)
+for filename in os.listdir(path+'rgb/cat_cifar'):
+    img = Image.open(path+'rgb/cat_cifar/'+filename)
     img = img.convert('L')
-    img.save(path+'/gray/whale/'+filename)
+    img.save(path+'gray/cat_cifar/'+filename)
     

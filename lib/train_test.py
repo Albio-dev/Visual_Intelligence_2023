@@ -3,7 +3,7 @@ from sklearn.metrics import accuracy_score
 from lib.scripts import make_settings
 from legacy import utils_our
 
-def train(model, train_data, val_data, num_epochs, best_model_path, device, optimizer_parameters,epoch_val):    
+def train(model, train_data, val_data, num_epochs, best_model_path, device, optimizer, optimizer_parameters,epoch_val):    
 
     best_acc = 0.0
     # Variables to store the results
@@ -19,15 +19,13 @@ def train(model, train_data, val_data, num_epochs, best_model_path, device, opti
 
     make_settings.writefile()
     settings = utils_our.load_settings()
-    w_decay = settings['weight_decay']
-    optimizer = settings['optimizer']
     # Optimizer
     if optimizer == 0:
         print('SGD')
-        optim = torch.optim.SGD(model.parameters(), lr = optimizer_parameters[0], weight_decay=w_decay, momentum=optimizer_parameters[1] )
+        optim = torch.optim.SGD(model.parameters(), lr = optimizer_parameters[0], momentum=optimizer_parameters[1], weight_decay=optimizer_parameters[2])
     elif optimizer == 1:
         print('Adam')
-        optim = torch.optim.Adam(model.parameters(), lr = optimizer_parameters[0], weight_decay=w_decay)
+        optim = torch.optim.Adam(model.parameters(), lr = optimizer_parameters[0], weight_decay=optimizer_parameters[2])
     #optim = torch.optim.SGD(model.parameters(), lr = optimizer_parameters[0], weight_decay=0.01, momentum=optimizer_parameters[1] )
     #optim = torch.optim.Adam(model.parameters(), lr = optimizer_parameters[0], weight_decay=w_decay)#, momentum=optimizer_parameters[1] )
 

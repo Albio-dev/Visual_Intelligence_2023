@@ -1,9 +1,10 @@
+from matplotlib import pyplot as plt
 import numpy, cv2, glob, random, os
 import torch
 from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import train_test_split
 import torchvision.transforms as transforms
-import itertools
+import torchvision.transforms.autoaugment as autoaugment
 
 class data_handler:
 
@@ -36,7 +37,7 @@ class data_handler:
 
         # Read data from every folder
         for index, foldername in enumerate(self.classes):
-            data[foldername] = [numpy.asarray(cv2.imread(file, cv2.IMREAD_UNCHANGED)) for file in glob.glob(f'{self.data_path}/{foldername}/*.jpg')]
+            data[foldername] = [numpy.asarray(cv2.imread(file, cv2.IMREAD_UNCHANGED)) for file in glob.glob(f'{self.data_path}/{foldername}/*.*')]
             labels[foldername] = [index]*len(data[foldername])
 
         # Save full dataset as class variables
@@ -165,7 +166,7 @@ class data_handler:
     
     def get_folder_index(self,path):
         try:
-            return max([int(x) for x in os.listdir(path)])+1
+            return max([int(x) for x in os.listdir(path)]) + 1
         except:
             return 0
        
@@ -177,14 +178,13 @@ class data_handler:
     def get_augmentation_transforms(self):
         if self.transforms is None:
             self.transforms = torch.nn.Sequential(
-                transforms.RandomAffine(degrees=(0), translate=(0.0, 0.1), scale=(0.95, 1.05))
+                transforms.RandomAffine(degrees=(-45, 45), scale=(0.95, 1.05))
                 # TODO: add transforms
             )
         return self.transforms
 
 
     def augment(self, augmentations = 2, data = None):
-
         if data is None:
             data = self.data
             labels = self.labels
@@ -194,6 +194,10 @@ class data_handler:
     
         augmented_data = torch.squeeze(torch.cat([self.get_augmentation_transforms()(torch.unsqueeze(data, dim=1)) for _ in range(augmentations)]))
         labels = torch.repeat_interleave(labels, augmentations)
+
+        autoaugment.AutoAugmentPolicy.IMAGENET
+        plt.imshow(augmented_data[0].cpu())
+        plt.savefig('testfig.jpg')
 
         self.data = augmented_data
         self.labels = labels

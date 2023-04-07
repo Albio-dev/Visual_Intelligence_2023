@@ -1,4 +1,5 @@
-batch_size: 32
+augmentations: 8
+batch_size: 512
 channels: 1
 data_path: ./Data/gray
 epoch_val: 5
@@ -6,13 +7,15 @@ imageSize: !!python/tuple
 - 128
 - 128
 lab_classes:
-- flower
-- dog
+- cat_cifar
+- dog_cifar
 model_train_path: ./train_checkpoint/
-num_k_folds: 3
+num_k_folds: 5
 num_samples: 2500
+optimizer: 0
 results_path: ./results/
 test_perc: 0.2
-learning_rate: 0.001
+weight_decay: 0.01
+learning_rate: 0.005
 momentum: 0.9
-num_epochs: 60
+num_epochs: 200

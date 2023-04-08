@@ -1,15 +1,18 @@
 from lib.cnn_explorer import explorer
 from lib.metrics import metrics
 from lib.models.CNN_128x128 import CNN_128x128
+from lib.models.NN_128x128 import NN_128x128
 from lib.scripts import make_settings
 from legacy import utils_our
 from lib.data_handler import data_handler
 from lib import train_test
+from lib import scatter_helper
 
 import torch
 from sklearn.model_selection import KFold
 import os
 import matplotlib.pyplot as plt
+import numpy as np
 
 # Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -69,7 +72,7 @@ def classify(display = False, cnn = True, nn = True):
     confmat_fig, axs = plt.subplots(1, cnn+nn, figsize=(15, 10))
     confmat_fig.suptitle('Confusion matrices')
 
-
+    
     # CNN training
     if cnn:    
 
@@ -88,7 +91,6 @@ def classify(display = False, cnn = True, nn = True):
 
         # Training parameters
         num_epochs = settings['num_epochs']
-        NN_best_path = settings['model_train_path'] + 'NN_128x128_best_model_trained.pt'
         CNN_best_path = settings['model_train_path'] + 'CNN_128x128_best_model_trained.pt'
         epoch_val = settings['epoch_val']
 
@@ -131,7 +133,7 @@ def classify(display = False, cnn = True, nn = True):
 
             print(f"Train data size: {len(x_train)}")
             print(f"Validation data size: {len(x_val)}")    
-            
+
             # Model creation
             CNN = CNN_128x128(input_channel=channels, num_classes=len(classes))
 
@@ -167,23 +169,108 @@ def classify(display = False, cnn = True, nn = True):
         
         cnn_inspect = explorer(CNN)        
         filters_fig = cnn_inspect.show_filters(current_results_path)
+    
+
 
 
 
     # NN training
     if nn:
-        pass
+        # Model parameters
+        classes = settings['lab_classes']
+        channels = settings['channels']
+        
+        # Training parameters
+        num_epochs = settings['num_epochs']
+        NN_best_path = settings['model_train_path'] + 'NN_128x128_best_model_trained.pt'
+        epoch_val = settings['epoch_val']
+
+        # Optimizer parameters        
+        optimizer = settings['optimizer']
+        learning_rate = settings['learning_rate']
+        momentum = settings['momentum']
+        weight_decay = settings['weight_decay']
+
+        # Create scatter objects
+        scatter_params = utils_our.load_settings('scatter_parameters.yaml')    
+        scatter = scatter_helper.scatter(imageSize=settings['imageSize'], mode = 1, scatter_params=scatter_params)
+        
+        # get NN dataset   
+        scatter_x_train = scatter.scatter(x_train)
+        scatter_x_test = scatter.scatter(x_test)
+        _, testset_scatter = handler.batcher(data=[scatter_x_train, scatter_x_test, y_train, y_test])
+
+        if folds > 1:
+
+            # Split data over folds
+            for i, (train_index, val_index) in enumerate(kf.split(scatter_x_train)):
+                x_train_par, x_val, y_train_par, y_val = scatter_x_train[train_index], scatter_x_train[val_index], y_train[train_index], y_train[val_index]
+
+                # Batch up fold data
+                trainset_scatter, valset_scatter = handler.batcher(data=[x_train_par, x_val, y_train_par, y_val])
+
+                print(f"K-fold cycle {i+1}/{folds}")
+                print(f"Train data size: {len(x_train_par)}")
+                print(f"Validation data size: {len(x_val)}")   
+                
+
+                NN = NN_128x128(input_channel=channels, 
+                            num_classes=len(classes), 
+                            data_size = np.prod(list(trainset_scatter)[0][0][0].shape))
+                
+                NN_train_data = train_test.train(model = NN, train_data=trainset_scatter,val_data = valset_scatter, num_epochs=num_epochs, best_model_path=NN_best_path+str(i), device=device, optimizer=optimizer, optimizer_parameters=(learning_rate, momentum, weight_decay),epoch_val= epoch_val)
+                acc_nn.append(NN_train_data['accuracy'])
+                
+                if cnn:
+                    metrics.plotTraining(data = NN_train_data, axs=training_axs[0][:], title = 'NN', iteration=i, epochs_per_validation=epoch_val)
+                else:
+                    metrics.plotTraining(data = NN_train_data, axs=training_axs, title = 'NN', iteration=i, epochs_per_validation=epoch_val)
+                
+                # Save scale for graphs
+                max_loss = min(max(max_loss, max(NN_train_data['loss']), max(NN_train_data['loss_val'])), 1)
+                min_acc = min(min_acc, min(NN_train_data['accuracy']), min(NN_train_data['accuracy_val']))
+
+        else:
+            scatter_x_train, scatter_x_val, y_train, y_val = handler.get_data_split(data = (scatter_x_train, y_train), test_perc = 0.2)
+            trainset_scatter, valset_scatter = handler.batcher(data=[scatter_x_train, scatter_x_val, y_train, y_val])
+
+            print(f"Train data size: {len(scatter_x_train)}")
+            print(f"Validation data size: {len(scatter_x_val)}")
 
 
-    # Create scatter objects.
+            NN = NN_128x128(input_channel=channels, 
+                            num_classes=len(classes), 
+                            data_size = np.prod(list(trainset_scatter)[0][0][0].shape))
+            NN_train_data = train_test.train(model = NN, train_data=trainset_scatter,val_data = valset_scatter, num_epochs=num_epochs, best_model_path=NN_best_path+'0', device=device, optimizer=optimizer, optimizer_parameters=(learning_rate, momentum, weight_decay),epoch_val= epoch_val)
+            acc_nn.append(NN_train_data['accuracy'])
+
+            if cnn:
+                metrics.plotTraining(data = NN_train_data, axs=training_axs[0][:], title = 'CNN', epochs_per_validation=epoch_val)
+            else:
+                metrics.plotTraining(data = NN_train_data, axs=training_axs, title = 'CNN', epochs_per_validation=epoch_val)
+            
+            # Decide scale
+            max_loss = min(max(max_loss, max(NN_train_data['loss']), max(NN_train_data['loss_val'])), 1)
+            min_acc = min(min_acc, min(NN_train_data['accuracy']), min(NN_train_data['accuracy_val']))
 
 
-    # Display training results
-    if display:
-        training_fig.show()
-        confmat_fig.show()
-        if cnn:
-            filters_fig.show()
+        
+        # Load best models
+        NN.load_state_dict(torch.load(NN_best_path + str(acc_nn.index(max(acc_nn)))))
+        NN_metrics = metrics(*train_test.test(model=NN, test_data=testset_scatter, device=device), classes)
+
+        if not cnn:
+            NN_metrics.confMatDisplay().plot(ax = axs)
+            axs.set_title('NN')
+        else:
+            NN_metrics.confMatDisplay().plot(ax = axs[0])
+            axs[0].set_title('NN')
+
+
+
+
+
+
 
     # Apply scale to graphs
     if cnn and not nn or nn and not cnn:
@@ -206,13 +293,21 @@ def classify(display = False, cnn = True, nn = True):
     if cnn:
         file.write(f"{CNN_metrics.getMetrics(type='CNN')}\n")
     if nn: 
-        pass
-        #file.write(f"{NN_metrics.getMetrics(type='NN')}\n")
+        file.write(f"{NN_metrics.getMetrics(type='NN')}\n")
     file.close()
     
     print("Done")
+    
+    # Display training results
+    if display:
+        training_fig.show()
+        confmat_fig.show()
+        if cnn:
+            filters_fig.show()
+        #input()
+        plt.show()
 
 
 
 if __name__ == '__main__':
-    classify(display=False, cnn=True, nn=False)
+    classify(display=True, cnn=False, nn=True)

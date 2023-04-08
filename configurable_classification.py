@@ -310,4 +310,4 @@ def classify(display = False, cnn = True, nn = True):
 
 
 if __name__ == '__main__':
-    classify(display=True, cnn=True, nn=True)
+    classify(display=True, cnn=True, nn=False)

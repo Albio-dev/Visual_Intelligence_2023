@@ -19,10 +19,10 @@ generic = {
     "num_samples" : 500,  #max 2774 (with flowers) # max 4100 with whales (3 class)
     # How many training epochs for every validation
     "epoch_val": 1,
-    #The number of folds of KFold
-    "num_k_folds": 3,
-    # Number of augmented images to produce
-    'augmentations': 8,
+    #The number of folds of KFold. 1 to disable
+    "num_k_folds": 1,
+    # Number of augmented images to produce. 0 to disable
+    'augmentations': 5,
     #The weight decay used for the optimizer
     "weight_decay": 0.01,
     #The number of the optimizer that we want to use: 0- SGD, 1- Adam
@@ -35,7 +35,7 @@ model_hyperparameters = {
     # Scale for past experience to not be perturbated by new ones
     "momentum" : 0.9,
     # The number of times the model is trained on the entire training dataset.
-    "num_epochs" : 120
+    "num_epochs" : 30
 }
 
 scattering_parameters = {

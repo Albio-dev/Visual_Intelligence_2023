@@ -11,7 +11,7 @@ function [data] = scattering(images, sn)
    
     
     datafeatures = cell(len, 1);
-    parfor i = 1:length(images)
+    parfor i = 1:len
 
         
         

@@ -20,7 +20,7 @@ generic = {
     # How many training epochs for every validation
     "epoch_val": 1,
     #The number of folds of KFold. 1 to disable
-    "num_k_folds": 1,
+    "num_k_folds": 3,
     # Number of augmented images to produce. 0 to disable
     'augmentations': 5,
     #The weight decay used for the optimizer

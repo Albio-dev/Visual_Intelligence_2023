@@ -46,8 +46,8 @@ class data_handler:
         self.raw_labels = labels
 
         # Extract samples in single list
-        self.data = numpy.asarray([j for i in data.values() for j in i])
-        self.labels = numpy.asarray([j for i in labels.values() for j in i])
+        self.data = torch.Tensor(numpy.array([j for i in data.values() for j in i]))
+        self.labels = torch.Tensor(numpy.array([j for i in labels.values() for j in i]))
 
         # If subsamples are required, return a random subsample, balanced on classes
         if samples is not None:
@@ -72,8 +72,8 @@ class data_handler:
             self.raw_labels = new_labels
             
             # Extract samples as list
-            self.data = numpy.asarray([j for i in new_data.values() for j in i])
-            self.labels = numpy.asarray([j for i in new_labels.values() for j in i])
+            self.data = torch.Tensor(numpy.array([j for i in new_data.values() for j in i]))
+            self.labels = torch.Tensor(numpy.array([j for i in new_labels.values() for j in i]))
 
 
         # Return the data
@@ -210,9 +210,11 @@ class data_handler:
         if data is None:
             data = self.data
             labels = self.labels
+            save = True
         else:
             labels = data[1]
             data = data[0]
+            save = False
     
         #augmented_data = torch.squeeze(torch.cat([self.get_augmentation_transforms()(torch.unsqueeze(data, dim=1)) for _ in range(augmentations)]))
 
@@ -265,6 +267,8 @@ class data_handler:
         plt.imshow(augmented_data[7].cpu())
         plt.savefig('testfig8.jpg')
 
-        self.data = augmented_data
-        self.labels = augmented_labels
-        return augmented_data
+        if save:
+            self.data = augmented_data
+            self.labels = augmented_labels
+
+        return augmented_data, augmented_labels

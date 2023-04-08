@@ -134,6 +134,12 @@ class AutoAugment(torch.nn.Module):
         if policy == AutoAugmentPolicy.CUSTOM_POLICY:
             return [
                 (("Rotate", 0.0, 1), ("Rotate", 1.0, 1)),
+                (("Rotate", 0.0, 2), ("Rotate", 1.0, 2)),
+                (("Rotate", 0.0, 3), ("Rotate", 1.0, 3)),
+                (("Rotate", 0.0, 4), ("Rotate", 1.0, 4)),
+                (("Rotate", 0.0, 5), ("Rotate", 1.0, 5)),
+                (("Rotate", 0.0, 6), ("Rotate", 1.0, 6)),
+                (("Rotate", 0.0, 7), ("Rotate", 1.0, 7)),
             ]
         elif policy == AutoAugmentPolicy.IMAGENET:
             return [

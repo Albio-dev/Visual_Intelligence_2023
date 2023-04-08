@@ -6,7 +6,7 @@ generic = {
     "model_train_path": './train_checkpoint/',
 
     # Classes in the dataset             
-    "lab_classes" : ['flower','dog'],
+    "lab_classes" : ['dog','flower'],
     "results_path" : './results/',
 
     # How many samples are used per-iteration
@@ -22,7 +22,7 @@ generic = {
     #The number of folds of KFold
     "num_k_folds": 3,
     # Number of augmented images to produce
-    'augmentations': 8,
+    'augmentations': 12,
     #The weight decay used for the optimizer
     "weight_decay": 0.01,
     #The number of the optimizer that we want to use: 0- SGD, 1- Adam
@@ -31,7 +31,7 @@ generic = {
 
 model_hyperparameters = {
     # Learning rate to scale how much new weighs are evaluated
-    "learning_rate": 0.01,
+    "learning_rate": 0.005,
     # Scale for past experience to not be perturbated by new ones
     "momentum" : 0.9,
     # The number of times the model is trained on the entire training dataset.

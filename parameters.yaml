@@ -1,4 +1,4 @@
-augmentations: 8
+augmentations: 24
 batch_size: 64
 channels: 1
 data_path: ./Data/gray
@@ -7,8 +7,8 @@ imageSize: !!python/tuple
 - 128
 - 128
 lab_classes:
-- flower
 - dog
+- flower
 model_train_path: ./train_checkpoint/
 num_k_folds: 3
 num_samples: 500
@@ -16,6 +16,6 @@ optimizer: 0
 results_path: ./results/
 test_perc: 0.2
 weight_decay: 0.01
-learning_rate: 0.01
+learning_rate: 0.005
 momentum: 0.9
 num_epochs: 120

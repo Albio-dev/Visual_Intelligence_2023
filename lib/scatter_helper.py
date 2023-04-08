@@ -1,6 +1,7 @@
 import numpy as np
 
 import matplotlib.pyplot as plt
+import torch
 
 class scatter:
 
@@ -72,36 +73,8 @@ class scatter:
     # Compute scattering coefficients
     def scatter(self, data):
         print("Scattering data...")
-        return np.asarray(self.scatterFunc(self.eng.uint8(data)))#[np.asarray(x._data) for x in self.scatterFunc(data)]
+        print(f'Scattering {data.shape[0]} images of size {data.shape[2]}x{data.shape[3]}')
+        device = data.device
+        return torch.Tensor(self.scatterFunc(self.eng.uint8(np.asarray(data.cpu())))).to(device)
 
 
-
-def getData(batch_size, test_perc, data_path, lab_classes, J, num_rotations, imageSize, order, channels , train_scale = 1):
-    # Split in train and test set
-    #trainset, testset = utils_our.batcher(batch_size = batch_size, *train_test_split(*utils_our.loadData(data_path, lab_classes), test_size=test_perc))
-    dataset = utils_our.loadData(path = data_path, folders = lab_classes)
-
-    ### SCATTERING DATA ###
-    #scatter = kt.Scattering2D(J, shape = imageSize, max_order = order, L=num_rotations)#, backend='torch_skcuda')
-    #scatter = scatter.to(device)
-    
-    #print(f'Calculating scattering coefficients of data in {len(trainset)} batches of {batch_size} elements each for training')
-    print('Calculating scattering coefficients of data')
-    #scatters = utils_our.scatter_mem(batch_size,device,scatter,dataset, channels)
-    #scatters = utils_our.load_scatter(data_path)
-    s = data_path.split("/")
-    sub_color = s[2]
-    scatter = utils_our.matlab_scatter(sub_color, dataset, J, [4, 2], num_rotations)
-    scatters = utils_our.load_scatter(data_path)
-        
-    if scatters is None:
-        print('Error during scatter_mem!')
-        sys.exit()
-    print('Scattering coefficients calculated')
-
-    xtrain, xtest, ytrain, ytest = utils_our.get_data_split(data = scatters, test_perc=test_perc, lab_classes=lab_classes, data_path=data_path)
-    xtrain = xtrain[:int(len(xtrain)*train_scale)]
-    ytrain = ytrain[:int(len(ytrain)*train_scale)]
-    return *utils_our.batcher(xtrain, xtest, ytrain, ytest,batch_size= batch_size), np.prod(scatters[0][0].shape), scatter[1]
-
-    #return *utils_our.batcher(*utils_our.get_data_split(data = scatters, test_perc=test_perc, lab_classes=lab_classes, data_path=data_path), batch_size = batch_size), np.prod(scatters[0][0].shape)

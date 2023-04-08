@@ -1,91 +1,142 @@
+from lib import train_test
+from lib.models.CNN_128x128 import CNN_128x128
+from lib.models.NN_128x128 import NN_128x128
+from legacy import utils_our
+from lib.metrics import metrics as metrics
+from lib import scatter_helper
+from lib.data_handler import data_handler
+from lib.cnn_explorer import explorer
+from lib.scripts import make_settings
+
 import matplotlib.pyplot as plt
+import torch
+import numpy as np
 import os
-import logging
-import legacy.CNN as CNN
-import legacy.NN_scattering as NN_scattering
-import lib.scripts.make_settings as make_settings
-import legacy.utils_our as utils_our
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-fh = logging.FileHandler("log.txt")
-formatter = logging.Formatter('%(asctime)s - %(message)s')
-fh.setLevel(logging.INFO)
-fh.setFormatter(formatter)
-# add the handlers to the logger
-logger.addHandler(fh)
+# Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-def classification_task(display = True):
+print('Device: ', device)
+def classify(display = False):
+    make_settings.writefile()
     settings = utils_our.load_settings()
-    
-    trainset_cnn, testset_cnn = CNN.getData(data_path=settings['data_path'], test_perc=settings['test_perc'], batch_size=settings['batch_size'], lab_classes=settings['lab_classes'], channels=settings['channels'], train_scale=1, training_data_size = settings['training_data_size'])
-    #mode = settings['data_path'].split('/')[-1]
-    trainset_scatter, testset_scatter, data_size, scatter = NN_scattering.getData(batch_size=settings['batch_size'], test_perc=settings['test_perc'], data_path=settings['data_path'], lab_classes=settings['lab_classes'], J=settings['J'], num_rotations=settings['n_rotations'], imageSize=settings['imageSize'], order=settings['order'], channels=settings['channels'], train_scale=1, training_data_size = settings['training_data_size'])
-    
-    
-    if not CNN.isTrained(model_train_path=settings['model_train_path']):
-        _, _, stats_CNN = CNN.train(trainset_cnn, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], batch_size=settings['batch_size'], model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], channels=settings['channels'])
 
-    if not NN_scattering.isTrained(model_train_path=settings['model_train_path']):
-        stats_NN = NN_scattering.train(trainset_scatter, data_size = data_size, learning_rate=settings['learning_rate'], num_epochs=settings['num_epochs'], lab_classes=settings['lab_classes'], momentum=settings['momentum'], model_train_path=settings['model_train_path'], channels=settings['channels'])
-
-    CNN_metrics, CNN_model = CNN.test(testset_cnn, model_train_path=settings['model_train_path'], lab_classes=settings['lab_classes'], batch_size=settings['batch_size'], channels=settings['channels'])
-    NN_metrics = NN_scattering.test(testset_scatter, data_size, lab_classes=settings['lab_classes'], model_train_path=settings['model_train_path'], channels=settings['channels'])
-
+    # Scatter creation
+    scatter_params = utils_our.load_settings('scatter_parameters.yaml')
     
-    if os.path.exists(f"{settings['model_train_path']}CNN_128x128_best_model_trained.pt"):
-        os.remove(f"{settings['model_train_path']}CNN_128x128_best_model_trained.pt")
-    if os.path.exists(f"{settings['model_train_path']}NN_128x128_best_model_trained.pt"):
-        os.remove(f"{settings['model_train_path']}NN_128x128_best_model_trained.pt")
+    scatter = scatter_helper.scatter(imageSize=settings['imageSize'], mode = 1, scatter_params=scatter_params)
+
+    # Data loading
+    data_path = settings['data_path']
+    classes = settings['lab_classes']
+    batch_size = settings['batch_size']
+    test_perc = settings['test_perc']
+    handler = data_handler(data_path, classes, batch_size, test_perc, samples=settings['num_samples'])
+    handler.loadData(samples=settings['num_samples'])
+
+    # Get CNN dataset
+    x_train, x_test, y_train, y_test = handler.get_data_split()
+    trainset, valset = handler.batcher(data = (x_train, y_train))
+    _, testset = handler.batcher(data = (x_test, y_test))
+
+    # get NN dataset
+    scatter_dataset = data_handler(data_path, classes, batch_size, test_perc, data = (scatter.scatter(handler.get_data()[0]), handler.get_data()[1]))
+    x_scatter_train, x_scatter_test, y_scatter_train, y_scatter_test = scatter_dataset.get_data_split()    
+    trainset_scatter, valset_scatter = handler.batcher(data = (x_scatter_train, y_scatter_train))
+    _, testset_scatter = handler.batcher(data = (x_scatter_test, y_scatter_test))
+
+    # Model parameters
+    classes = settings['lab_classes']
+    channels = settings['channels']
+
+    # Model creation
+    CNN = CNN_128x128(input_channel=channels, 
+                      num_classes=len(classes))
+    NN = NN_128x128(input_channel=channels, 
+                    num_classes=len(classes), 
+                    data_size = np.prod(list(trainset_scatter)[0][0][0].shape))
     
+    # Optimizer parameters
+    learning_rate = settings['learning_rate']
+    momentum = settings['momentum']
 
-    # Write to file settings and metrics
-    logger.info(settings)
-    logger.info(f"{CNN_metrics.getMetrics(type='CNN')}")
-    logger.info(f"{NN_metrics.getMetrics(type='NN')}")
+    # Training parameters
+    num_epochs = settings['num_epochs']
+    NN_best_path = settings['model_train_path']+'NN_128x128_best_model_trained.pt'
+    CNN_best_path = settings['model_train_path']+'CNN_128x128_best_model_trained.pt'
+    epoch_val = settings['epoch_val']
 
-    CNN_metrics.printMetrics("CNN")
+    # Call the function in temp.py
+    CNN_train_data = train_test.train(model = CNN, train_data=trainset, val_data = valset, num_epochs=num_epochs, best_model_path=CNN_best_path, device=device, optimizer_parameters=(learning_rate, momentum), epoch_val= epoch_val)
+    NN_train_data = train_test.train(model = NN, train_data=trainset_scatter, val_data = valset_scatter, num_epochs=num_epochs, best_model_path=NN_best_path, device=device, optimizer_parameters=(learning_rate, momentum), epoch_val= epoch_val)
+
+    # Load best models
+    NN.load_state_dict(torch.load(NN_best_path))
+    CNN.load_state_dict(torch.load(CNN_best_path))
+
+    # Test models
+    CNN_metrics = metrics(*train_test.test(model=CNN, test_data=testset, device=device), classes)
+    NN_metrics = metrics(*train_test.test(model=NN, test_data=testset_scatter, device=device), classes)
+
+    # Print testing results
+    CNN_metrics.printMetrics('CNN')
     NN_metrics.printMetrics("NN")
 
+
     results_path = settings['results_path']
-    current_results_path = f"{results_path}{utils_our.get_folder_index(results_path)}"
+    current_results_path = f"{results_path}{handler.get_folder_index(results_path)}"
 
     if not os.path.isdir(current_results_path):
         os.makedirs(current_results_path)
-
-    if display == True:
-        utils_our.display_stats_graphs(stats_CNN, stats_NN, settings['num_epochs'], save_path=f"{current_results_path}/loss_acc.png")
-
-        #NN_scattering.showPassBandScatterFilters(J = settings['J'], num_rotations = settings['n_rotations'], imageSize= settings['imageSize'])
-        CNN.showCNNFilters(CNN_model, save_path=f"{current_results_path}/CNN_filters.png")
-
-        NN_scattering.printScatterInfo(scatter, logger.info, display, save_path=f"{current_results_path}/scatter_filters.png")
-
-        fig, axs = plt.subplots(1, 2)
-        fig.suptitle('Confusion Matrices')
-        CNN_metrics.confMatDisplay().plot(ax = axs[0])
-        axs[0].set_title("CNN")
-        NN_metrics.confMatDisplay().plot(ax = axs[1])
-        axs[1].set_title("NN")
-
-        fig.savefig(f"{current_results_path}/conf_mat.png", dpi=300)
-        fig.show()
-        
-        input()
-    else:
-        NN_scattering.printScatterInfo(scatter, print)
-
+    
+    
     file = open(f"{current_results_path}/info.txt", 'w')
-    file.write(f"{settings}\n{CNN_metrics.getMetrics(type='CNN')}\n{NN_metrics.getMetrics(type='NN')}")
+    file.write(f"{settings}\n{CNN_metrics.getMetrics(type='CNN')}\n{NN_metrics.getMetrics(type='NN')}\n")
+    file.write(f'{scatter.info}')
     file.close()
-    
-    
+
+
+
+    if display:
+        
+        # Plot training data
+        fig, axs = plt.subplots(2, 2)
+        fig.suptitle('Training infos')
+        metrics.plotTraining(data = CNN_train_data, axs=axs[0][:], epochs_per_validation=epoch_val)
+        metrics.plotTraining(data = NN_train_data, axs=axs[1][:], epochs_per_validation=epoch_val)
+        # Decide scale
+        max_loss = min(max(max(CNN_train_data['loss']), max(CNN_train_data['loss_val']), max(NN_train_data['loss']), max(NN_train_data['loss_val'])), 1)
+        min_acc = min(min(CNN_train_data['accuracy']), min(CNN_train_data['accuracy_val']), min(NN_train_data['accuracy']), min(NN_train_data['accuracy_val']))
+        # Apply scale to graphs
+        axs[0][0].set_ylim(0, max_loss)
+        axs[0][1].set_ylim(min_acc, 1)
+        axs[1][0].set_ylim(0, max_loss)
+        axs[1][1].set_ylim(min_acc, 1)
+        fig.show()        
+        fig.savefig(f"{current_results_path}/training_infos.png", dpi=300)
     
 
-if __name__ == "__main__":
-    make_settings.writefile()
-    classification_task(True)
+        # Plot confusion matrices
+        fig, axs = plt.subplots(1, 2)
+        fig.suptitle('Confusion matrices')
+        CNN_metrics.confMatDisplay().plot(ax = axs[0])
+        axs[0].set_title('CNN')
+        NN_metrics.confMatDisplay().plot(ax = axs[1])
+        axs[1].set_title('NN')
+        fig.show()        
+        fig.savefig(f"{current_results_path}/conf_mat.png", dpi=300)
+    
+        
+        cnn_inspect = explorer(CNN)        
+        fig = cnn_inspect.show_filters(current_results_path)
+        fig.show()
+        fig.savefig(f"{current_results_path}/CNN_filters.png", dpi=300) 
 
-def k_run(n):
-    for i in range(n):
-        classification_task(True)
+        input()
+
+    
+
+
+
+if __name__ == '__main__':
+    classify(True)

@@ -245,9 +245,9 @@ def classify(display = False, cnn = True, nn = True):
             acc_nn.append(NN_train_data['accuracy'])
 
             if cnn:
-                metrics.plotTraining(data = NN_train_data, axs=training_axs[0][:], title = 'CNN', epochs_per_validation=epoch_val)
+                metrics.plotTraining(data = NN_train_data, axs=training_axs[1][:], title = 'NN', epochs_per_validation=epoch_val)
             else:
-                metrics.plotTraining(data = NN_train_data, axs=training_axs, title = 'CNN', epochs_per_validation=epoch_val)
+                metrics.plotTraining(data = NN_train_data, axs=training_axs, title = 'NN', epochs_per_validation=epoch_val)
             
             # Decide scale
             max_loss = min(max(max_loss, max(NN_train_data['loss']), max(NN_train_data['loss_val'])), 1)
@@ -263,8 +263,8 @@ def classify(display = False, cnn = True, nn = True):
             NN_metrics.confMatDisplay().plot(ax = axs)
             axs.set_title('NN')
         else:
-            NN_metrics.confMatDisplay().plot(ax = axs[0])
-            axs[0].set_title('NN')
+            NN_metrics.confMatDisplay().plot(ax = axs[1])
+            axs[1].set_title('NN')
 
 
 
@@ -310,4 +310,4 @@ def classify(display = False, cnn = True, nn = True):
 
 
 if __name__ == '__main__':
-    classify(display=True, cnn=False, nn=True)
+    classify(display=True, cnn=True, nn=True)

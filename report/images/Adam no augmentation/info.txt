@@ -1,6 +1,0 @@
-{'batch_size': 32, 'channels': 1, 'data_path': './Data/gray', 'epoch_val': 2, 'imageSize': (128, 128), 'lab_classes': ['flower', 'dog'], 'model_train_path': './train_checkpoint/', 'num_k_folds': 3, 'num_samples': 2500, 'results_path': './results/', 'test_perc': 0.2, 'learning_rate': 0.001, 'momentum': 0.9, 'num_epochs': 60}
-CNN metrics: 
-Accuracy:		0.844
-Precision:		0.844
-Recall:			0.844
-F1:				0.844

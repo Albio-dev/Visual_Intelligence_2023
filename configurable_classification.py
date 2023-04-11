@@ -222,7 +222,7 @@ def classify(display = False, cnn = True, nn = True):
                 acc_nn.append(NN_train_data['accuracy'])
                 
                 if cnn:
-                    metrics.plotTraining(data = NN_train_data, axs=training_axs[0][:], title = 'NN', iteration=i, epochs_per_validation=epoch_val)
+                    metrics.plotTraining(data = NN_train_data, axs=training_axs[1][:], title = 'NN', iteration=i, epochs_per_validation=epoch_val)
                 else:
                     metrics.plotTraining(data = NN_train_data, axs=training_axs, title = 'NN', iteration=i, epochs_per_validation=epoch_val)
                 

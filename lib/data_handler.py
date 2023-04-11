@@ -46,8 +46,8 @@ class data_handler:
         self.raw_labels = labels
 
         # Extract samples in single list
-        self.data = torch.Tensor(numpy.array([j for i in data.values() for j in i]))
-        self.labels = torch.Tensor(numpy.array([j for i in labels.values() for j in i]))
+        self.data = torch.Tensor(numpy.array([j for i in data.values() for j in i])).to(torch.uint8)
+        self.labels = torch.Tensor(numpy.array([j for i in labels.values() for j in i])).to(torch.uint8)
 
         # If subsamples are required, return a random subsample, balanced on classes
         if samples is not None:
@@ -72,8 +72,8 @@ class data_handler:
             self.raw_labels = new_labels
             
             # Extract samples as list
-            self.data = torch.Tensor(numpy.array([j for i in new_data.values() for j in i]))
-            self.labels = torch.Tensor(numpy.array([j for i in new_labels.values() for j in i]))
+            self.data = torch.Tensor(numpy.array([j for i in new_data.values() for j in i])).to(torch.uint8)
+            self.labels = torch.Tensor(numpy.array([j for i in new_labels.values() for j in i])).to(torch.uint8)
 
 
         # Return the data

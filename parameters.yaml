@@ -7,8 +7,8 @@ imageSize: !!python/tuple
 - 128
 - 128
 lab_classes:
-- flower
 - dog
+- flower
 model_train_path: ./train_checkpoint/
 num_k_folds: 3
 num_samples: 2500

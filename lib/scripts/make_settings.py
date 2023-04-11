@@ -6,7 +6,7 @@ generic = {
     "model_train_path": './train_checkpoint/',
 
     # Classes in the dataset             
-    "lab_classes" : ['flower','dog'],
+    "lab_classes" : ['dog','flower'],
     "results_path" : './results/',
 
     # How many samples are used per-iteration

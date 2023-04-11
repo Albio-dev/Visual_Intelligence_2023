@@ -228,8 +228,8 @@ class data_handler:
         if augmentations > 0:
 
             for x, y in zip(data, labels):
-                augmented_data += [torch.squeeze(augmenter(torch.unsqueeze(x, dim=0))) for _ in range(augmentations)]
-                augmented_labels += [y] * augmentations
+                augmented_data += [x] + [torch.squeeze(augmenter(torch.unsqueeze(x, dim=0))) for _ in range(augmentations)]
+                augmented_labels += [y] * (augmentations + 1)
 
             aug_train_lists = list(zip(augmented_data, augmented_labels))
             random.shuffle(aug_train_lists)

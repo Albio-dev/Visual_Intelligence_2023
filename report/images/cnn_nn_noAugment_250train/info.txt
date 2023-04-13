@@ -1,0 +1,11 @@
+{'augmentations': 0, 'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'epoch_val': 1, 'imageSize': (128, 128), 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'num_k_folds': 3, 'num_samples': 500, 'optimizer': 0, 'results_path': './results/', 'test_perc': 0.5, 'weight_decay': 0.01, 'learning_rate': 0.005, 'momentum': 0.9, 'num_epochs': 200}
+CNN metrics: 
+Accuracy:		0.736
+Precision:		0.736
+Recall:			0.736
+F1:				0.736
+NN metrics: 
+Accuracy:		0.8
+Precision:		0.8
+Recall:			0.8
+F1:				0.8000000000000002

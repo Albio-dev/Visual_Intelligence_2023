@@ -5,7 +5,7 @@ from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import train_test_split
 import torchvision.transforms as transforms
 import torchvision.transforms.autoaugment as autoaugment
-from lib import custom_augment as T
+from lib.scripts import custom_augment as T
 
 class data_handler:
 
@@ -242,7 +242,7 @@ class data_handler:
             augmented_labels = labels
         
         #labels = torch.repeat_interleave(labels, augmentations)
-
+        '''
         plt.imshow(augmented_data[0].cpu())
         plt.savefig('testfig1.jpg')
 
@@ -266,6 +266,7 @@ class data_handler:
         
         plt.imshow(augmented_data[7].cpu())
         plt.savefig('testfig8.jpg')
+        '''
 
         if save:
             self.data = augmented_data

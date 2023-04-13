@@ -74,7 +74,6 @@ class scatter:
     def scatter(self, data):
         print("Scattering data...")
         print(f'Scattering {data.shape[0]} images of size {data.shape[-1]}x{data.shape[-2]}')
-        device = data.device
-        return torch.Tensor(self.scatterFunc(self.eng.uint8(np.asarray(data.cpu())))).to(device)
+        return torch.Tensor(self.scatterFunc(self.eng.uint8(np.asarray(data))))
 
 

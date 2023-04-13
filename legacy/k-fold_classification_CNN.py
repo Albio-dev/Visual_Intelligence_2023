@@ -15,7 +15,7 @@ import torch
 import numpy as np
 import os
 
-import lib.custom_augment as T
+import lib.scripts.custom_augment as T
 
 # Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

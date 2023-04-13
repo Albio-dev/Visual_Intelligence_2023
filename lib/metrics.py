@@ -10,9 +10,9 @@ class metrics:
 
         # Calculate metrics
         self.accuracy = accuracy_score(self.y_true, self.y_pred)
-        self.precision = precision_score(self.y_true, self.y_pred, average='micro')
-        self.recall = recall_score(self.y_true, self.y_pred, average='micro')
-        self.f1 = f1_score(self.y_true, self.y_pred, average='micro')
+        self.precision = precision_score(self.y_true, self.y_pred, average='binary')
+        self.recall = recall_score(self.y_true, self.y_pred, average='binary')
+        self.f1 = f1_score(self.y_true, self.y_pred, average='binary')
 
         # Calculate confusion matrix
         self.confmat = confusion_matrix(self.y_true, self.y_pred, labels=list(range(0,len(self.classes))))

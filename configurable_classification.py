@@ -295,6 +295,13 @@ def classify(display = False, cnn = True, nn = True):
     if nn: 
         file.write(f"{NN_metrics.getMetrics(type='NN')}\n")
     file.close()
+
+    print(f'Training results:')
+    if cnn:
+        print(f"{CNN_metrics.getMetrics(type='CNN')}")
+    if nn:
+        print(f"{NN_metrics.getMetrics(type='NN')}")
+
     
     print("Done")
     
@@ -310,4 +317,4 @@ def classify(display = False, cnn = True, nn = True):
 
 
 if __name__ == '__main__':
-    classify(display=True, cnn=True, nn=False)
+    classify(display=True, cnn=True, nn=True)

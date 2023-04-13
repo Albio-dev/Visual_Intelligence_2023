@@ -66,8 +66,12 @@ During the forward pass, input images are passed through the convolutional layer
 \section{Neural Network}
 \subsection{Wavelet scattering}
 \subsubsection(What is a wavelet scattering)
+Wavelet scattering is a mathematical technique for analyzing signals, such as sound or images, by decomposing them into different frequency bands and time scales. It works by applying a series of wavelet transforms to the signal, which effectively "filters" the signal into its constituent frequency components.\\
+The key idea behind wavelet scattering is to create a representation of the signal that is invariant to certain transformations, such as translations and dilations. This allows us to extract features from the signal that are robust to changes in scale and position.
 \subsubsection{How we do it}
-Spiegare come viene applicata la wavelet scattering (utilizzato matlab).
+Initially, we tried to use the Python library \textbf{Kymatio} to implement \textbf{2D wavelet scattering}, but then we decided to implement it through \textbf{MATLAB} because it allows us to work more on the scattering \textbf{parameters}. We connected MATLAB to \textbf{Python} using the \textbf{matlab.engine} library.\\
+
+
 We found the best results with the following values:
 \begin{itemize}
     \item \texttt{J} = ...: parameter represents the number of scales to use in the wavelet transform .

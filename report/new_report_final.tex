@@ -1,6 +1,7 @@
 \documentclass{report}
 \usepackage{listings}
 \usepackage{graphicx}
+\def\weight{0.7}
 
 \title{Report on CNN/Scattering classification comparison}
 \author{Alberto Carli \and Gabriele Roncolato \and Leonardo Zecchin }
@@ -65,15 +66,21 @@ During the forward pass, input images are passed through the convolutional layer
 
 \section{Neural Network}
 \subsection{Wavelet scattering}
-\subsubsection(What is a wavelet scattering)
+\subsubsection{What is a wavelet scattering}
+Wavelet scattering is a mathematical technique for analyzing signals, such as sound or images, by decomposing them into different frequency bands and time scales. It works by applying a series of wavelet transforms to the signal, which effectively "filters" the signal into its constituent frequency components.\\
+The key idea behind wavelet scattering is to create a representation of the signal that is invariant to certain transformations, such as translations and dilations. This allows us to extract features from the signal that are robust to changes in scale and position.
 \subsubsection{How we do it}
-Spiegare come viene applicata la wavelet scattering (utilizzato matlab).
-We found the best results with the following values:
-\begin{itemize}
-    \item \texttt{J} = ...: parameter represents the number of scales to use in the wavelet transform .
-    \item \texttt{order} = ...: is the maximum order of wavelet scattering coefficients to compute .
-    \item $\texttt{L} = ...$: specifies the number of rotations to use in the wavelet transform .
-\end{itemize}
+Initially, we tried to use the Python library \textbf{Kymatio} to implement \textbf{2D wavelet scattering}, but then we decided to implement it through \textbf{MATLAB} because it allows us to work more on the scattering \textbf{parameters}. We connected MATLAB to \textbf{Python} using the \textbf{matlab.engine} library and this is implemented in the \texttt{scatter\_helper.py} file.\\
+
+The purpose of the \texttt{get\_scatterNet.m} file is to compute a \textbf{scattering network} for images using  \textbf{Wavelet Scattering transform}. 
+\\The function calls the \texttt{waveletScattering2}, which is part of the Deep Learning Toolbox in MATLAB. The waveletScattering2 function computes the scattering coefficients for a given image using a wavelet transform, which is then used to construct the scattering network. \\
+The input arguments of the \texttt{get\_scatterNet} function are used to configure the waveletScattering2 function. Specifically, \texttt{invariance\_scale} specifies the scale of invariance of the scattering coefficients, \texttt{quality\_factors} specifies the quality factors for the wavelet transform, \texttt{num\_rotations} specifies the number of rotations used in the wavelet transform, and \texttt{images\_size} specifies the size of the input image.\\
+Finally, the function returns the computed scattering network as \textbf{sn}.\\
+
+Moreover, we have incorporated the \texttt{scattering.m} file that calculates the \texttt{scatter} function. This function applies the \textbf{Scatter Transform} to all images passed as an input argument \texttt{images}, utilizing the Matlab method \texttt{scatteringTransform}. The \texttt{scatteringTransform} function computes the scattering transform for the input data, utilizing the provided scattering network (\texttt{sn}).\\
+Furthermore, we reshaped the extracted features to keep only the highest-order scattering coefficients, after finding that our initial attempt to take the mean of the scattering coefficients over the spatial dimensions did not yield interesting results. In fact, we found that keeping all of the coefficients gave worse results.
+
+
 \subsection{Architecture}
 \begin{lstlisting}[language=bash]
     NN_128x128(
@@ -129,13 +136,126 @@ The function expects the dataset as a \texttt{torch.utils.data.DataLoader} and i
 \section{Testing}
 
 \chapter{Results}
-cominciato in RGB, ma passato a grayscale perchè la prof è cattiva
-\section{}
+\section{COSA INSERIRE (Da togliere)}
 trovati parametri ottimali per la scatter
 ma la cnn non partiva: i dati erano pochi
 provato a modificare la struttura della cnn (overfitting)(batchnorm, dropout, ecc)
 alla fine siamo riusciti ad avere buoni risultati con l'Augmentation
 provato autoaugment, solo traslazioni e solo rotazioni
+\section{Summary}
+We start using the RGB images but we switch to grayscale images because the results are better. (BOH)\\
+In this study, we initially used the Convolutional Neural Network (CNN) model provided during laboratory 
+lectures as a baseline and compared its performance to that of the Neural Network (NN) model with wavelet scattering.
+We then sought to improve the results of both models by experimenting with different sets of parameters, with a particular 
+focus on the NN and wavelet scattering parameters. \\
+These are the best parameters we found for the NN models:
+\begin{itemize}
+    \item \textbf{Invariance scale}: $J=6$
+    \item \textbf{Order of scattering}: $2$
+    \item \textbf{Number of rotations}: $[8, 8]$
+    \item \textbf{Quality factors}: $[2, 1]$
+    \item \textbf{Learning rate}: $0.001$ (DA CAMBIARE)
+    \item \textbf{Momentum}: $0.9$
+\end{itemize}
+After identifying the best parameters, we directed our attention to the CNN model.
+Our findings revealed that the dataset was relatively small, and the loss and validation 
+graphs suggested that the model was overfitting. To address this issue, we restructured the 
+CNN model by introducing BatchNorm and Dropout layers, although 
+the results were unsatisfactory, suggesting that these changes alone were insufficient.
+o address the overfitting issue, we incorporated data augmentation into the training set, 
+which significantly improved the results. \\
+Our attempts to augment the dataset using translations and rotations were initially promising, 
+but we found that the CNN filters were learning the black band generated by the transformations. 
+To avoid this, we opted to limit rotations to between -45 and 45 degrees.\\
+\begin{itemize}
+    \item \textbf{batch\_size}: 64
+    \item \textbf{test\_perc}: 0.2
+    \item \textbf{num\_samples}: 500 
+    \item \textbf{epoch\_val}: 1
+    \item \textbf{num\_k\_folds}: 3
+    \item \textbf{augmentations}: 16 (number of augmented images per original image)
+    \item \textbf{weight\_decay}: 0.01
+    \item \textbf{optimizer}: 0 (0- SGD, 1- Adam)
+    \item \textbf{learning\_rate}: 0.005 (scale for how much new weights are evaluated)
+    \item \textbf{momentum}: 0.9 (scale for past experience to not be perturbed by new ones)
+    \item \textbf{num\_epochs}: 200 
+\end{itemize}
+\pagebreak
+\section{Executions}
+AGGIUNGERE LE VARIE ESECUZIONI CON IMMAGINI\\
+
+These are the results obtained with the best parameters found for the CNN model:
+\begin{figure}[ht!]
+    \centering
+    \begin{minipage}[b]{0.7\linewidth}
+      \includegraphics[width=\linewidth]{/Users/leonardozecchin/uni/visualIntelligence/Visual_Intelligence_2023/report/images/3. CNN_500_sample/CNN_filters.png}
+      \caption{CNN filters.}
+      \label{fig:image1}
+    \end{minipage}
+    \hspace{0.5cm}
+    \begin{minipage}[b]{0.7\linewidth}
+      \includegraphics[width=\linewidth]{/Users/leonardozecchin/uni/visualIntelligence/Visual_Intelligence_2023/report/images/3. CNN_500_sample/training_infos.png}
+      \caption{Loss and Validation graphs.}
+      \label{fig:image2}
+    \end{minipage}
+\end{figure}\\
+The \textbf{accuracy} reached in test is $0.82$.\\
+\pagebreak
+
+The we tried with more samples ($2500$) and these are the results:\\
+\begin{figure}[ht!]
+    \centering
+    \begin{minipage}[b]{\weight\linewidth}
+      \includegraphics[width=\linewidth]{/Users/leonardozecchin/uni/visualIntelligence/Visual_Intelligence_2023/report/images/4. CNN_2500_sample/CNN_filters.png}
+      \caption{CNN filters.}
+      \label{fig:image1}
+    \end{minipage}
+    \hspace{0.5cm}
+    \begin{minipage}[b]{\weight\linewidth}
+      \includegraphics[width=\linewidth]{/Users/leonardozecchin/uni/visualIntelligence/Visual_Intelligence_2023/report/images/4. CNN_2500_sample/training_infos.png}
+      \caption{Loss and Validation graphs.}
+      \label{fig:image2}
+    \end{minipage}
+\end{figure}\\
+The \textbf{accuracy} reached in test is $0.87$.\\
+\pagebreak
+
+For the NN executions with agumentation we have these results:
+\begin{figure}[ht!]
+    \centering
+    \begin{minipage}[b]{\weight\linewidth}
+      \includegraphics[width=\linewidth]{/Users/leonardozecchin/uni/visualIntelligence/Visual_Intelligence_2023/report/images/1. augmentationNN/conf_mat.png}
+      \caption{Confusion matrix.}
+      \label{fig:image1}
+    \end{minipage}
+    \hspace{0.5cm}
+    \begin{minipage}[b]{\weight\linewidth}
+      \includegraphics[width=\linewidth]{/Users/leonardozecchin/uni/visualIntelligence/Visual_Intelligence_2023/report/images/1. augmentationNN/training_infos.png}
+      \caption{Loss and Validation graphs.}
+      \label{fig:image2}
+    \end{minipage}
+\end{figure}\\
+The \textbf{accuracy} reached in test is $0.74$.\\
+
+\pagebreak
+
+For the NN executions without agumentation we have these results:
+\begin{figure}[ht!]
+    \centering
+    \begin{minipage}[b]{\weight\linewidth}
+      \includegraphics[width=\linewidth]{/Users/leonardozecchin/uni/visualIntelligence/Visual_Intelligence_2023/report/images/2. senza_augmentationNN/conf_mat.png}
+      \caption{Confusion matrix.}
+      \label{fig:image1}
+    \end{minipage}
+    \hspace{0.5cm}
+    \begin{minipage}[b]{\weight\linewidth}
+      \includegraphics[width=\linewidth]{/Users/leonardozecchin/uni/visualIntelligence/Visual_Intelligence_2023/report/images/2. senza_augmentationNN/training_infos.png}
+      \caption{Loss and Validation graphs.}
+      \label{fig:image2}
+    \end{minipage}
+\end{figure}\\
+The \textbf{accuracy} reached in test is $0.81$.\\
+
 
 \chapter{Conclusions}
 I parametri vanno meglio per la CNN o per la NN, richiedono parametri diversi

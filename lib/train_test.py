@@ -1,7 +1,5 @@
 import torch, numpy
 from sklearn.metrics import accuracy_score
-from lib.scripts import make_settings
-from legacy import utils_our
 
 def train(model, train_data, val_data, num_epochs, best_model_path, device, optimizer, optimizer_parameters,epoch_val):    
 
@@ -17,9 +15,6 @@ def train(model, train_data, val_data, num_epochs, best_model_path, device, opti
     true_label_val = torch.empty((0)).to(device)
 
     ### CREATE MODEL ###
-
-    make_settings.writefile()
-    settings = utils_our.load_settings()
     # Optimizer
     if optimizer == 0:
         print('SGD')

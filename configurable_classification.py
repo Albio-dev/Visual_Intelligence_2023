@@ -196,8 +196,8 @@ def classify(display = False, cnn = True, nn = True):
         scatter = scatter_helper.scatter(imageSize=settings['imageSize'], mode = 1, scatter_params=scatter_params)
         
         # get NN dataset   
-        scatter_x_train = scatter.scatter(x_train)
-        scatter_x_test = scatter.scatter(x_test)
+        scatter_x_train = scatter.scatter(x_train.cpu())
+        scatter_x_test = scatter.scatter(x_test.cpu())
         _, testset_scatter = handler.batcher(data=[scatter_x_train, scatter_x_test, y_train, y_test])
 
         if folds > 1:

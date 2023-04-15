@@ -119,7 +119,10 @@ The training is performed by the \texttt{train()} function in the \texttt{lib/tr
 
 Two optimizers can be selected with the appropriate parameter \texttt{optimizer}: \texttt{0} = \texttt{SGD} or \texttt{1} = \texttt{Adam} to which are given parameters
 as required. SGD uses \textit{learning\_rate} and \textit{momentum}, while Adam uses only \textit{learning\_rate}. \\
+\textit{Cross Entropy} is used the loss function. \\
+
 The training is performed by iterating through the training set \texttt{epochs} times. \\
+The function expects the dataset as a \texttt{torch.utils.data.DataLoader} and iterates by batch alternating classification, loss calculation and backpropagation.\\
 
 
 \section{Validation}

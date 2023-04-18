@@ -303,6 +303,26 @@ To avoid this, we opted to limit rotations to between -45 and 45 degrees.\\
   \item \textbf{num\_epochs}: 200
 \end{itemize}
 \pagebreak
+\chapter{Conclusions}
+
+Our study has revealed several key findings regarding the impact of parameter selection and data augmentation 
+techniques on the performance of Convolutional Neural Networks (CNNs) and Neural Networks (NNs). The optimal 
+parameters varied between the two models, but our results suggest that rotations were the most effective 
+parameter for improving performance. However, the reasons for this improvement are not entirely clear, as it is 
+uncertain whether it is due to the rotations themselves or the increase in the number of training examples. 
+While using more samples can lead to a training process that is noisier and with "faded" filters, it can also 
+result in better generalization. Indeed, data augmentation techniques such as rotations can produce filters that 
+are more generalizable to unseen data, as the model learns to identify more robust features that are less 
+dependent on specific input configurations. Nonetheless, it is crucial to find the right balance between the 
+number and type of augmented samples and the complexity of the model to avoid overfitting. Overall, our findings 
+highlight the importance of careful parameter selection and the potential benefits of using rotation as a data 
+augmentation technique for improving the performance and generalization of CNNs and NNs.
+
+\pagebreak
+
+\part{Appendix}
+\appendix
+
 \section{Executions}
 AGGIUNGERE LE VARIE ESECUZIONI CON IMMAGINI\\
 
@@ -379,9 +399,5 @@ For the NN executions without agumentation we have these results:
 The \textbf{accuracy} reached in test is $0.81$.\\
 
 
-\chapter{Conclusions}
-I parametri vanno meglio per la CNN o per la NN, richiedono parametri diversi
-le rotazioni sono quelle che hanno dato risultati migliori
-+ campioni -> training noisy e filtri "sbiaditi", ma migliore generalizzazione
 
 \end{document}

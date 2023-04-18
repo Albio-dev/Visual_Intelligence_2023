@@ -1,5 +1,6 @@
 \documentclass{report}
 \usepackage{listings}
+\usepackage{subcaption}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \graphicspath{{./images}}
@@ -326,78 +327,127 @@ augmentation technique for improving the performance and generalization of CNNs 
 \section{Executions}
 AGGIUNGERE LE VARIE ESECUZIONI CON IMMAGINI\\
 
-These are the results obtained with the best parameters found for the CNN model:
-\begin{figure}[ht!]
+TEMPLATE FOR IMAGES
+
+\begin{figure}[t!]
   \centering
-  \begin{minipage}[b]{0.7\linewidth}
-    \includegraphics[width=\linewidth]{3.CNN_500_sample/CNN_filters.png}
-    \caption{CNN filters.}
-    \label{fig:image1}
-  \end{minipage}
-  \hspace{0.5cm}
-  \begin{minipage}[b]{0.7\linewidth}
-    \includegraphics[width=\linewidth]{3.CNN_500_sample/training_infos.png}
-    \caption{Loss and Validation graphs.}
-    \label{fig:image2}
-  \end{minipage}
-\end{figure}\\
+  \hspace{-2cm}
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.3\textwidth]{3.CNN_500_sample/CNN_filters.png}
+    \caption{Caption for Image 1}
+    \label{fig:image-set1-sub1}
+  \end{subfigure}
+  \hspace{-0.5cm}
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.3\textwidth]{3.CNN_500_sample/CNN_filters.png}
+    \caption{Caption for Image 2}
+    \label{fig:image-set1-sub2}
+  \end{subfigure}
+
+  \caption{Caption for the whole figure}
+  \label{fig:figure}
+\end{figure}
+
+
+
+
+These are the results obtained with the best parameters found for the CNN model:
+\begin{figure}[t!]
+  \centering
+  \hspace{-2cm}
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.3\textwidth]{3.CNN_500_sample/CNN_filters.png}
+    \caption{CNN filters}
+    \label{fig:image-set1-sub1}
+  \end{subfigure}
+  \hspace{-0.5cm}
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.3\textwidth]{3.CNN_500_sample/training_infos.png}
+    \caption{Loss and Validation graphs}
+    \label{fig:image-set1-sub2}
+  \end{subfigure}
+
+  \caption{Caption for the whole figure}
+  \label{fig:image-set1}
+\end{figure}
 The \textbf{accuracy} reached in test is $0.82$.\\
+
 \pagebreak
 
 The we tried with more samples ($2500$) and these are the results:\\
-\begin{figure}[ht!]
+\begin{figure}[t!]
   \centering
-  \begin{minipage}[b]{\weight\linewidth}
-    \includegraphics[width=\linewidth]{4.CNN_2500_sample/CNN_filters.png}
-    \caption{CNN filters.}
-    \label{fig:image1}
-  \end{minipage}
-  \hspace{0.5cm}
-  \begin{minipage}[b]{\weight\linewidth}
-    \includegraphics[width=\linewidth]{4.CNN_2500_sample/training_infos.png}
-    \caption{Loss and Validation graphs.}
-    \label{fig:image2}
-  \end{minipage}
-\end{figure}\\
+  \hspace{-2cm}
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.3\textwidth]{4.CNN_2500_sample/CNN_filters.png}
+    \caption{CNN filters}
+    \label{fig:image-set2-sub1}
+  \end{subfigure}
+  \hspace{-0.5cm}
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.3\textwidth]{4.CNN_2500_sample/training_infos.png}
+    \caption{Loss and Validation graphs}
+    \label{fig:image-set2-sub2}
+  \end{subfigure}
+
+  \caption{Caption for the whole figure}
+  \label{fig:image-set2}
+\end{figure}
 The \textbf{accuracy} reached in test is $0.87$.\\
 \pagebreak
 
 For the NN executions with agumentation we have these results:
-\begin{figure}[ht!]
+\begin{figure}[t!]
   \centering
-  \begin{minipage}[b]{\weight\linewidth}
-    \includegraphics[width=\linewidth]{1.augmentationNN/conf_mat.png}
-    \caption{Confusion matrix.}
-    \label{fig:image1}
-  \end{minipage}
-  \hspace{0.5cm}
-  \begin{minipage}[b]{\weight\linewidth}
-    \includegraphics[width=\linewidth]{1.augmentationNN/training_infos.png}
-    \caption{Loss and Validation graphs.}
-    \label{fig:image2}
-  \end{minipage}
-\end{figure}\\
+  \hspace{-2cm}
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.3\textwidth]{1.augmentationNN/conf_mat.png}
+    \caption{Confusion matrix}
+    \label{fig:image-set3-sub1}
+  \end{subfigure}
+  \hspace{-0.5cm}
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.3\textwidth]{1.augmentationNN/training_infos.png}
+    \caption{Loss and Validation graphs}
+    \label{fig:image-set3-sub2}
+  \end{subfigure}
+
+  \caption{Caption for the whole figure}
+  \label{fig:image-set3}
+\end{figure}
 The \textbf{accuracy} reached in test is $0.74$.\\
 
 \pagebreak
 
 For the NN executions without agumentation we have these results:
-\begin{figure}[ht!]
+\begin{figure}[t!]
   \centering
-  \begin{minipage}[b]{\weight\linewidth}
-    \includegraphics[width=\linewidth]{2.senza_augmentationNN/conf_mat.png}
-    \caption{Confusion matrix.}
-    \label{fig:image1}
-  \end{minipage}
-  \hspace{0.5cm}
-  \begin{minipage}[b]{\weight\linewidth}
-    \includegraphics[width=\linewidth]{2.senza_augmentationNN/training_infos.png}
-    \caption{Loss and Validation graphs.}
-    \label{fig:image2}
-  \end{minipage}
-\end{figure}\\
+  \hspace{-2cm}
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.3\textwidth]{2.senza_augmentationNN/conf_mat.png}
+    \caption{Confusion matrix}
+    \label{fig:image-set3-sub1}
+  \end{subfigure}
+  \hspace{-0.5cm}
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.3\textwidth]{2.senza_augmentationNN/training_infos.png}
+    \caption{Loss and Validation graphs}
+    \label{fig:image-set3-sub2}
+  \end{subfigure}
+
+  \caption{Caption for the whole figure}
+  \label{fig:image-set3}
+\end{figure}
 The \textbf{accuracy} reached in test is $0.81$.\\
-
-
 
 \end{document}

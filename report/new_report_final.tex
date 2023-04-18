@@ -1,6 +1,7 @@
 \documentclass{report}
 \usepackage{listings}
 \usepackage{graphicx}
+\usepackage{hyperref}
 \graphicspath{{./images}}
 \def\weight{0.7}
 
@@ -69,17 +70,26 @@ The output of the last FC layer is a probability distribution over the \texttt{n
 \subsection{Wavelet scattering}
 \subsubsection{What is a wavelet scattering}
 Wavelet scattering is a mathematical technique for analyzing signals, such as sound or images, by decomposing them into different frequency bands and time scales. It works by applying a series of wavelet transforms to the signal, which effectively "filters" the signal into its constituent frequency components.\\
-The key idea behind wavelet scattering is to create a representation of the signal that is invariant to certain transformations, such as translations and dilations. This allows us to extract features from the signal that are robust to changes in scale and position.
+The key idea behind wavelet scattering is to create a representation of the signal that is invariant to translations and rotations. This allows us to extract features from the signal that are robust to changes in scale and position.
 \subsubsection{How we do it}
-Initially, we tried to use the Python library \textbf{Kymatio} to implement \textbf{2D wavelet scattering}, but then we decided to implement it through \textbf{MATLAB} because it allows us to work more on the scattering \textbf{parameters}. We connected MATLAB to \textbf{Python} using the \textbf{matlab.engine} library and this is implemented in the \texttt{scatter\_helper.py} file.\\
+Initially, we tried to use the Python library \textbf{Kymatio} to implement \textbf{2D wavelet scattering}, but then we decided to implement 
+it through \textbf{MATLAB} because it allows us to specify scattering \textbf{parameters} better. We connected MATLAB to \textbf{Python} using 
+the \textbf{matlab.engine} library. This is implemented in the \texttt{scatter\_helper.py} file.\\
 
-The purpose of the \texttt{get\_scatterNet.m} file is to compute a \textbf{scattering network} for images using  \textbf{Wavelet Scattering transform}.
-\\The function calls the \texttt{waveletScattering2}, which is part of the Deep Learning Toolbox in MATLAB. The waveletScattering2 function computes the scattering coefficients for a given image using a wavelet transform, which is then used to construct the scattering network. \\
+The purpose of the \texttt{get\_scatterNet.m} file is to create a \textbf{scattering network} MATLAB object for input images using 
+ \textbf{Wavelet Scattering transform}.\\
+The function calls the \texttt{waveletScattering2} MATLAB function, which is part of the Deep Learning Toolbox. WaveletScattering2 computes the scattering coefficients for a given image using a wavelet transform, which is then used to construct the scattering network. \\
 The input arguments of the \texttt{get\_scatterNet} function are used to configure the waveletScattering2 function. Specifically, \texttt{invariance\_scale} specifies the scale of invariance of the scattering coefficients, \texttt{quality\_factors} specifies the quality factors for the wavelet transform, \texttt{num\_rotations} specifies the number of rotations used in the wavelet transform, and \texttt{images\_size} specifies the size of the input image.\\
 Finally, the function returns the computed scattering network as \textbf{sn}.\\
 
-Moreover, we have incorporated the \texttt{scattering.m} file that calculates the \texttt{scatter} function. This function applies the \textbf{Scatter Transform} to all images passed as an input argument \texttt{images}, utilizing the Matlab method \texttt{scatteringTransform}. The \texttt{scatteringTransform} function computes the scattering transform for the input data, utilizing the provided scattering network (\texttt{sn}).\\
-Furthermore, we reshaped the extracted features to keep only the highest-order scattering coefficients, after finding that our initial attempt to take the mean of the scattering coefficients over the spatial dimensions did not yield interesting results. In fact, we found that keeping all of the coefficients gave worse results.
+Moreover, we have incorporated the \texttt{scattering.m} file that calculates the \texttt{scatter} function. This function applies the 
+\textbf{Scatter Transform} to all images passed as an input argument \texttt{images}, using the Matlab method \texttt{scatteringTransform}. \\
+The \texttt{scatteringTransform} function computes the scattering transform for the input data, utilizing the provided scattering network 
+(\texttt{sn}).\\
+
+Finally, we reshaped the extracted features to keep only the highest-order scattering coefficients, after finding that our initial attempt 
+to take the mean of the scattering coefficients over the spatial dimensions did not yield interesting results. We also found that keeping 
+all the coefficients gave even worse results.
 
 
 \subsection{Architecture}
@@ -91,8 +101,11 @@ Furthermore, we reshaped the extracted features to keep only the highest-order s
       (fc2): Linear(in_features=64, out_features=2, bias=True)
     )
     \end{lstlisting}
-This is a neural network with \textbf{fully-connected layers} designed for image classification tasks. Unlike Convolutional Neural Networks (CNNs), which are commonly used for image classification, this network does not have any convolutional layers. \\
-The input to the network is an image with \texttt{input\_channel} number of channels and size 128x128 pixels. The image is flattened into a vector using the\texttt{nn.Flatten()} layer, and then passed through two \textbf{fully-connected layers}. The first fully-connected layer has 64 hidden units, and the second (output) layer has \texttt{num\_classes} units, which correspond to the number of classes in the classification task.\\
+This is a neural network with \textbf{fully-connected layers} designed for image classification tasks. Unlike Convolutional Neural Networks (CNNs), 
+which are commonly used for image classification, this network does not have any convolutional layers. \\
+The input to the network is an image with \texttt{input\_channel} number of channels and size 128x128 pixels. The image is flattened into a vector 
+using the\texttt{nn.Flatten()} layer, and then passed through two \textbf{fully-connected layers}. The first fully-connected layer has 64 nodes, 
+and the second (output) layer has \texttt{num\_classes} units, which correspond to the number of classes in the classification task.\\
 
 The \textbf{forward method} defines the forward pass of the network, which simply applies the two fully-connected layers to the input vector, with ReLU activation applied to the output of the first layer and a dropout layer applied after the ReLU activation.
 
@@ -184,6 +197,13 @@ Testing predictions and real results are stored and returned after testing is do
 In our case, the \texttt{metrics} class handles calculation of statistics and plotting of useful graphs.\\
 
 \chapter{Results}
+The project started from the RGB dataset images and with the models as seen during laboratory lectures.\\
+We started by using the Convolutional Neural Network (CNN) model provided during laboratory lectures from which we extracted the fully connected
+section and thus defined the \textbf{NN\_128x128} model.\\
+These models were using RGB images, but after a short while we converted everything to grayscale images.\\
+
+We started working with the parameters as given in the laboratory lectures, together with the models.
+
 \section{COSA INSERIRE (Da togliere)}
 \begin{itemize}
   \item trovati parametri ottimali per la scatter
@@ -192,6 +212,57 @@ In our case, the \texttt{metrics} class handles calculation of statistics and pl
   \item alla fine siamo riusciti ad avere buoni risultati con l'Augmentation
   \item provato autoaugment, solo traslazioni e solo rotazioni
 \end{itemize}
+
+\section{Tuning scatter}
+In this first part of the study, we focused on the NN model with wavelet scattering. \\
+We started by tuning the parameters of the scattering transform, which are the invariance scale $J$, the order of scattering $Q$, the number of rotations $R$, and the quality factors $Q$. \\
+
+But using kymatio, we found that the library does not support the quality factors, so, after a bit of fruitless parameter tuning, 
+we opted to use the \texttt{scattering2d} function from \texttt{kymatio.scattering2d} instead, for better control. \\
+
+\section{Models tuning}
+Then we tried to tune the parameters of the optimizer of the models.\\
+We tried different learning rates and momentum values for the SGD optimizer, and finally found a combination that led to the networks actually learning.
+\begin{itemize}
+  \item \textbf{Learning rate}: $0.01$ 
+  \item \textbf{Momentum}: $0.5$
+\end{itemize}
+
+So, in this situation we could actually try and find some good values for the MATLAB scatter transform:
+\begin{itemize}
+  \item \textbf{Invariance scale}: $J=6$
+  \item \textbf{Order of scattering}: $2$
+  \item \textbf{Number of rotations}: $[8, 8]$
+\end{itemize}
+We found that with these values, the neural network performed well with TODO accuracy.\\
+
+\section{CNN}
+With the scatter sorted, we now focused on the CNN model, ready to find new, different, parameters that would better suit the different model.\\
+We found out that the CNN model was not learning at all, so we tried to change the structure of the model, adding Batch Normalization and Dropout layers,
+as well as adding/reducing layers size and number.\\
+In the meantime, through testing, we figured that the best parameters for the SGD optimizer were the following:
+\begin{itemize}
+  \item \textbf{Learning rate}: $0.005$ 
+  \item \textbf{Momentum}: $0.9$
+\end{itemize}
+We also tried to use the Adam optimizer, but the results were not as good as with SGD.\\
+
+Even though the accuracy was good, the filters were not quite what we expected (something like edge detection), so we tried to change parameters
+of the model, but we observed some sort of tradeoff between the training curves (loss and accuracy) and the quality of the filters.\\
+TODO sicuro dell'ordine delle cose?
+
+\section{Augmentation}
+We managed to get both reasonable training curves and good filters by using data augmentation.\\
+We tried to use the \texttt{autoaugment} function from \texttt{torchvision.transforms}, and it gave very nice results.\\
+
+But we didn't yet understand why, so we tried to use only a single type of transformation at a time and try to understand what was happening.\\
+Notably, when augmentation involved only translations, the filters presented some sort of weird black edge around, so we figured they didn't help much.\\
+
+Finally, we tried to use only rotations, and the results were very good: we could see both good edge filters and decent training curves.\\
+Moreover, model's accuracy was very good, with TODO accuracy.\\
+We also noticed some sort of positive correlation between the number of augmented (rotated) images and the accuracy of the model.\\
+
+
 
 \section{Summary}
 We start using the RGB images but we switch to grayscale images because the results are better. (BOH)\\

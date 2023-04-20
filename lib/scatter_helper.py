@@ -76,4 +76,7 @@ class scatter:
         print(f'Scattering {data.shape[0]} images of size {data.shape[-1]}x{data.shape[-2]}')
         return torch.Tensor(self.scatterFunc(self.eng.uint8(np.asarray(data))))
 
+    def quit_matlab(self):
+        if self.mode == 1:
+            self.eng.quit()
 

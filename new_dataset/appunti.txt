@@ -19,3 +19,7 @@ aggiungere quality factors crea un grafico rumoroso, ma fitta un pochino meglio.
 Con dropout la loss in traning/val è più rumorosa, ma quella di validation non sale (9a.newDataset) molto, mentre senza dropout è più pulita, ma la loss cresce molto (9b.newDataset)
 
 Provato a tenere tutte le feature prodotte dalla scatter, ma questo significa cambiare (di nuovo) i parametri del modello
+
+Provato a mantenere tutti i livelli della scatter e i risultati non sono cambiati, va meno peggio con learning rate basso e momentum.
+Cambiare la batch size contribuisce in minima parte all'allenamento utilizzando la featureMatrix di matlab. Influisce anche tenendo solo l'ultimo livello di feature.
+Piuttosto, abbiamo capito che tenere l'ultimo livello migliora notevolmente la qualità dei risultati, rispetto a tenere tutte le features. (10.newDataset, 11.newDataset)

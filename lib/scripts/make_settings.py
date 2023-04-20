@@ -6,7 +6,7 @@ generic = {
     "model_train_path": './train_checkpoint/',
 
     # Classes in the dataset             
-    "lab_classes" : ['amiloide','not_amiloide'],
+    "lab_classes" : ['dog', 'flower'],
     "results_path" : './results/',
 
     # How many samples are used per-iteration
@@ -14,15 +14,15 @@ generic = {
     # Quantity of dataset used for the testing
     "test_perc" : .2,
     # Size of the input images
-    "imageSize" : (100, 100),
+    "imageSize" : (128, 128),
     #The number of samples (images) used
-    "num_samples" : 398,  #max 2774 (with flowers) # max 4100 with whales (3 class)
+    "num_samples" : 500,  #max 2774 (with flowers) # max 4100 with whales (3 class)
     # How many training epochs for every validation
     "epoch_val": 1,
     #The number of folds of KFold. 1 to disable
     "num_k_folds": 3,
     # Number of augmented images to produce. 0 to disable
-    'augmentations': 0,
+    'augmentations': 16,
     #The weight decay used for the optimizer
     "weight_decay": 0.01,
     #The number of the optimizer that we want to use: 0- SGD, 1- Adam
@@ -35,7 +35,7 @@ model_hyperparameters = {
     # Scale for past experience to not be perturbated by new ones
     "momentum" : 0.9,
     # The number of times the model is trained on the entire training dataset.
-    "num_epochs" : 200
+    "num_epochs" : 100
 }
 
 scattering_parameters = {
@@ -59,28 +59,16 @@ def writefile():
 
 writefile()
     
-def setScatteringParameters(J, order, imageSize, n_rotations):
-    scattering_parameters['J'] = J
-    scattering_parameters['order'] = order
-    scattering_parameters['imageSize'] = imageSize
-    scattering_parameters['n_rotations'] = n_rotations
-
-    writefile()    
-
-def setGenericParameters(data_path, model_train_path, lab_classes, batch_size, test_perc, channels):
-    generic['data_path'] = data_path
-    generic['model_train_path'] = model_train_path
-    generic['lab_classes'] = lab_classes
-    generic['batch_size'] = batch_size
-    generic['test_perc'] = test_perc
-    generic['channels'] = channels
-
+def edit_parameter(parameter, value):
+    if parameter in generic:
+        generic[parameter] = value
+    elif parameter in model_hyperparameters:
+        model_hyperparameters[parameter] = value
+    elif parameter in scattering_parameters:
+        scattering_parameters[parameter] = value
+    else:
+        print("Parameter not found")
+        return
     writefile()
 
-def setModelHyperparameters(learning_rate, momentum, num_epochs):
-    model_hyperparameters['learning_rate'] = learning_rate
-    model_hyperparameters['momentum'] = momentum
-    model_hyperparameters['num_epochs'] = num_epochs
-
-    writefile()
 

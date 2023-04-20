@@ -172,8 +172,8 @@ class data_handler:
             return 0
        
     def to(self, device):
-        self.data = torch.tensor(self.data).to(device)
-        self.labels = torch.tensor(self.labels).to(device)
+        self.data = self.data.clone().detach().to(device)
+        self.labels = self.labels.clone().detach().to(device)
         return self
     
     def get_augmentation_transforms(self):
@@ -218,8 +218,9 @@ class data_handler:
     
         #augmented_data = torch.squeeze(torch.cat([self.get_augmentation_transforms()(torch.unsqueeze(data, dim=1)) for _ in range(augmentations)]))
 
-        
-        policy = T.AutoAugmentPolicy.CUSTOM_POLICY
+        policy = T.AutoAugmentPolicy.ROTATION_POLICY
+        #policy = T.AutoAugmentPolicy.TRANSLATION_POLICY
+        #policy = T.AutoAugmentPolicy.MIXED_POLICY
         augmenter = T.AutoAugment(policy)
 
         augmented_data = []

@@ -1,5 +1,5 @@
-augmentations: 0
-batch_size: 64
+augmentations: 16
+batch_size: 16
 channels: 1
 data_path: ./Data/gray
 epoch_val: 1
@@ -18,4 +18,4 @@ test_perc: 0.2
 weight_decay: 0.01
 learning_rate: 0.005
 momentum: 0.9
-num_epochs: 200
+num_epochs: 100

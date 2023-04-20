@@ -96,6 +96,9 @@ class AutoAugmentPolicy(Enum):
     IMAGENET = "imagenet"
     CIFAR10 = "cifar10"
     SVHN = "svhn"
+    TRANSLATION_POLICY = "translationpolicy"
+    ROTATION_POLICY = "rotationpolicy"
+    MIXED_POLICY = "mixedpolicy"
 
 
 # FIXME: Eliminate copy-pasted code for fill standardization and _augmentation_space() by moving stuff on a base class
@@ -131,7 +134,7 @@ class AutoAugment(torch.nn.Module):
     def _get_policies(
         self, policy: AutoAugmentPolicy
     ) -> List[Tuple[Tuple[str, float, Optional[int]], Tuple[str, float, Optional[int]]]]:
-        if policy == AutoAugmentPolicy.CUSTOM_POLICY:
+        if policy == AutoAugmentPolicy.ROTATION_POLICY:
             return [
                 (("Rotate", 0.0, 1), ("Rotate", 1.0, 1)),
                 (("Rotate", 0.0, 2), ("Rotate", 1.0, 2)),
@@ -142,6 +145,28 @@ class AutoAugment(torch.nn.Module):
                 (("Rotate", 0.0, 7), ("Rotate", 1.0, 7)),
                 (("Rotate", 0.0, 8), ("Rotate", 1.0, 8)),
                 (("Rotate", 0.0, 9), ("Rotate", 1.0, 9)),
+            ]
+        elif policy == AutoAugmentPolicy.TRANSLATION_POLICY:
+            return[
+                (("TranslateX", .5, 1),("TranslateY", .5, 1)),
+                (("TranslateX", .5, 2),("TranslateY", .5, 2)),
+                (("TranslateX", .5, 3),("TranslateY", .5, 3)),
+                (("TranslateX", .5, 4),("TranslateY", .5, 4)),
+                (("TranslateX", .5, 5),("TranslateY", .5, 5)),
+                (("TranslateX", .5, 6),("TranslateY", .5, 6)),
+            ]
+        elif policy == AutoAugmentPolicy.MIXED_POLICY:
+            return[
+                (("Rotate", 0.0, 1), ("Rotate", 1.0, 1)),
+                (("TranslateX", .5, 1),("TranslateY", .5, 1)),
+                (("Rotate", 0.0, 2), ("Rotate", 1.0, 2)),
+                (("TranslateX", .5, 2),("TranslateY", .5, 2)),
+                (("Rotate", 0.0, 3), ("Rotate", 1.0, 3)),
+                (("TranslateX", .5, 3),("TranslateY", .5, 3)),
+                (("Rotate", 0.0, 4), ("Rotate", 1.0, 4)),
+                (("TranslateX", .5, 4),("TranslateY", .5, 4)),
+                (("Rotate", 0.0, 5), ("Rotate", 1.0, 5)),
+                (("TranslateX", .5, 5),("TranslateY", .5, 5))
             ]
         elif policy == AutoAugmentPolicy.IMAGENET:
             return [

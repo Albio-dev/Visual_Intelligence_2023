@@ -1,0 +1,21 @@
+Eseguito i modelli con i parametri uguali a cani_vs_fiori ma va molto male (pessima accuracy e la loss non si abbassa) (0.newDataset)
+
+semplificato la scatter (poche rotazioni e basso q factor. Sempre 2 livelli) e per la NN la loss in validation segue l'andamento di quella in training (1.newDataset)
+1 livello fa schifo 
+3 livelli va un pochino meglio (2.newDataset)
+
+Con lr più alto e momentum più basso non va meglio (3.newDataset)
+Con lr più basso non va meglio (troppo lento ad imparare) (4.newDataset)
+
+Con un lr più alto è vero che fa super overfitting, ma almeno i modelli fittano. Ora c'è da risolvere il problema overfitting e non fitting (5.newDataset)
+
+Abbiamo provato utilizzando Adam ma non ci sono stati miglioramenti (6.newDataset)
+
+Abbiamo provato a cambiare la batch_size da 64 a 16 ma non cambia niente. (7.newDataset)
+
+modifiche architetturali
+NN: aggiungere layer non cambia, togliere il dropout fa cose strane (8.newDataset)
+aggiungere quality factors crea un grafico rumoroso, ma fitta un pochino meglio. Forse il problema è la quantità di campioni che entrano nella NN (devono essere tanti)
+Con dropout la loss in traning/val è più rumorosa, ma quella di validation non sale (9a.newDataset) molto, mentre senza dropout è più pulita, ma la loss cresce molto (9b.newDataset)
+
+Provato a tenere tutte le feature prodotte dalla scatter, ma questo significa cambiare (di nuovo) i parametri del modello

@@ -172,8 +172,8 @@ class data_handler:
             return 0
        
     def to(self, device):
-        self.data = torch.tensor(self.data).to(device)
-        self.labels = torch.tensor(self.labels).to(device)
+        self.data = self.data.clone().detach().to(device)
+        self.labels = self.labels.clone().detach().to(device)
         return self
     
     def get_augmentation_transforms(self):

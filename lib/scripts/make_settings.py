@@ -26,7 +26,7 @@ generic = {
     #The weight decay used for the optimizer
     "weight_decay": 0.01,
     #The number of the optimizer that we want to use: 0- SGD, 1- Adam
-    "optimizer": 0
+    "optimizer": 1
 }
 
 model_hyperparameters = {

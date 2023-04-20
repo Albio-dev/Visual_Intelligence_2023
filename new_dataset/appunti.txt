@@ -20,7 +20,7 @@ Con dropout la loss in traning/val è più rumorosa, ma quella di validation non
 
 Provato a tenere tutte le feature prodotte dalla scatter, ma questo significa cambiare (di nuovo) i parametri del modello
 
-Provato a mantenere tutti i livelli della scatter e i risultati non sono cambiati, va meno peggio con learning rate basso e momentum.
+Provato a mantenere tutti i livelli della scatter e i risultati non sono cambiati, va meno peggio con learning rate basso e momentum alto.
 Cambiare la batch size contribuisce in minima parte all'allenamento utilizzando la featureMatrix di matlab. Influisce anche tenendo solo l'ultimo livello di feature.
 Piuttosto, abbiamo capito che tenere l'ultimo livello migliora notevolmente la qualità dei risultati, rispetto a tenere tutte le features. (10.newDataset, 11.newDataset)
 
@@ -32,3 +32,16 @@ applicare augmentation (solo traslazioni) il training è perfetto, ma facendo ov
 In generale, augmentation migliora marginalmente l'accuracy
 Mischiare traslazioni e rotazioni nell'augmentation ha portato ad un training migliore, ma nessuna differenza notevole in test
 Difficilmente l'accuracy in test supera i 0.6 e, quando lo fa, è molto variabile passando da .53 a .66
+
+Togliendo batchnorm e dropout va molto male, anche se si nota che migliora con l'augmentation (indipendentemente dal tipo di augmentation)
+Provato con un solo layer convolutivo: performance scarse, ma migliora con augmentation. Con 16 augmentation fa overfitting.
+Provato con 2 layer convolutivi: come con 3 layer
+provato con 4 layer convolutivi: come sopra
+
+Provato con più filtri al primo layer e con kernel più grossi, ma non si sono osservate differenze notevoli dai precedenti
+Provato ad aumentare la weight_regularization, con qualche prova di combinazioni di parametri, ma senza successo.
+Provato a diminuire la weitght_regularization, con nessun cambiamento evidente, anche con 500 epoche.
+
+Provato utilizzando Adam ma il comportamento rimane lo stesso, nessuna differenza.
+
+Un esempio di tutte queste prove si trova in 14a.newDataset, 14b.newDataset, 14c.newDataset

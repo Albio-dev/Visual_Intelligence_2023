@@ -12,7 +12,7 @@ lab_classes:
 model_train_path: ./train_checkpoint/
 num_k_folds: 3
 num_samples: 398
-optimizer: 0
+optimizer: 1
 results_path: ./results/
 test_perc: 0.2
 weight_decay: 0.01

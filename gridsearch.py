@@ -3,7 +3,7 @@ import lib.scripts.make_settings
 import matlab.engine
 
 parameters_to_modify = {
-    'augmentations': [2,8,16]
+    'augmentations': [0,8,16]
 }
 
 for parameter in parameters_to_modify:

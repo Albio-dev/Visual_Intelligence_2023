@@ -21,7 +21,6 @@ print('Device: ', device)
 def classify(display = False, cnn = True, nn = True):
 
     # Update settings
-    make_settings.writefile()
     settings = utils_our.load_settings()
 
     # Create folds if required
@@ -200,6 +199,8 @@ def classify(display = False, cnn = True, nn = True):
         scatter_x_test = scatter.scatter(x_test.cpu())
         _, testset_scatter = handler.batcher(data=[scatter_x_train, scatter_x_test, y_train, y_test])
 
+        
+
         if folds > 1:
 
             # Split data over folds
@@ -212,7 +213,8 @@ def classify(display = False, cnn = True, nn = True):
                 print(f"K-fold cycle {i+1}/{folds}")
                 print(f"Train data size: {len(x_train_par)}")
                 print(f"Validation data size: {len(x_val)}")   
-                
+                # Debug print
+                print(f"Sample data size: {np.prod(list(trainset_scatter)[0][0][0].shape)}")
 
                 NN = NN_128x128(input_channel=channels, 
                             num_classes=len(classes), 
@@ -236,6 +238,8 @@ def classify(display = False, cnn = True, nn = True):
 
             print(f"Train data size: {len(scatter_x_train)}")
             print(f"Validation data size: {len(scatter_x_val)}")
+            # Debug print
+            print(f"Sample data size: {np.prod(list(trainset_scatter)[0][0][0].shape)}")
 
 
             NN = NN_128x128(input_channel=channels, 
@@ -266,6 +270,8 @@ def classify(display = False, cnn = True, nn = True):
             NN_metrics.confMatDisplay().plot(ax = axs[1])
             axs[1].set_title('NN')
 
+        scatter.quit_matlab()
+
 
 
 
@@ -290,6 +296,9 @@ def classify(display = False, cnn = True, nn = True):
 
     file = open(f"{current_results_path}/info.txt", 'w')
     file.write(f"{settings}\n")
+    if nn:
+        file.write(f"{scatter_params}\n")
+
     if cnn:
         file.write(f"{CNN_metrics.getMetrics(type='CNN')}\n")
     if nn: 
@@ -317,4 +326,5 @@ def classify(display = False, cnn = True, nn = True):
 
 
 if __name__ == '__main__':
+    make_settings.writefile()
     classify(display=True, cnn=True, nn=True)

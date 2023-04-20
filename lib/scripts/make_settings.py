@@ -10,7 +10,7 @@ generic = {
     "results_path" : './results/',
 
     # How many samples are used per-iteration
-    "batch_size" : 64,
+    "batch_size" : 16,
     # Quantity of dataset used for the testing
     "test_perc" : .2,
     # Size of the input images
@@ -31,7 +31,7 @@ generic = {
 
 model_hyperparameters = {
     # Learning rate to scale how much new weighs are evaluated
-    "learning_rate": 0.005,
+    "learning_rate": 0.0005,
     # Scale for past experience to not be perturbated by new ones
     "momentum" : 0.9,
     # The number of times the model is trained on the entire training dataset.
@@ -44,9 +44,9 @@ scattering_parameters = {
     # Order of scattering
     "order" : 2,
     # Number of rotations
-    "num_rotations" : [8, 8],
+    "num_rotations" : [2, 2],
     # Quality factors
-    "quality_factors": [2, 1]
+    "quality_factors": [1,1]
 }
 
 def writefile():
@@ -59,28 +59,16 @@ def writefile():
 
 writefile()
     
-def setScatteringParameters(J, order, imageSize, n_rotations):
-    scattering_parameters['J'] = J
-    scattering_parameters['order'] = order
-    scattering_parameters['imageSize'] = imageSize
-    scattering_parameters['n_rotations'] = n_rotations
-
-    writefile()    
-
-def setGenericParameters(data_path, model_train_path, lab_classes, batch_size, test_perc, channels):
-    generic['data_path'] = data_path
-    generic['model_train_path'] = model_train_path
-    generic['lab_classes'] = lab_classes
-    generic['batch_size'] = batch_size
-    generic['test_perc'] = test_perc
-    generic['channels'] = channels
-
+def edit_parameter(parameter, value):
+    if parameter in generic:
+        generic[parameter] = value
+    elif parameter in model_hyperparameters:
+        model_hyperparameters[parameter] = value
+    elif parameter in scattering_parameters:
+        scattering_parameters[parameter] = value
+    else:
+        print("Parameter not found")
+        return
     writefile()
 
-def setModelHyperparameters(learning_rate, momentum, num_epochs):
-    model_hyperparameters['learning_rate'] = learning_rate
-    model_hyperparameters['momentum'] = momentum
-    model_hyperparameters['num_epochs'] = num_epochs
-
-    writefile()
 

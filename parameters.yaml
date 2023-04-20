@@ -1,18 +1,18 @@
 augmentations: 16
-batch_size: 16
+batch_size: 64
 channels: 1
 data_path: ./Data/gray
 epoch_val: 1
 imageSize: !!python/tuple
-- 100
-- 100
+- 128
+- 128
 lab_classes:
-- amiloide
-- not_amiloide
+- dog
+- flower
 model_train_path: ./train_checkpoint/
 num_k_folds: 3
-num_samples: 398
-optimizer: 1
+num_samples: 500
+optimizer: 0
 results_path: ./results/
 test_perc: 0.2
 weight_decay: 0.01

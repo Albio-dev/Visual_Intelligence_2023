@@ -1,0 +1,12 @@
+{'augmentations': 16, 'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'epoch_val': 1, 'imageSize': (128, 128), 'lab_classes': ['dog', 'flower'], 'model_train_path': './train_checkpoint/', 'num_k_folds': 3, 'num_samples': 500, 'optimizer': 0, 'results_path': './results/', 'test_perc': 0.2, 'weight_decay': 0.01, 'learning_rate': 0.005, 'momentum': 0.9, 'num_epochs': 100}
+{'J': 6, 'num_rotations': [8, 8], 'order': 2, 'quality_factors': [2, 1]}
+CNN metrics: 
+Accuracy:		0.85
+Precision:		0.8979591836734694
+Recall:			0.8148148148148148
+F1:				0.8543689320388349
+NN metrics: 
+Accuracy:		0.77
+Precision:		0.7313432835820896
+Recall:			0.9074074074074074
+F1:				0.8099173553719008

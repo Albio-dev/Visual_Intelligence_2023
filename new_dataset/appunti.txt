@@ -24,7 +24,6 @@ Provato a mantenere tutti i livelli della scatter e i risultati non sono cambiat
 Cambiare la batch size contribuisce in minima parte all'allenamento utilizzando la featureMatrix di matlab. Influisce anche tenendo solo l'ultimo livello di feature.
 Piuttosto, abbiamo capito che tenere l'ultimo livello migliora notevolmente la qualità dei risultati, rispetto a tenere tutte le features. (10.newDataset, 11.newDataset)
 
-
 CNN: 
 Cambiare solo la batch size comporta cambiamenti, ma marginali
 applicare augmentation (solo rotazioni) migliora percettibilmente e consistentemente le performance (12a.newDataset, 12b.newDataset)
@@ -45,3 +44,17 @@ Provato a diminuire la weitght_regularization, con nessun cambiamento evidente, 
 Provato utilizzando Adam ma il comportamento rimane lo stesso, nessuna differenza.
 
 Un esempio di tutte queste prove si trova in 14a.newDataset, 14b.newDataset, 14c.newDataset
+
+Tornati alla NN:
+Provato con una NN a 4 layer dove il primo passa da features a 256 e poi dimezza il numero di nodi. L'ultimo fa da 64 a numero di classi (2)
+Provato a cambiare il learning rate, ma con la scatter minimale si vedeono i salti dell'ottimizzatore
+con q factor (1, 1) cambiare invariance scale e rotazioni non cambia il risultato (pessimo) (15.newDataset)
+
+provato una gridsearch cambiando l'invariance scale ma non ci sono differenze cambiando i valori. 
+provato una gridsearch cambiando numero di rotazioni ma non ci sono differenze cambiando i valori.
+
+Provando con dell'augmentation (q factor = rotazioni = (2, 2)) viene esattamente come sopra
+
+provato con una NN minimale (1 solo layer) con nessun risultato
+
+Tornati alla NN originale (2 livelli) e provato un solo layer di scatter ma senza risultati

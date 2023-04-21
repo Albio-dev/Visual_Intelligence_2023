@@ -1,17 +1,17 @@
-augmentations: 16
+augmentations: 0
 batch_size: 64
 channels: 1
 data_path: ./Data/gray
 epoch_val: 1
 imageSize: !!python/tuple
-- 128
-- 128
+- 100
+- 100
 lab_classes:
-- dog
-- flower
+- pos
+- neg
 model_train_path: ./train_checkpoint/
 num_k_folds: 3
-num_samples: 500
+num_samples: 216
 optimizer: 0
 results_path: ./results/
 test_perc: 0.2

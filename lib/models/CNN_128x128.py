@@ -31,7 +31,7 @@ class CNN_128x128(nn.Module):
 
         # Flatten layer (from ConvLayer to fully-connected)
         self.flat = nn.Flatten()
-        self.fc1 = nn.Linear(256,64)
+        self.fc1 = nn.Linear(64,64)
         self.drop2 = nn.Dropout(p=0.5)
         self.fc2 = nn.Linear(64, self.num_classes)
         

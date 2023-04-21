@@ -6,7 +6,7 @@ generic = {
     "model_train_path": './train_checkpoint/',
 
     # Classes in the dataset             
-    "lab_classes" : ['dog', 'flower'],
+    "lab_classes" : ['pos', 'neg'],
     "results_path" : './results/',
 
     # How many samples are used per-iteration
@@ -14,15 +14,15 @@ generic = {
     # Quantity of dataset used for the testing
     "test_perc" : .2,
     # Size of the input images
-    "imageSize" : (128, 128),
+    "imageSize" : (100, 100),
     #The number of samples (images) used
-    "num_samples" : 500,  #max 2774 (with flowers) # max 4100 with whales (3 class)
+    "num_samples" : 216,  #max 2774 (with flowers) # max 4100 with whales (3 class)
     # How many training epochs for every validation
     "epoch_val": 1,
     #The number of folds of KFold. 1 to disable
     "num_k_folds": 3,
     # Number of augmented images to produce. 0 to disable
-    'augmentations': 16,
+    'augmentations': 0,
     #The weight decay used for the optimizer
     "weight_decay": 0.01,
     #The number of the optimizer that we want to use: 0- SGD, 1- Adam

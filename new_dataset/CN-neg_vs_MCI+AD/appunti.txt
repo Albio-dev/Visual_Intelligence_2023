@@ -13,4 +13,4 @@ Provato con diversi quality factors, e si ottiene un risultato simile a quello d
 altri cambiamenti della scatter producono gli stessi risultati (invariance scale, numero di rotazioni, quality factors)
 
 la forma del grafico è sempre la stessa in cui c'è un momento iniziale in cui il modello si allena e la validation non cambia e ad un certo punto la validation esplode e il modello fa overfitting.
-in ogni caso il modello non generalizza mai ()
+in ogni caso il modello non generalizza mai (7. final)

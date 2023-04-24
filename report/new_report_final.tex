@@ -16,10 +16,10 @@
 \pagebreak
 
 \chapter{Introduction}
-This document illustrates the project valid for the Visual Intelligence class of the academic year 2022/2023. \\
-The assignment tests the knowledge gained in class by applying signal analysis methods, in particular we classified signals by using \textbf{Convolutional Neural Networks} and wavelet theory, specifically  \textbf{Wavelet Scattering}. \\
-In this project we implemented the code necessary to classify a given dataset first by training and testing a CNN, then by applying the Wavelet Scattering Transform and training a NN with the extracted features.
-Finally we compared the results obtained with these two methods in terms of accuracy against how many epochs were used to train the classifiers. \\
+This report illustrates the results of the project for the Visual Intelligence class of 2022/2023. \\
+The assignment is designed to test the knowledge gained in class regarding signal analysis and wavelet theory: in particular we classified signals using \textbf{Convolutional Neural Networks} and wavelet functions, specifically the \textbf{Wavelet Scattering}. \\
+In this project we implemented the code necessary to classify a given dataset first by training and testing a CNN, then by applying the Wavelet Scattering Transform and training a classifier NN with the extracted features.
+Finally we compared the results obtained with these two different methods in terms of accuracy against how many epochs were used to train the classifiers. \\
 For the entire project, we followed the guidelines given during the laboratory lectures.
 
 We started using an RGB dataset but we soon switched to the grayscale version because it is considered more challenging.\\
@@ -63,15 +63,15 @@ This is the final set of parameters that we found to be optimal for this dataset
 
 
 \chapter{Objectives}
-The goal of this project is to explore the use of scattering transforms to improve the performance of neural networks on a given dataset.\\
-Specifically, we aimed to compare the performance of a CNN trained on the original dataset to a NN trained on the scattering decomposition of the data.\\
+The goal of this project is to explore the use of scattering transforms to improve the performance of classification models on a given dataset.\\
+Specifically, we aimed to compare the performance of a CNN trained on the original dataset to a NN trained on the scattering transform of the data.\\
 
-We then visualized the filters learned by the CNN and compared them to the ones applied by the scattering transform to gain insight into the types of features that were extracted.
-By accomplishing these objectives we hoped to gain a better understanding of how the CNN learns which features to extract.
+We then visualized the filters built by the CNN and compared them to the ones built by the scattering transform to gain some insight into what types of features each model extracted.
+By accomplishing these goals we have gained a better understanding of how a CNN can iteratively learn which features are more meaningful.
 
 \chapter{Dataset}
-We used a dataset consisting of 128x128 RGB images divided into two categories: dogs and flowers. There are 1600 pictures of dogs and 1387 pictures of flowers.
-We converted everything to grayscale with each class n its specific folder and every file numbered.
+We used a dataset consisting of 128$\times$128 RGB images split into two categories: dogs and flowers. There are 1600 pictures of dogs and 1387 pictures of flowers.
+In order to make the task less trivial we converted all samples to grayscale.
 
 \begin{figure}[h!]
   \centering
@@ -144,8 +144,8 @@ We converted everything to grayscale with each class n its specific folder and e
 \chapter{Framework}
 \section{Convolutional Neural Network}
 \subsection{What is a CNN}
-A Convolutional Neural Network (\textbf{CNN}) is a type of deep learning algorithm commonly used for image recognition and computer vision tasks. It is designed to automatically learn and extract relevant features from input images through convolutional and pooling layers, followed by fully connected layers that produce output predictions. \\
-The \texttt{CNN\_128x128} architecture consists of four \textbf{convolutional} layers and three fully connected layers. The first layer takes an input image with \texttt{input\_channel} number of channels, and the output of the last layer is a vector with \texttt{num\_classes} elements representing the probability of each class.
+A Convolutional Neural Network (\textbf{CNN}) is a class of neural networks commonly used for visual analysis. It is designed to automatically build specialized convolutional filters and extract relevant features from input images through convolution and pooling: the extracted features can then be used to compute an output through a series of fully connected layers. \\
+The \texttt{CNN\_128$\times$128} architecture consists of four \textbf{convolutional} layers and three fully connected layers. The networks takes an image with \texttt{input\_channel} channels as input and returns a vector with \texttt{num\_classes} elements representing the probability of each class as output.
 
 \subsection{Architecture}
 \begin{lstlisting}[language=bash]
@@ -163,41 +163,41 @@ CNN_128x128(
     (fc2): Linear(in_features=64, out_features=2, bias=True)
     )
 \end{lstlisting}
-The model is named \texttt{CNN\_128x128} and takes as input an image with a width and height of 128 pixels and a number of channels specified by the \texttt{input\_channel} parameter
-(typically 3 for RGB images or 1 for grayscale images). The number of output classes is specified by the \texttt{num\_classes} parameter.\\
-The CNN consists of three \textbf{convolutional layers} with increasing numbers of output channels (16, 32, and 64, respectively). Each convolutional layer is followed by a \textbf{batch normalization layer},
-a \textbf{ReLU} activation function, and a \textbf{max pooling layer} with a kernel size of 2 and a stride of 2. \\
-The output of the final convolutional layer is flattened into a vector and passed through two \textbf{fully connected} (FC) layers with 64 and \texttt{num\_classes} output units, respectively.
-The FC layers are followed by dropout layers to prevent overfitting.\\
+The model is named \texttt{CNN\_128$\times$128}: it takes a 128$\times$128 image with a number of channels specified by the \texttt{input\_channel} parameter as input 
+(typically 3 channels for RGB images or 1 channel for grayscale images). The number of output classes is specified by the \texttt{num\_classes} parameter.\\
+The CNN consists of three \textbf{convolutional layers} with an increasing number of output channels (16, 32, and 64, respectively). Each convolutional layer is followed by a \textbf{batch normalization layer},
+a \textbf{ReLU} activation function and a \textbf{max pooling layer} with a kernel size of 2 and a stride of 2. \\
+The output of the final convolutional layer is flattened and passed through two \textbf{fully connected} (FC) layers with 64 and \texttt{num\_classes} output units, respectively.
+A dropout layer is present to prevent overfitting.\\
 
-During the forward pass, input images are passed through the convolutional layers, normalized and pooled before being flattened and passed through the FC layers.
-The output of the last FC layer is a probability distribution over the \texttt{num\_classes} output classes, which can be used to make predictions about the input image's class.
+During the forwarding, each input image is convoluted, normalized and pooled before being flattened and forwarded to the FC layers.
+The output of the last FC layer is a probability distribution over the \texttt{num\_classes} output classes, which can be used to make predictions about the class of the input image.
 
 
 \section{Neural Network}
 \subsection{Wavelet scattering}
 \subsubsection{What is a wavelet scattering}
-Wavelet scattering is a mathematical technique for analyzing signals, such as sound or images, by decomposing them into different frequency bands and time scales. It works by applying a series of wavelet transforms to the signal, which effectively "filters" the signal into its constituent frequency components.\\
-The key idea behind wavelet scattering is to create a representation of the signal that is invariant to translations and rotations. This allows us to extract features from the signal that are robust to changes in scale and position.
+The wavelet scattering can be used to analyze signals, such sounds or images, by decomposing them into different frequency bands and time/space scales. It applies a series of wavelet transforms to the signal and breaks it down into its constituent frequency components.\\
+The key idea behind wavelet scattering is to create a representation of the signal that is invariant to translations and rotations. This allows us to extract features from the signal that are resistant to changes in scale and position.
 \subsubsection{How we do it}
-Initially, we tried to use the Python library \textbf{Kymatio} to implement \textbf{2D wavelet scattering}, but then we decided to implement 
-it through \textbf{MATLAB} because it allows us to specify scattering \textbf{parameters} better. We connected MATLAB to \textbf{Python} using 
-the \textbf{matlab.engine} library. This is implemented in the \texttt{scatter\_helper.py} file.\\
+Initially, we tried using the Python library \textbf{Kymatio} to apply a \textbf{2D wavelet scattering}, but some limitations in the Kymatio implementation led us to implement 
+our own transform in \textbf{MATLAB}, mainly because the Kymatio library didn't allow us to specify some critical \textbf{parameters}. We were then able to execute MATLAB code from \textbf{Python} using 
+the \textbf{matlab.engine} library. This implementation can be found in the \texttt{scatter\_helper.py} file.\\
 
-The purpose of the \texttt{get\_scatterNet.m} file is to create a \textbf{scattering network} MATLAB object for input images using 
+The purpose of the code contained in \texttt{get\_scatterNet.m} is to create a \textbf{scattering network} MATLAB object for input images using 
  \textbf{Wavelet Scattering transform}.\\
-The function calls the \texttt{waveletScattering2} MATLAB function, which is part of the Deep Learning Toolbox. WaveletScattering2 computes the scattering coefficients for a given image using a wavelet transform, which is then used to construct the scattering network. \\
+This function calls the \texttt{waveletScattering2} MATLAB function from the Deep Learning Toolbox: WaveletScattering2 computes the scattering coefficients for a given image using a wavelet transform, which is then used to construct the scattering network. \\
 The input arguments of the \texttt{get\_scatterNet} function are used to configure the waveletScattering2 function. Specifically, \texttt{invariance\_scale} specifies the scale of invariance of the scattering coefficients, \texttt{quality\_factors} specifies the quality factors for the wavelet transform, \texttt{num\_rotations} specifies the number of rotations used in the wavelet transform, and \texttt{images\_size} specifies the size of the input image.\\
 Finally, the function returns the computed scattering network as \textbf{sn}.\\
 
-Moreover, we have incorporated the \texttt{scattering.m} file that calculates the \texttt{scatter} function. This function applies the 
-\textbf{Scatter Transform} to all images passed as an input argument \texttt{images}, using the Matlab method \texttt{scatteringTransform}. \\
-The \texttt{scatteringTransform} function computes the scattering transform for the input data, utilizing the provided scattering network 
+In addition to that, we have incorporated the \texttt{scattering.m} file which calculates the \texttt{scatter} function. This function applies the 
+\textbf{Scatter Transform} to all of the images which are passed as the input argument \texttt{images} using the Matlab function \texttt{scatteringTransform}. \\
+The \texttt{scatteringTransform} function computes the scattering transform of the input images using the scattering network 
 (\texttt{sn}).\\
 
-Finally, we reshaped the extracted features to keep only the highest-order scattering coefficients, after finding that our initial attempt 
+Finally, we reshaped the extracted features in order to keep only the highest-order scattering coefficients after finding that our initial attempt 
 to take the mean of the scattering coefficients over the spatial dimensions did not yield interesting results. We also found that keeping 
-all the coefficients gave even worse results.
+all of the coefficients gave worse results.
 
 
 \subsection{Architecture}
@@ -209,173 +209,204 @@ all the coefficients gave even worse results.
       (fc2): Linear(in_features=64, out_features=2, bias=True)
     )
     \end{lstlisting}
-This is a neural network with \textbf{fully-connected layers} designed for image classification tasks. Unlike Convolutional Neural Networks (CNNs), 
-which are commonly used for image classification, this network does not have any convolutional layers. \\
-The input to the network is an image with \texttt{input\_channel} number of channels and size 128x128 pixels. The image is flattened into a vector 
-using the\texttt{nn.Flatten()} layer, and then passed through two \textbf{fully-connected layers}. The first fully-connected layer has 64 nodes, 
-and the second (output) layer has \texttt{num\_classes} units, which correspond to the number of classes in the classification task.\\
+This is a neural network with \textbf{fully-connected layers} designed for image classification. Unlike Convolutional Neural Networks (CNNs), 
+which are commonly used for image classification, this network does not have any convolutional layer. \\
+The input of this network is an image with \texttt{input\_channel} channels and a size of 128$\times$128 pixels. The image is flattened 
+using the\texttt{nn.Flatten()} layer and then passed through two \textbf{fully-connected layers}. The first fully-connected layer has 64 nodes 
+and the second layer (which is also the output layer) has \texttt{num\_classes} units, which correspond to the total number of classes for the classification task.\\
 
-The \textbf{forward method} defines the forward pass of the network, which simply applies the two fully-connected layers to the input vector, with ReLU activation applied to the output of the first layer and a dropout layer applied after the ReLU activation.
+The \textbf{forward method} defines the forwarding of the network: the input vector passes through the first FC layer, a ReLU activation function and finally a dropout layer.
 
 \section{Pipeline}
-Which model to run can be specified when calling \texttt{configurable\_classification.classify()} and passing \texttt{True} to
-the parameters \textit{cnn} and \textit{nn} respectively.\\
+It is possible to specify which model to employ by calling \texttt{configurable\_classification.classify()} with the value \texttt{True} for the
+\textit{cnn} and \textit{nn} parameters.\\
 
-Each model is handled separately, each execution with its own quirks, as specified in the architecture section.
-Generally the pipeline involves:
+Each model is handled separately as specified in the architecture section.
+The global pipeline involves:
 \begin{enumerate}
   \item dataset preparation
   \item train-test splitting
-  \item eventual augmentation
-  \item train-validation splitting (eventually through k-fold)
+  \item augmentation
+  \item train-validation splitting (k-fold)
   \item training
   \item validation
   \item testing
 \end{enumerate}
 
-In many points of the pipeline, behavior is controlled through parameters, which are written in the file \textit{parameters.yaml}.\\
-These parameters are overwritten at every execution by running the script \textit{lib/scripts/make\_settings.py}.\\
-Scatter-specific parameters are too, written by the same script, but to another file named \textit{scatter\_parameters.yaml}.\\
+The behavior of the pipeline is controlled through the parameters specified in the \textit{parameters.yaml} file.\\
+These parameters are overwritten at every execution by running the \textit{lib/scripts/make\_settings.py} script.\\
+Scatter-specific parameters are also written by the same script to a different file named \textit{scatter\_parameters.yaml}.\\
 
-Execution results are produced as graphs of training and testing and saved in the folder \textit{results} folder, each execution in its specific folder, numbered incrementally
-with the runs. The dump of the whole parameters file is saved as well.\\
-The output is a figure with the training and validation loss and accuracy, for every fold,
-a figure with the confusion matrices, side by side and a figure with the filters developed by the CNN, if present.
-If the parameter \textit{display} is set to \texttt{True}, then graphs are displayed after execution too.\\
+The results for each execution consist of training graphs and testing measures, which are saved in the \textit{results} folder: each set of results is saved in its own specific folder, which is incrementally numbered
+at each execution. A dump containing all of the parameters used is also saved in a txt file.\\
+The output consists of a graph showing the training and validation loss and accuracy for every fold,
+a figure containing the confusion matrices side by side and a figure showing the filters built by the CNN.
+If the \textit{display} parameter is set to \texttt{True}, then these results are displayed before the execution has terminated.\\
 
 \subsection{Dataset preparation}
-We created a class that handles the dataset \texttt{data\_handler.py}. This class provides functionality to load the dataset from the disk, subsample it, and split it
-into training, validation, and test sets, wrap it into a batcher class from pytorch, transfer it to the GPU, and perform data augmentation. \\
-Every random operation is seeded with 42 to ensure reproducibility.\\
+We created a class which handles the dataset \texttt{data\_handler.py}: this class provides a function to load the dataset from the disk, subsample it, split it
+into separate training, validation, and test sets, wrap it into a batcher class from pytorch, transfer it to the GPU and perform data augmentation on it. \\
+Each random operation is seeded with 42 to ensure consistent results.\\
 
-When the data is loaded from disk, every class folder is read with the \texttt{cv2.imread()} function and a list of labels is generated assigning a number to the class, incrementally. \\
-Then if the parameter \texttt{samples} is set (e.g. not None), the dataset is subsampled by randomly selecting an equal amount of images from each class up to the \texttt{samples} value specified. \\
-The dataset and labels are saved as class attributes and returned as \texttt{pytorch.Tensor()}.\\
+When the data is loaded from the disk, every class folder is read using the \texttt{cv2.imread()} function and a list of labels is then generated by assigning a number to each class. \\
+Then, if the parameter \texttt{samples} is set (e.g. not None), the dataset is subsampled by randomly selecting an equal number of images from each class up to the \texttt{samples} value specified. \\
+The dataset and labels are saved as class attributes and returned as a \texttt{pytorch.Tensor()}.\\
 
 The dataset is then split into training, validation, and test sets using the \texttt{get\_data\_split()} function, which is just a wrapper for the \texttt{train\_test\_split()} function from \texttt{sklearn.model\_selection} to 
 better handle the data and seed it with a constant seed (42). \\
-The \texttt{test\_perc} parameter controls the percentage of split between train and test sets by specifying how much. \\
+The \texttt{test\_perc} parameter controls the split percentage between the train set and the test set. \\
 
-Then, if the folds parameter is set to more than 1, the training set is split and iterated through \texttt{folds} folds using the \texttt{sklearn.model\_selection.KFold()}. \\
-Otherwise, the training set is split into training and validation sets using the \texttt{train\_test\_split()} function from \texttt{sklearn.model\_selection} with 0.2 of the dataset going to validation. \\
+Then, if the folds parameter is set to greater than 1, the training set is split and iterated through \texttt{folds} folds using the \texttt{sklearn.model\_selection.KFold()} function. \\
+Otherwise, the training set is split into a training set and a validation set using the \texttt{train\_test\_split()} function from \texttt{sklearn.model\_selection} with 20\% of the dataset reserved for validation. \\
 The validation set is used to monitor the training process and to detect overfitting. \\
 
 \subsection{Augmentation}
-The \texttt{data\_handler} class provides a method to perform data augmentation on the dataset. Again, this is just a wrapper function for some \texttt{torchvision.transforms} 
-all linked to a policy selected in the code. Aternative (or custom) policies can be found in the file \texttt{lib/scripts/custom\_augment.py}. \\
+The \texttt{data\_handler} class provides a method to perform data augmentation on the dataset. This is just a wrapper function for some \texttt{torchvision.transforms} 
+linked to an augmentation policy. Aternative (or custom) policies can be found in the file \texttt{lib/scripts/custom\_augment.py}. \\
 
-The augmentation is performed by randomly applying a series of transformations to the images in the dataset. Our policy consists in random rotation of angles between 0 and 90 degrees.\\
+The augmentation is performed by randomly applying a series of transformations to the dataset images. Our policy consists of random rotations between -45 and +45 degrees.\\
 
-In our pipeline, the transformations are applied to the training set only, before being split into training and validation sets, while the testing set is not augmented. \\
-The original image is kept and then a number of new augmented images is generated as specified in the parameter \texttt{augmentations}.\\
+The transformations are only applied to the training set before it is split into training and validation, while the testing set is not augmented. \\
+The newly generated augmented images are added to the dataset: the amount of generated images is specified by the \texttt{augmentations} parameter.\\
 
 \subsection{Training}
 The training procedure is shared between the two models. \\
 The training is performed by the \texttt{train()} function in the \texttt{lib/train\_test.py} file. \\
 
-Two optimizers can be selected with the \texttt{optimizer} parameter: \texttt{0} = \texttt{SGD} or \texttt{1} = \texttt{Adam} to which are given parameters
-as required. SGD uses \textit{learning\_rate} and \textit{momentum}, while Adam uses only \textit{learning\_rate}. \\
+One out of two different optimizers can be selected using the \texttt{optimizer} parameter: \texttt{0} = \texttt{SGD} or \texttt{1} = \texttt{Adam}
+SGD uses \textit{learning\_rate} and \textit{momentum}, while Adam uses only \textit{learning\_rate}. \\
 \textit{Cross Entropy} is used as loss function. \\
 
 The training is performed by iterating through the training set \texttt{epochs} times. \\
-The function expects the dataset as a \texttt{torch.utils.data.DataLoader} and iterates by batch alternating classification, loss calculation and backpropagation.\\
+The training function expects a \texttt{torch.utils.data.DataLoader} object as training set and iterates on each batch alternating classification, loss calculation and backpropagation.\\
 
-If a GPU is available (and detected by pytorch), each batch will be loaded onto GPU and training will happen there. \\
+If a GPU is available (and detected by pytorch) each batch will be loaded onto the GPU and the training will take place there. \\
 The training is monitored by printing the loss and accuracy on the training set every epoch. \\
-Training accuracy and loss are stored into lists and then returned after the training is done, to be used for plotting. \\
+The training accuracy and loss are stored into lists and then returned after the training is done to be used for plotting. \\
 
 \subsection{Validation}
-Validation can be enabled by setting the \texttt{epoch\_val} parameter to a positive number, or disabled entirely by giving it value \texttt{None}.
-If enabled, the validation is performed every \texttt{epoch\_val} epochs. \\
+Validation can be enabled by setting the \texttt{epoch\_val} parameter to a positive number, or disabled entirely by giving it the \texttt{None} value.
+If enabled, the validation is performed once every \texttt{epoch\_val} epochs. \\
 
-The validation is performed by setting the model to evaluation mode and running the model while iterating through the validation set. \\
+The validation is performed by setting the model to evaluation mode and iterating the model through the validation set. \\
 A loss is calculated, but no backpropagation is performed.\\
-If a GPU is available (and detected by pytorch), each batch will be loaded onto GPU and training will happen there. \\
+If a GPU is available (and detected by pytorch), each batch will be loaded onto the GPU and the validation will take place there. \\
 
-The validation is monitored by printing the loss and accuracy on the validation set every time it is run. \\
-Validation accuracy and loss are stored into lists and then returned after the training is done, to be used for plotting. \\
+The validation is monitored by printing the loss and the accuracy on the validation set each time it is executed. \\
+The validation accuracy and loss are stored into lists and then returned after the training is done to be used for plotting. \\
 \subsection{Testing}
 Testing is performed by the \texttt{test()} function in the \texttt{lib/train\_test.py} file. \\
-The function expects the dataset as a \texttt{torch.utils.data.DataLoader} and iterates by batch, classifying each image and storing the results. \\
-Basically like validation, but with testing data. In case of data augmentation, testing data is NOT augmented.\\
+This function expects the dataset as a \texttt{torch.utils.data.DataLoader} object and it iterates on each batch, classifying each image and storing the results \\
+in the same way as the validation but using the test set. In case of data augmentation, the testing set is NOT augmented.\\
 
-If a GPU is available (and detected by pytorch), each batch will be loaded onto GPU and testing will happen there. \\
+If a GPU is available (and detected by pytorch), each batch will be loaded onto the GPU and the testing will take place there. \\
 
-Testing predictions and real results are stored and returned after testing is done, to enable more flexible analysis and metrics calculation.\\
-In our case, the \texttt{metrics} class handles calculation of statistics and plotting of useful graphs.\\
+The predicted results and the real results are stored and returned after the testing is done to enable a more flexible analysis and metrics calculations.\\
+In our case, the \texttt{metrics} class handles the calculation of statistics and the plotting of useful graphs.\\
 
 \chapter{Results}
-The project started from the RGB dataset images and with the models as seen during laboratory lectures.\\
-We started by using the Convolutional Neural Network (CNN) model provided during laboratory lectures from which we extracted the fully connected
-section and thus defined the \textbf{NN\_128x128} model.\\
-These models were using RGB images, but after a short while we converted everything to grayscale images.\\
-
-We started working with the parameters as given in the laboratory lectures, together with the models.
+Our initial dataset consisted of the RGB images and our initial models were derived from CNN defined during the laboratory lectures.\\
+Starting off from this Convolutional Neural Network we extracted the fully connected
+layers and used those to define the \textbf{NN\_128$\times$128} model.\\
+Eventually we converted our initial dataset to grayscale images in order to make the classification task less trivial.\\
 
 \section{Tuning scatter}
-In this first part of the study, we focused on the NN model with wavelet scattering. \\
+At first we focused on the NN model and on the wavelet scattering. \\
 We started by tuning the parameters of the scattering transform, which are the invariance scale $J$, the order of scattering $Q$, the number of rotations $R$, and the quality factors $Q$. \\
 
-But using kymatio, we found that the library does not support the quality factors, so, after a bit of fruitless parameter tuning, 
-we opted to use the \texttt{scattering2d} function from \texttt{kymatio.scattering2d} instead, for better control. \\
+As mentioned above, we initially tried using kymatio to apply the scattering transform but we found that the library does not support a quality factors parameter for the 2D transform: for this reason, after some fruitless parameter tuning, 
+we opted to use the \texttt{scattering2d} function from \texttt{kymatio.scattering2d} which granted us more control. \\
 
 \section{Models tuning}
-Then we tried to tune the parameters of the optimizer of the models.\\
-We tried different learning rates and momentum values for the SGD optimizer, and finally found a combination that led to the networks actually learning.
+We then tried tuning the parameters of the optimizer.\\
+We tried using different learning rates and momentum for the SGD optimizer, and finally found the optimal values which allowed the models to start learning.
 \begin{itemize}
   \item \textbf{Learning rate}: $0.01$ 
   \item \textbf{Momentum}: $0.5$
 \end{itemize}
 
-So, in this situation we could actually try and find some good values for the MATLAB scatter transform:
+Then we finally found some good values for the MATLAB scatter transform parameters:
 \begin{itemize}
   \item \textbf{Invariance scale}: $J=6$
   \item \textbf{Order of scattering}: $2$
   \item \textbf{Number of rotations}: $[8, 8]$
 \end{itemize}
-We found that with these values, the neural network performed well at around 80\% accuracy.\\
+Using these values the neural network reached 0.81 accuracy in testing.\\
 
 \section{CNN}
-With the scatter sorted, we now focused on the CNN model, ready to find new, different, parameters that would better suit the different model.\\
-We figured that the model was overfitting a lot on training data so, to mitigate that, we tried to change the structure of the model, adding Batch Normalization and Dropout layers,
-as well as adding/reducing layers size and number.\\
-In the meantime, through testing, we figured that the best parameters for the SGD optimizer were the following:
+After finding the optimal scatter parameters we finally focused on the CNN model.\\
+A different architecture meant, of course, the need for different parameters which could work well with the additional convolutional layers, but the model would always overfit or underfit.
+After many attempts at finding an optimal configuration we concluded that the CNN model needed to be further adjusted: the addition of Batch Normalization and Dropout layers, as well as increasing or reducing the number of layers and their size, was critical in avoiding overfitting.\\
+We then concluded that the best parameters for the SGD optimizer were the following:
 \begin{itemize}
   \item \textbf{Learning rate}: $0.005$ 
   \item \textbf{Momentum}: $0.9$
 \end{itemize}
-At this point we realized that batch normalization and dropout layers were contributing to stability of the training, so we decided to keep them.\\
+We also attempted to use the Adam optimizer, but SGD consistently provided better results.\\
 
-Even though the accuracy was good and we solved the overfitting issue, the filters were not quite what we expected (something like edge detection), so we tried to change parameters
-of the model, but we observed some sort of tradeoff between the training curves (loss and accuracy) and the quality of the filters.\\
-We also tried to use the Adam optimizer, but the results were not as good as with SGD and could not determine consistent differences between the two.\\
+The model was now reaching a good accuracy during testing, but the filters were not quite what we expected: instead of obtaining a set of filters which resembled some generic edge detection filters (like the ones used by the scatter transform), we were obtaining some very noisy matrices.
+We also started noticing a consistent tradeoff between the quality of training/accuracy and the quality of the filters.
+Eventually we came to realize that, when using a small dataset, a convolutional network can either build very generic filters, which perform poorly on a very specific and biased dataset, or very specific filters, which greatly diverge from common edge detection ones but perform well on the given dataset.
+
 
 \section{Augmentation}
-With augmentation we finally managed to get both reasonable training curves and good filters.\\
-We tried to use the \texttt{autoaugment} function from \texttt{torchvision.transforms}, and it gave very nice results.\\
+The results showed that the only way to obtain both a good accuracy and the expected filters is to increase the training dataset.
+This was not possible however, as one of the project goals was to use a small dataset: for this reason we decided to artificially increase the amount of data using data augmentation.
+This allowed us to reach both reasonable training curves and the expected filters.\\
 
-But we didn't yet understand why, so we tried to use only a single type of transformation at a time and try to understand what was happening.\\
-Notably, when augmentation involved only translations, the filters presented some sort of weird black edge around, so we figured they didn't help much.\\
+The \texttt{autoaugment} function from \texttt{torchvision.transforms} with the IMAGENET augmentation policy gave very good results.\\
+In order to understand why this was the case, we tried using only a single type of transformation at a time (rotations, solarization, translations, ...).\\
+Notably, when augmentation involved only translations, the filters presented some black edges and the accuracy was not as good: we concluded that the wrong type of augmentations didn't allow the model to learn any further.\\
 
-Finally, we tried to use only rotations, and the results were very good: we could see both good edge filters and decent training curves.\\
-Moreover, model's accuracy was very good, at about 85\%.\\
-We also noticed some sort of positive correlation between the number of augmented (rotated) images and the accuracy of the model.\\
+Finally we tried using only rotations: we could see both good edge filters and decent training curves.\\
+Moreover, the model's accuracy also increased.\\
+We noticed a positive correlation between the number of augmented images and the quality of the filters.\\
 
 
+
+\section{Summary}
+We now present a brief summary of the parameters used to train our models.
+
+The following are the best parameters we found for the NN model:
+\begin{itemize}
+  \item \textbf{Invariance scale}: $J=6$
+  \item \textbf{Order of scattering}: $2$
+  \item \textbf{Number of rotations}: $[8, 8]$
+  \item \textbf{Quality factors}: $[2, 1]$
+  \item \textbf{Learning rate}: $0.005$ 
+  \item \textbf{Momentum}: $0.9$
+\end{itemize}
+
+The following are the best parameters we found for the CNN model:
+\begin{itemize}
+  \item \textbf{batch\_size}: 64
+  \item \textbf{test\_perc}: 0.2
+  \item \textbf{num\_samples}: 500
+  \item \textbf{epoch\_val}: 1
+  \item \textbf{num\_k\_folds}: 3
+  \item \textbf{augmentations}: 16 (number of augmented images per original image)
+  \item \textbf{weight\_decay}: 0.01
+  \item \textbf{optimizer}: 0 (0- SGD, 1- Adam)
+  \item \textbf{learning\_rate}: 0.005 (scale for how much new weights are evaluated)
+  \item \textbf{momentum}: 0.9 (scale for past experience to not be perturbed by new ones)
+  \item \textbf{num\_epochs}: 200
+\end{itemize}
 \pagebreak
 \chapter{Conclusions}
 
 Our study has revealed several key findings regarding the impact of parameter selection and data augmentation 
 techniques on the performance of Convolutional Neural Networks (CNNs) and Neural Networks (NNs). The optimal 
 parameters varied between the two models, but our results suggest that rotations were the most effective 
-parameter for improving performance. However, the reasons for this improvement are not entirely clear, as it is 
-uncertain whether it is due to the rotations themselves or the increase in the number of training examples. 
-While using more samples can lead to a training process that is noisier and with "faded" filters, it can also 
-result in better generalization. Indeed, data augmentation techniques such as rotations can produce filters that 
-are more generalizable to unseen data, as the model learns to identify more robust features that are less 
-dependent on specific input configurations. Nonetheless, it is crucial to find the right balance between the 
+parameter for improving performance on our particular dataset.
+The addition of augmented images to the dataset not only increased the overall accuracy but also allowed the CNN model to build a set of filters which resemble generic edge detection filters, in particular those used by the scatter transform.
+This led us to conclude that data augmentation not only increases the capability for generalization in the fully connected layers, but also in the filters used for the convolutional layers.
+Data augmentation techniques such as rotations can indeed produce filters that 
+are more generalizable to new data, as the model learns to identify more robust features that are less 
+dependent on a specific input. The robustness to certain properties strictly depends on the type of augmentation used: 
+for example, the use of rotations led the CNN to build filters which could work well with rotated subjects, while the use of translations led the CNN to build filters which could work with black edges (although not optimal for this classification task). 
+Nonetheless, it is crucial to find the right balance between the 
 number and type of augmented samples and the complexity of the model to avoid overfitting. Overall, our findings 
-highlight the importance of careful parameter selection and the potential benefits of using rotation as a data 
+highlight the importance of careful parameters selection and the potential benefits of using rotations as a major data 
 augmentation technique for improving the performance and generalization of CNNs and NNs.
 
 \pagebreak
@@ -531,7 +562,7 @@ augmentation technique for improving the performance and generalization of CNNs 
     \label{fig:image-set6-sub2}
   \end{subfigure}
 
-  \caption{Execution with 500 samples and 16 augmentations. The CNN reaches a better accuracy with TODO\%, while the NN reaches TODO\%. Augmentation privileges CNN}
+  \caption{Execution with 500 samples and 16 augmentations. The CNN reaches a better accuracy with 0.85\%, while the NN reaches 0.77\%. Augmentation privileges CNN}
   \label{fig:image-set6}
 \end{figure}
 

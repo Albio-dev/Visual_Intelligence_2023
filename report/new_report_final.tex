@@ -305,7 +305,7 @@ The predicted results and the real results are stored and returned after the tes
 In our case, the \texttt{metrics} class handles the calculation of statistics and the plotting of useful graphs.\\
 
 \chapter{Results}
-Our initial dataset consisted of the RGB images and our initial models were derived from CNN defined during the laboratory lectures.\\
+Our initial dataset consisted of RGB images and our initial models were derived from CNN defined during the laboratory lectures.\\
 Starting off from this Convolutional Neural Network we extracted the fully connected
 layers and used those to define the \textbf{NN\_128$\times$128} model.\\
 Eventually we converted our initial dataset to grayscale images in order to make the classification task less trivial.\\
@@ -331,7 +331,7 @@ Then we finally found some good values for the MATLAB scatter transform paramete
   \item \textbf{Order of scattering}: $2$
   \item \textbf{Number of rotations}: $[8, 8]$
 \end{itemize}
-Using these values the neural network reached 0.81 accuracy in testing.\\
+Using these values the neural network reached 80\% accuracy in testing.\\
 
 \section{CNN}
 After finding the optimal scatter parameters we finally focused on the CNN model.\\
@@ -359,7 +359,7 @@ In order to understand why this was the case, we tried using only a single type 
 Notably, when augmentation involved only translations, the filters presented some black edges and the accuracy was not as good: we concluded that the wrong type of augmentations didn't allow the model to learn any further.\\
 
 Finally we tried using only rotations: we could see both good edge filters and decent training curves.\\
-Moreover, the model's accuracy also increased.\\
+Moreover, the model's accuracy also increased, at about 85\%.\\
 We noticed a positive correlation between the number of augmented images and the quality of the filters.\\
 
 
@@ -384,11 +384,11 @@ The following are the best parameters we found for the CNN model:
   \item \textbf{num\_samples}: 500
   \item \textbf{epoch\_val}: 1
   \item \textbf{num\_k\_folds}: 3
-  \item \textbf{augmentations}: 16 (number of augmented images per original image)
+  \item \textbf{augmentations}: 16 
   \item \textbf{weight\_decay}: 0.01
-  \item \textbf{optimizer}: 0 (0- SGD, 1- Adam)
-  \item \textbf{learning\_rate}: 0.005 (scale for how much new weights are evaluated)
-  \item \textbf{momentum}: 0.9 (scale for past experience to not be perturbed by new ones)
+  \item \textbf{optimizer}: 0 
+  \item \textbf{learning\_rate}: 0.005 
+  \item \textbf{momentum}: 0.9 
   \item \textbf{num\_epochs}: 200
 \end{itemize}
 \pagebreak
@@ -413,30 +413,6 @@ augmentation technique for improving the performance and generalization of CNNs 
 
 \part{Appendix}
 \appendix
-
-\begin{figure}[t!]
-  \centering
-  \hspace{-2cm}
-  \begin{subfigure}[t]{0.49\textwidth}
-    \centering
-    \includegraphics[width=1.3\textwidth]{3.CNN_500_sample/CNN_filters.png}
-    \caption{Caption for Image 1}
-    \label{fig:image-set1-sub1}
-  \end{subfigure}
-  \hspace{-0.5cm}
-  \begin{subfigure}[t]{0.49\textwidth}
-    \centering
-    \includegraphics[width=1.3\textwidth]{3.CNN_500_sample/CNN_filters.png}
-    \caption{Caption for Image 2}
-    \label{fig:image-set1-sub2}
-  \end{subfigure}
-
-  \caption{Caption for the whole figure (TEMPLATE)}
-  \label{fig:figure}
-\end{figure}
-
-
-
 
 
 \begin{figure}[t!]

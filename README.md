@@ -1,12 +1,13 @@
 # Visual_Intelligence_2023
 
-ToDo list:
-- [X] Provare con immagini grayscale
-- [ ] Vedere le prestazioni al ridurre del trainset
-- [X] Scorporare i colori dei filtri della CNN
-- [X] Provare a classificare con la scatter di matlab
-- [ ] Visualizzare i banchi di filtri belli come fa mallat <3
-- [ ] Scrivere il report (almeno 4 pagine e massimo 6)
-- [ ] Preparare una breve presentazione (max 10 min.) da esporre spiegando i punti salienti del progetto.
+To run the project execute the following command in the terminal:
 
+```bash
+python3 configurable_classification.py
+```
 
+Settings can be found in the files "parameters.yaml" and "scatter_parameters.yaml", but they will be overwritten at every execution.
+The correct way to edit the settings is by running lib/scripts/make_settings.py
+
+There is also a tool for automated execution, "gridsearch.py", which can be used to run the program with different settings. Warning: it is not an actual gridsearch.
+Execution results are saved in the folder results and numbered ascendently.

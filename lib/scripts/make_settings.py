@@ -44,9 +44,9 @@ scattering_parameters = {
     # Order of scattering
     "order" : 2,
     # Number of rotations
-    "num_rotations" : [10, 10],
+    "num_rotations" : [8, 8],
     # Quality factors
-    "quality_factors": [5, 5]
+    "quality_factors": [2, 1]
 }
 
 def writefile():

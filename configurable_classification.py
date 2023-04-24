@@ -3,7 +3,6 @@ from lib.metrics import metrics
 from lib.models.CNN_128x128 import CNN_128x128
 from lib.models.NN_128x128 import NN_128x128
 from lib.scripts import make_settings
-from legacy import utils_our
 from lib.data_handler import data_handler
 from lib import train_test
 from lib import scatter_helper
@@ -13,6 +12,7 @@ from sklearn.model_selection import KFold
 import os
 import matplotlib.pyplot as plt
 import numpy as np
+import yaml
 
 # Set device where to run the model. GPU if available, otherwise cpu (very slow with deep learning models)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -20,8 +20,8 @@ print('Device: ', device)
 
 def classify(display = False, cnn = True, nn = True):
 
-    # Update settings
-    settings = utils_our.load_settings()
+    with open('parameters.yaml') as f:
+        settings = yaml.load(f, Loader=yaml.loader.FullLoader)
 
     # Create folds if required
     folds = settings['num_k_folds']
@@ -191,7 +191,10 @@ def classify(display = False, cnn = True, nn = True):
         weight_decay = settings['weight_decay']
 
         # Create scatter objects
-        scatter_params = utils_our.load_settings('scatter_parameters.yaml')    
+            
+        with open('scatter_parameters.yaml') as f:
+            scatter_params = yaml.load(f, Loader=yaml.loader.FullLoader)
+        
         scatter = scatter_helper.scatter(imageSize=settings['imageSize'], mode = 1, scatter_params=scatter_params)
         
         # get NN dataset   

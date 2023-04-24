@@ -1,1 +1,16 @@
 Run models with dogs-flowers parameters (1. Baseline)
+
+provati quattro diversi learning rates [] e 0.01 sembra essere il migliore (2a. learning rates, 2b. learning rates, 2c. learning rates, 2d. learning rates)
+Provati un diverso numero di augmentation (solo rotazioni) [0, 8, 16] dimostrando solo overfitting in training (3a. 0augmentation, 3b. 8augmentation, 3a. 16augmentation)
+Anche provando policy di trasformazioni ottimali per dataset famosi (imagenet, cifar10) si vede lo stesso trend 
+Provati diversi momentum e sembra che più basso sia meglio, tipo 0.3 (5. momentum)
+
+scatter:
+provato diverse invariance scale, 4 sembra avere i migliori risultati (4. J4)
+provate diverse rotazioni ma senza cambiamenti notevoli. Sembrerebbe che semplificare la scatter rallenti il momento di overfitting
+Un solo layer non fa fitting per nulla
+Provato con diversi quality factors, e si ottiene un risultato simile a quello della CNN (6. qf22)
+altri cambiamenti della scatter producono gli stessi risultati (invariance scale, numero di rotazioni, quality factors)
+
+la forma del grafico è sempre la stessa in cui c'è un momento iniziale in cui il modello si allena e la validation non cambia e ad un certo punto la validation esplode e il modello fa overfitting.
+in ogni caso il modello non generalizza mai ()

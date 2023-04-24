@@ -1,0 +1,12 @@
+{'augmentations': 0, 'batch_size': 64, 'channels': 1, 'data_path': './Data/gray', 'epoch_val': 1, 'imageSize': (100, 100), 'lab_classes': ['pos', 'neg'], 'model_train_path': './train_checkpoint/', 'num_k_folds': 3, 'num_samples': 216, 'optimizer': 0, 'results_path': './results/', 'test_perc': 0.2, 'weight_decay': 0.01, 'learning_rate': 0.1, 'momentum': 0.9, 'num_epochs': 100}
+{'J': 6, 'num_rotations': [8, 8], 'order': 2, 'quality_factors': [2, 1]}
+CNN metrics: 
+Accuracy:		0.36363636363636365
+Precision:		0.47058823529411764
+Recall:			0.2962962962962963
+F1:				0.3636363636363636
+NN metrics: 
+Accuracy:		0.38636363636363635
+Precision:		0.0
+Recall:			0.0
+F1:				0.0

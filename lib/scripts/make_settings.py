@@ -31,9 +31,9 @@ generic = {
 
 model_hyperparameters = {
     # Learning rate to scale how much new weighs are evaluated
-    "learning_rate": 0.005,
+    "learning_rate": 0.01,
     # Scale for past experience to not be perturbated by new ones
-    "momentum" : 0.9,
+    "momentum" : 0.3,
     # The number of times the model is trained on the entire training dataset.
     "num_epochs" : 100
 }
@@ -44,9 +44,9 @@ scattering_parameters = {
     # Order of scattering
     "order" : 2,
     # Number of rotations
-    "num_rotations" : [8, 8],
+    "num_rotations" : [10, 10],
     # Quality factors
-    "quality_factors": [2, 1]
+    "quality_factors": [5, 5]
 }
 
 def writefile():

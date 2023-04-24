@@ -256,8 +256,6 @@ def classify(display = False, cnn = True, nn = True):
             # Decide scale
             max_loss = min(max(max_loss, max(NN_train_data['loss']), max(NN_train_data['loss_val'])), 1)
             min_acc = min(min_acc, min(NN_train_data['accuracy']), min(NN_train_data['accuracy_val']))
-
-
         
         # Load best models
         NN.load_state_dict(torch.load(NN_best_path + str(acc_nn.index(max(acc_nn)))))
@@ -271,11 +269,6 @@ def classify(display = False, cnn = True, nn = True):
             axs[1].set_title('NN')
 
         scatter.quit_matlab()
-
-
-
-
-
 
 
     # Apply scale to graphs

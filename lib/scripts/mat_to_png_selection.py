@@ -7,7 +7,7 @@ input_path = 'Data\\new_dataset'
 input_classes = ['pos', 'neg']
 
 output_path = 'Data\\gray'
-output_classes = ['pos', 'neg']
+output_classes = ['neg', 'pos']
 allowed_lists = ['CN_neg.txt', 'MCI+AD_pos.txt']
 
 for c in range(len(output_classes)):
@@ -27,7 +27,9 @@ for c in range(len(output_classes)):
 
                 # Read .mat files and convert to .png
                 mat = scipy.io.loadmat(f'{os.path.join(p,file)}')
-                cv2.imwrite(f'{os.path.join(output_path, output_classes[c], str(index))}.png', mat['corr_ms'])
+                data = (mat['corr_ms'] + 1) / 2
+
+                cv2.imwrite(f'{os.path.join(output_path, output_classes[c], str(index))}.png', data*255)
 
                 index += 1
 

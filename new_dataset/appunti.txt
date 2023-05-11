@@ -1,0 +1,60 @@
+Eseguito i modelli con i parametri uguali a cani_vs_fiori ma va molto male (pessima accuracy e la loss non si abbassa) (0.newDataset)
+
+semplificato la scatter (poche rotazioni e basso q factor. Sempre 2 livelli) e per la NN la loss in validation segue l'andamento di quella in training (1.newDataset)
+1 livello fa schifo 
+3 livelli va un pochino meglio (2.newDataset)
+
+Con lr più alto e momentum più basso non va meglio (3.newDataset)
+Con lr più basso non va meglio (troppo lento ad imparare) (4.newDataset)
+
+Con un lr più alto è vero che fa super overfitting, ma almeno i modelli fittano. Ora c'è da risolvere il problema overfitting e non fitting (5.newDataset)
+
+Abbiamo provato utilizzando Adam ma non ci sono stati miglioramenti (6.newDataset)
+
+Abbiamo provato a cambiare la batch_size da 64 a 16 ma non cambia niente. (7.newDataset)
+
+modifiche architetturali
+NN: aggiungere layer non cambia, togliere il dropout fa cose strane (8.newDataset)
+aggiungere quality factors crea un grafico rumoroso, ma fitta un pochino meglio. Forse il problema è la quantità di campioni che entrano nella NN (devono essere tanti)
+Con dropout la loss in traning/val è più rumorosa, ma quella di validation non sale (9a.newDataset) molto, mentre senza dropout è più pulita, ma la loss cresce molto (9b.newDataset)
+
+Provato a tenere tutte le feature prodotte dalla scatter, ma questo significa cambiare (di nuovo) i parametri del modello
+
+Provato a mantenere tutti i livelli della scatter e i risultati non sono cambiati, va meno peggio con learning rate basso e momentum alto.
+Cambiare la batch size contribuisce in minima parte all'allenamento utilizzando la featureMatrix di matlab. Influisce anche tenendo solo l'ultimo livello di feature.
+Piuttosto, abbiamo capito che tenere l'ultimo livello migliora notevolmente la qualità dei risultati, rispetto a tenere tutte le features. (10.newDataset, 11.newDataset)
+
+CNN: 
+Cambiare solo la batch size comporta cambiamenti, ma marginali
+applicare augmentation (solo rotazioni) migliora percettibilmente e consistentemente le performance (12a.newDataset, 12b.newDataset)
+applicare augmentation (solo traslazioni) il training è perfetto, ma facendo overfitting anche in training. Verosimilmente impara le traslazioni (13a.newDataset, 13b.newDataset)
+In generale, augmentation migliora marginalmente l'accuracy
+Mischiare traslazioni e rotazioni nell'augmentation ha portato ad un training migliore, ma nessuna differenza notevole in test
+Difficilmente l'accuracy in test supera i 0.6 e, quando lo fa, è molto variabile passando da .53 a .66
+
+Togliendo batchnorm e dropout va molto male, anche se si nota che migliora con l'augmentation (indipendentemente dal tipo di augmentation)
+Provato con un solo layer convolutivo: performance scarse, ma migliora con augmentation. Con 16 augmentation fa overfitting.
+Provato con 2 layer convolutivi: come con 3 layer
+provato con 4 layer convolutivi: come sopra
+
+Provato con più filtri al primo layer e con kernel più grossi, ma non si sono osservate differenze notevoli dai precedenti
+Provato ad aumentare la weight_regularization, con qualche prova di combinazioni di parametri, ma senza successo.
+Provato a diminuire la weitght_regularization, con nessun cambiamento evidente, anche con 500 epoche.
+
+Provato utilizzando Adam ma il comportamento rimane lo stesso, nessuna differenza.
+
+Un esempio di tutte queste prove si trova in 14a.newDataset, 14b.newDataset, 14c.newDataset
+
+Tornati alla NN:
+Provato con una NN a 4 layer dove il primo passa da features a 256 e poi dimezza il numero di nodi. L'ultimo fa da 64 a numero di classi (2)
+Provato a cambiare il learning rate, ma con la scatter minimale si vedeono i salti dell'ottimizzatore
+con q factor (1, 1) cambiare invariance scale e rotazioni non cambia il risultato (pessimo) (15.newDataset)
+
+provato una gridsearch cambiando l'invariance scale ma non ci sono differenze cambiando i valori. 
+provato una gridsearch cambiando numero di rotazioni ma non ci sono differenze cambiando i valori.
+
+Provando con dell'augmentation (q factor = rotazioni = (2, 2)) viene esattamente come sopra
+
+provato con una NN minimale (1 solo layer) con nessun risultato
+
+Tornati alla NN originale (2 livelli) e provato un solo layer di scatter ma senza risultati

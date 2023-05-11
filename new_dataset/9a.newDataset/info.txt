@@ -1,0 +1,12 @@
+{'augmentations': 0, 'batch_size': 16, 'channels': 1, 'data_path': './Data/gray', 'epoch_val': 1, 'imageSize': (100, 100), 'lab_classes': ['amiloide', 'not_amiloide'], 'model_train_path': './train_checkpoint/', 'num_k_folds': 3, 'num_samples': 398, 'optimizer': 0, 'results_path': './results/', 'test_perc': 0.2, 'weight_decay': 0.01, 'learning_rate': 0.01, 'momentum': 0.3, 'num_epochs': 200}
+{'J': 6, 'num_rotations': [1, 1], 'order': 2, 'quality_factors': [2, 2]}
+CNN metrics: 
+Accuracy:		0.5375
+Precision:		0.4594594594594595
+Recall:			0.5
+F1:				0.47887323943661975
+NN metrics: 
+Accuracy:		0.45
+Precision:		0.42424242424242425
+Recall:			0.8235294117647058
+F1:				0.5599999999999999
